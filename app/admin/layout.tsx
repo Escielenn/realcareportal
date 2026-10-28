@@ -12,11 +12,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   ]);
   return (
     <div className="min-h-dvh md:flex">
-      <aside className="no-print bg-teal-dark text-white md:sticky md:top-0 md:flex md:h-dvh md:w-60 md:shrink-0 md:flex-col md:overflow-y-auto">
+      <aside className="no-print relative isolate overflow-hidden bg-navy text-white md:sticky md:top-0 md:flex md:h-dvh md:w-60 md:shrink-0 md:flex-col md:overflow-y-auto">
+        <div className="mountain-photo absolute inset-x-0 bottom-0 -z-10 hidden h-72 opacity-25 md:block" style={{ maskImage: "linear-gradient(to top, black 10%, transparent)", WebkitMaskImage: "linear-gradient(to top, black 10%, transparent)" }} aria-hidden />
+        <div className="brand-bar h-1.5 w-full" aria-hidden />
         <div className="flex items-center gap-2 px-4 py-4">
-          <Logo className="h-8 w-8" />
+          <Logo tile className="h-11" />
           <div>
-            <Link href="/admin" className="block leading-tight font-bold">Real Care</Link>
+            <Link href="/admin" className="block font-display leading-tight font-bold">Real Care</Link>
             <span className="text-xs text-white/70">Staff console</span>
           </div>
         </div>
@@ -46,7 +48,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </form>
         </div>
       </aside>
-      <main className="min-w-0 flex-1 px-4 py-6 md:px-8 md:py-8">{children}</main>
+      <main className="min-w-0 flex-1 px-4 py-6 pb-24 md:px-8 md:py-8">{children}</main>
     </div>
   );
 }

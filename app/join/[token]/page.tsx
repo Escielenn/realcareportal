@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Logo } from "@/components/logo";
+import { AuthShell } from "@/components/auth-shell";
 import { JoinForm } from "./join-form";
 
 export default async function JoinPage({ params }: { params: Promise<{ token: string }> }) {
@@ -12,12 +12,7 @@ export default async function JoinPage({ params }: { params: Promise<{ token: st
   const es = invite?.locale === "es";
 
   return (
-    <main className="flex min-h-dvh flex-col items-center justify-center px-4 py-10">
-      <div className="w-full max-w-md">
-        <div className="mb-6 flex flex-col items-center text-center">
-          <Logo className="h-12 w-12" />
-          <h1 className="mt-4 text-2xl font-bold">{es ? "Bienvenido a Real Care" : "Welcome to Real Care"}</h1>
-        </div>
+    <AuthShell title={es ? "Bienvenido a Real Care" : "Welcome to Real Care"}>
         {invite ? (
           <div className="card p-6">
             <p className="mb-1 text-lg font-semibold">{es ? "Hola" : "Hi"} {invite.full_name.split(" ")[0]},</p>
@@ -36,7 +31,6 @@ export default async function JoinPage({ params }: { params: Promise<{ token: st
             <Link href="/login" className="btn-ghost mt-5">Sign in / Iniciar sesión</Link>
           </div>
         )}
-      </div>
-    </main>
+    </AuthShell>
   );
 }

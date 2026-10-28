@@ -13,13 +13,13 @@ export function ProviderNav({ items }: { items: Item[] }) {
       <nav className="hidden gap-1 md:flex" aria-label="Main">
         {items.map((i) => (
           <Link key={i.href} href={i.href} aria-current={active(i.href) ? "page" : undefined}
-            className={`relative rounded-lg px-3 py-2 font-semibold ${active(i.href) ? "bg-teal-soft text-teal" : "text-muted hover:text-ink"}`}>
+            className={`relative rounded-lg px-3 py-2 font-semibold ${active(i.href) ? "bg-white/20 text-white" : "text-white/85 hover:bg-white/10 hover:text-white"}`}>
             {i.label}
-            {!!i.badge && <span className="ml-1.5 rounded-full bg-coral px-1.5 text-xs text-white">{i.badge}</span>}
+            {!!i.badge && <span className="ml-1.5 rounded-full bg-sky px-1.5 text-xs text-navy">{i.badge}</span>}
           </Link>
         ))}
       </nav>
-      <nav className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-4 border-t border-line bg-white pb-[env(safe-area-inset-bottom)] md:hidden" aria-label="Main">
+      <nav className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-4 border-t border-line bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden" aria-label="Main">
         {items.map((i) => (
           <Link key={i.href} href={i.href} aria-current={active(i.href) ? "page" : undefined}
             className={`relative flex flex-col items-center gap-0.5 py-2 text-xs font-semibold ${active(i.href) ? "text-teal" : "text-muted"}`}>
@@ -40,9 +40,9 @@ export function AdminNav({ items }: { items: { href: string; label: string; badg
     <nav className="flex gap-1 overflow-x-auto md:flex-col" aria-label="Staff">
       {items.map((i) => (
         <Link key={i.href} href={i.href} aria-current={active(i.href) ? "page" : undefined}
-          className={`flex items-center justify-between rounded-lg px-3 py-2 whitespace-nowrap font-medium ${active(i.href) ? "bg-white/15 text-white" : "text-white/75 hover:bg-white/10 hover:text-white"}`}>
+          className={`flex items-center justify-between rounded-lg px-3 py-2 whitespace-nowrap font-medium ${active(i.href) ? "bg-teal text-white shadow-sm" : "text-white/80 hover:bg-white/10 hover:text-white"}`}>
           {i.label}
-          {!!i.badge && <span className="ml-2 rounded-full bg-coral px-2 text-xs font-bold text-white">{i.badge}</span>}
+          {!!i.badge && <span className="ml-2 rounded-full bg-sky px-2 text-xs font-bold text-navy">{i.badge}</span>}
         </Link>
       ))}
     </nav>

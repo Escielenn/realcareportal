@@ -1,24 +1,7 @@
-files
-/
-04-Injection-Admin-Voiceover-EN
-MD
-File
-Edit
-View
-Help
-JB
-18 of 21
-Share
-Edit content
-View as plain text
-UTF-8
 Real Care, Inc. — Injection Administration Training
 Voiceover Script (English)
 
 Estimated Read Time: ~7 minutes at natural speaking pace
-
-﻿
-
 
 Welcome to Real Care! This training covers Injection Administration under Delegated Medication Administration. By the end of this training, you will be able to explain why injections are used, understand nurse delegation requirements, identify the supplies needed, demonstrate proper injection technique, follow infection control practices, recognize adverse reactions, safely dispose of sharps, and document medication administration correctly. Please note that caregivers and providers will also need to demonstrate competency during nurse observation.
 

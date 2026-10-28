@@ -25,7 +25,7 @@ export default async function Certificate({ params }: { params: Promise<{ id: st
         <PrintButton label={es ? "Imprimir" : "Print"} />
       </div>
       <div className="print-page rounded-2xl border-[6px] border-double border-teal bg-white px-8 py-12 text-center shadow-sm md:px-14">
-        <div className="flex justify-center"><Logo className="h-14 w-14" /></div>
+        <div className="flex justify-center"><Logo className="h-24" /></div>
         <p className="mt-4 text-sm font-semibold tracking-[0.2em] text-teal uppercase">Real Care, Inc.</p>
         <h1 className="mt-2 text-3xl font-bold md:text-4xl">{es ? "Certificado de finalización" : "Certificate of Completion"}</h1>
         <p className="mt-8 text-muted">{es ? "Se certifica que" : "This certifies that"}</p>

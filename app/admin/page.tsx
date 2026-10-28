@@ -4,6 +4,7 @@ import { providerRows } from "@/lib/admin-data";
 import { fmtDate, fmtDateTime, todayDenver, daysBetween } from "@/lib/i18n";
 import { RenewalRunner } from "@/components/client-bits";
 import { TrainingPill } from "@/components/status";
+import { MountainBand } from "@/components/mountains";
 
 export default async function AdminHome() {
   const { supabase, profile } = await requireStaff();
@@ -35,10 +36,11 @@ export default async function AdminHome() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Good {Number(new Date().toLocaleString("en-US", { hour: "numeric", hour12: false, timeZone: "America/Denver" })) < 12 ? "morning" : "afternoon"}, {profile.full_name.split(" ")[0]}</h1>
-        <p className="text-muted">{fmtDate(today)} · {rows.length} providers</p>
-      </div>
+      <MountainBand className="rounded-2xl px-6 pt-6 pb-10 shadow-sm">
+        <p className="text-xs font-semibold tracking-[0.16em] text-sky uppercase">Staff console</p>
+        <h1 className="mt-1 text-3xl font-semibold">Good {Number(new Date().toLocaleString("en-US", { hour: "numeric", hour12: false, timeZone: "America/Denver" })) < 12 ? "morning" : "afternoon"}, {profile.full_name.split(" ")[0]}</h1>
+        <p className="text-white/80">{fmtDate(today)} · {rows.length} providers</p>
+      </MountainBand>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
         {stat("Forms waiting for review", q.length, "/admin/review")}

@@ -1,24 +1,7 @@
-files
-/
-01-Employee-Orientation-Voiceover-ES
-MD
-File
-Edit
-View
-Help
-JB
-6 of 21
-Share
-Edit content
-View as plain text
-UTF-8
 Real Care, Inc. — Orientación para Empleados
 Guión de Capacitación (Español)
 
 Tiempo estimado de lectura: ~6 minutos a ritmo natural de habla
-
-﻿
-
 
 Bienvenido a Real Care. Esta es su capacitación de Orientación para Empleados. Nos alegra tenerlo en el equipo, y esta capacitación le guiará a través de lo que necesita saber como nuevo miembro de la familia de Real Care.
 

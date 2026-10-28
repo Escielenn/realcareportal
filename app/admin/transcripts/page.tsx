@@ -95,7 +95,7 @@ export default async function Transcripts({ searchParams }: { searchParams: Prom
                 </div>
                 <div className="flex items-start gap-3 text-right text-xs text-muted">
                   <div>Generated {fmtDateTime(generated)}<br />{(from || to) && <>Period {from ? fmtDate(from) : "start"} – {to ? fmtDate(to) : "today"}<br /></>}Current cycle due {fmtDate(r.due_on)}<br /><strong className="text-ink">{r.done_count} of {r.required_count} required complete</strong></div>
-                  <Logo className="h-10 w-10" />
+                  <Logo className="h-12" />
                 </div>
               </header>
               {myCycles.map((cy) => {

@@ -1,19 +1,4 @@
-QMAP Part 2 - Syllabus Units 3, 4 & 5
-/
-QMAP Part 2 - Units 3, 4 & 5 - Voiceover Script
-MD
-File
-Edit
-View
-Help
-5 of 30
-Share
-Edit content
-View as plain text
-UTF-8
 QMAP Part 2 — Units 3, 4 & 5 — Voiceover Script (Full, Slide-by-Slide)
-﻿
-
 
 Welcome to Real Care! This is Part 2 of your Qualified Medication Administration Persons training. In this module, we'll walk through three units together: medication orders, the Medication Administration Record, and medication reminder boxes. By the end of this training, you'll know how to read and translate physician orders, document correctly on the MAR, and safely fill a medication reminder box for the clients you support.
 

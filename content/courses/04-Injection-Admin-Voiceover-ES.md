@@ -1,24 +1,7 @@
-files
-/
-04-Injection-Admin-Voiceover-ES
-MD
-File
-Edit
-View
-Help
-JB
-15 of 21
-Share
-Edit content
-View as plain text
-UTF-8
 Real Care, Inc. — Capacitación en Administración de Inyecciones
 Guión de Capacitación (Español)
 
 Tiempo estimado de lectura: ~7 minutos a ritmo natural de habla
-
-﻿
-
 
 Bienvenido a Real Care. Esta capacitación cubre la Administración de Inyecciones bajo la Administración Delegada de Medicamentos. Al final de esta capacitación, podrá explicar por qué se usan las inyecciones, comprender los requisitos de delegación de enfermería, identificar los suministros necesarios, demostrar la técnica correcta de inyección, seguir las prácticas de control de infecciones, reconocer reacciones adversas, desechar objetos punzantes de manera segura y documentar correctamente la administración de medicamentos. Tenga en cuenta que los cuidadores y proveedores también deberán demostrar competencia durante la observación de enfermería.
 

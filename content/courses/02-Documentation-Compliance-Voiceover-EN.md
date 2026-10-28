@@ -1,24 +1,7 @@
-files
-/
-02-Documentation-Compliance-Voiceover-EN
-MD
-File
-Edit
-View
-Help
-JB
-7 of 21
-Share
-Edit content
-View as plain text
-UTF-8
 Real Care, Inc. — Documentation Submissions & Compliance
 Voiceover Script (English)
 
 Estimated Read Time: ~7 minutes at natural speaking pace
-
-﻿
-
 
 Welcome to Real Care! This training covers Documentation Submissions and Compliance. Accurate, timely documentation is one of the most important parts of what we do. It ensures compliance with state regulations, supports billing and funding, and protects the health and safety of the individuals we serve. Please listen carefully and take note of the key deadlines and requirements covered here.
 

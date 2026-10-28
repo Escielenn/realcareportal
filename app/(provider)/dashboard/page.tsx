@@ -2,6 +2,7 @@ import Link from "next/link";
 import { requireProvider } from "@/lib/auth";
 import { getLang, t, fmtDate, fmtDateTime, trainingStatus, daysBetween, todayDenver } from "@/lib/i18n";
 import { trainingFor, title } from "@/lib/data";
+import { MountainBand } from "@/components/mountains";
 import { ProgressBar, TrainingPill, SubmissionPill } from "@/components/status";
 
 export default async function Dashboard({ searchParams }: { searchParams: Promise<{ welcome?: string }> }) {
@@ -36,14 +37,15 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold md:text-3xl">{t(lang, "hello")}, {firstName}</h1>
-        <p className="mt-1 text-muted">{t(lang, "dashIntro")}</p>
-      </div>
+      <MountainBand className="rounded-2xl px-5 pt-6 pb-10 shadow-sm md:px-7 md:pt-8 md:pb-12">
+        <p className="text-xs font-semibold tracking-[0.16em] text-sky uppercase">Real Care Colorado</p>
+        <h1 className="mt-1 text-3xl font-semibold md:text-4xl">{t(lang, "hello")}, {firstName}</h1>
+        <p className="mt-1 max-w-xl text-white/85">{t(lang, "dashIntro")}</p>
+      </MountainBand>
 
       {(welcome || tr.completions.length === 0) && (
         <section className="card overflow-hidden">
-          <div className="bg-teal px-5 py-4 text-white">
+          <div className="brand-bar px-5 py-4 text-white">
             <h2 className="text-lg font-bold">{lang === "es" ? "Primeros pasos" : "Getting started"}</h2>
             <p className="text-white/85">{lang === "es" ? "Cuatro pasos para empezar en el portal." : "Four quick steps to get set up."}</p>
           </div>

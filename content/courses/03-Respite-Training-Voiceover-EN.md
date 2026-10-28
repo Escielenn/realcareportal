@@ -1,24 +1,7 @@
-files
-/
-03-Respite-Training-Voiceover-EN
-MD
-File
-Edit
-View
-Help
-JB
-16 of 21
-Share
-Edit content
-View as plain text
-UTF-8
 Real Care, Inc. — Respite Care Overview & Provider Responsibilities
 Voiceover Script (English)
 
 Estimated Read Time: ~6 minutes at natural speaking pace
-
-﻿
-
 
 Welcome to Real Care! This training covers Respite Care — what it is, how it works, and what is expected of both primary providers and Respite Providers. By the end of this training, you will understand eligibility, scheduling, provider requirements, documentation, reporting, payment processes, and person-centered care expectations.
 

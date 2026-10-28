@@ -1,24 +1,7 @@
-files
-/
-01-Employee-Orientation-Voiceover-EN
-MD
-File
-Edit
-View
-Help
-JB
-10 of 21
-Share
-Edit content
-View as plain text
-UTF-8
 Real Care, Inc. — Employee Orientation
 Voiceover Script (English)
 
 Estimated Read Time: ~6 minutes at natural speaking pace
-
-﻿
-
 
 Welcome to Real Care! This is your Employee Orientation training. We are glad to have you on the team, and this training will walk you through what you need to know as a new member of the Real Care family.
 

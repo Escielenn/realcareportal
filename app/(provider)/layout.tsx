@@ -17,11 +17,11 @@ export default async function ProviderLayout({ children }: { children: React.Rea
 
   return (
     <div className="min-h-dvh pb-20 md:pb-0">
-      <header className="no-print sticky top-0 z-10 border-b border-line bg-white/95 backdrop-blur">
+      <header className="no-print brand-bar sticky top-0 z-10 text-white shadow-md">
         <div className="mx-auto flex max-w-5xl items-center gap-4 px-4 py-3">
-          <Link href="/dashboard" className="flex items-center gap-2 font-bold text-ink">
-            <Logo className="h-8 w-8" />
-            <span className="hidden sm:inline">Real Care</span>
+          <Link href="/dashboard" className="flex items-center gap-2.5 font-bold" aria-label="Real Care Portal home">
+            <Logo tile className="h-11" />
+            <span className="hidden font-display text-lg leading-tight sm:block">Provider<br className="hidden lg:block" /> Portal</span>
           </Link>
           <ProviderNav
             items={[
@@ -33,18 +33,18 @@ export default async function ProviderLayout({ children }: { children: React.Rea
           />
           <div className="ml-auto flex items-center gap-2">
             <LangToggle lang={lang} />
-            <Link href="/notifications" className="relative rounded-full p-2 text-muted hover:bg-sand hover:text-ink" aria-label={lang === "es" ? `Notificaciones, ${unread ?? 0} sin leer` : `Notifications, ${unread ?? 0} unread`}>
+            <Link href="/notifications" className="relative rounded-full p-2 text-white/85 hover:bg-white/15 hover:text-white" aria-label={lang === "es" ? `Notificaciones, ${unread ?? 0} sin leer` : `Notifications, ${unread ?? 0} unread`}>
               <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8" /><path d="M10 20a2 2 0 0 0 4 0" /></svg>
-              {!!unread && <span className="absolute -top-0.5 -right-0.5 min-w-5 rounded-full bg-coral px-1 text-center text-xs font-bold text-white">{unread}</span>}
+              {!!unread && <span className="absolute -top-0.5 -right-0.5 min-w-5 rounded-full bg-sky px-1 text-center text-xs font-bold text-navy">{unread}</span>}
             </Link>
-            <Link href="/profile" className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-soft text-sm font-bold text-teal hover:bg-teal hover:text-white" aria-label={lang === "es" ? "Mi perfil" : "My profile"}>{initials}</Link>
+            <Link href="/profile" className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-bold text-teal ring-2 ring-white/40 hover:bg-sky-soft" aria-label={lang === "es" ? "Mi perfil" : "My profile"}>{initials}</Link>
             <form action={signOut}>
-              <button className="hidden rounded-lg px-2 py-1.5 text-sm font-medium text-muted hover:text-ink sm:block">{t(lang, "signOut")}</button>
+              <button className="hidden rounded-lg px-2 py-1.5 text-sm font-medium text-white/80 hover:text-white sm:block">{t(lang, "signOut")}</button>
             </form>
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl px-4 py-6 md:py-8">{children}</main>
+      <main className="mx-auto max-w-5xl px-4 pt-6 pb-28 md:pt-8">{children}</main>
     </div>
   );
 }

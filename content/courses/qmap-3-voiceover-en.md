@@ -1,24 +1,7 @@
-QMAP Part 3 - Syllabus Units 6, 7 & 8
-/
-QMAP_Training_Part_3_Voiceover_Script
-MD
-File
-Edit
-View
-Help
-JB
-4 of 40
-Share
-Edit content
-View as plain text
-UTF-8
 QMAP Training Part 3 — Voiceover Script
 
 Covers Units 6, 7, and 8
 Real Care, Inc.
-
-﻿
-
 
 Welcome to Real Care! This is Part 3 of your QMAP training, covering Units 6, 7, and 8. In this training, you'll review the procedures for safely administering medications, what to do when medication errors happen, and how to properly store medications. Let's get started.
 

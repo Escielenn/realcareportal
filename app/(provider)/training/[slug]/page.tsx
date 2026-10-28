@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requireProvider } from "@/lib/auth";
 import { getLang, t, fmtDate } from "@/lib/i18n";
 import { title } from "@/lib/data";
+import { MountainBand } from "@/components/mountains";
 import { Paywall } from "@/components/provider-bits";
 
 export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -27,10 +28,10 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
     <div className="mx-auto max-w-2xl space-y-6">
       <Link href="/training" className="text-sm font-semibold text-teal hover:underline">← {t(lang, "training")}</Link>
       <div className="card overflow-hidden">
-        <div className="bg-teal px-5 py-6 text-white">
-          <h1 className="text-2xl font-bold">{title(course, lang)}</h1>
+        <MountainBand photo={course.sort % 2 ? 2 : 1} className="px-5 pt-6 pb-10">
+          <h1 className="text-2xl font-semibold md:text-3xl">{title(course, lang)}</h1>
           <p className="mt-2 text-white/85">{lang === "es" ? course.description_es : course.description_en}</p>
-        </div>
+        </MountainBand>
         {completion ? (
           <div className="flex flex-wrap items-center justify-between gap-3 bg-green-soft px-5 py-4">
             <p className="font-semibold text-green">✓ {t(lang, "complete")} · {fmtDate(completion.completed_at, lang)}{completion.score ? ` · ${completion.score}%` : ""}</p>

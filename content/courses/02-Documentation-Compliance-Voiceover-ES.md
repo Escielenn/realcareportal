@@ -1,24 +1,7 @@
-files
-/
-02-Documentation-Compliance-Voiceover-ES
-MD
-File
-Edit
-View
-Help
-JB
-21 of 21
-Share
-Edit content
-View as plain text
-UTF-8
 Real Care, Inc. — Envío de Documentación y Cumplimiento
 Guión de Capacitación (Español)
 
 Tiempo estimado de lectura: ~7 minutos a ritmo natural de habla
-
-﻿
-
 
 Bienvenido a Real Care. Esta capacitación cubre el Envío de Documentación y Cumplimiento. La documentación precisa y oportuna es una de las partes más importantes de lo que hacemos. Asegura el cumplimiento con las regulaciones estatales, apoya la facturación y el financiamiento, y protege la salud y seguridad de las personas que servimos. Por favor escuche con atención y tome nota de las fechas límite y requisitos clave que se cubren aquí.
 

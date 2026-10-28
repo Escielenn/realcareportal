@@ -277,18 +277,6 @@ summary = [
    ("What comes first in a crisis?", "¿Qué es lo primero en una crisis?",
     ["Everyone's safety", "Finishing the activity", "Taking photos"],
     ["La seguridad de todos", "Terminar la actividad", "Tomar fotos"], 0)),
-  ("qmap", "QMAP", "QMAP",
-   "Qualified Medication Administration Personnel: safe medication administration and documentation. 60 days of access.",
-   "Personal calificado para administrar medicamentos: administración segura de medicamentos y su documentación. 60 días de acceso.",
-   ("What must you check before giving a medication?", "¿Qué debe verificar antes de dar un medicamento?",
-    ["The right person, medication, dose, route and time", "Only the color of the pill", "Nothing if you gave it yesterday"],
-    ["La persona, el medicamento, la dosis, la vía y la hora correctos", "Solo el color de la pastilla", "Nada si lo dio ayer"], 0)),
-  ("respite", "Respite Training", "Capacitación de cuidado de relevo",
-   "Short-term relief care: routines, handoffs with families, and what to document.",
-   "Cuidado de relevo a corto plazo: rutinas, entrega de información con las familias y qué documentar.",
-   ("What should you get from the family at the start of a respite visit?", "¿Qué debe obtener de la familia al inicio de una visita de relevo?",
-    ["Routines, medications and emergency contacts", "Their bank details", "Nothing"],
-    ["Rutinas, medicamentos y contactos de emergencia", "Sus datos bancarios", "Nada"], 0)),
 ]
 
 for slug, te, ts, de, ds, qq in summary:
@@ -313,8 +301,84 @@ for slug, te, ts, de, ds, qq in summary:
     ]
     courses.append((slug, te, ts, de, ds, specialty, price, lessons))
 
+# Real Care's own trainings (videos in Dropbox; scripts and quizzes in content/courses) ----
+import course_content as cc
+
+QMAP_VIDEOS = {  # part number -> anonymous link inside the shared folder
+    1: "https://www.dropbox.com/scl/fo/01oosyg2icccbv7cem2mm/APPRw8heaw3OuKNMqXcssMY/QMAP/QMAP%20Part%201%20-%20Syllabus%20Units%201%20%26%202/QMAP%201%20Final%20Video.mov?rlkey=aqaymo4mfbkftwnnqhys06wxv&dl=0",
+    2: "https://www.dropbox.com/scl/fo/01oosyg2icccbv7cem2mm/AGPP6ROlR2IsBcVgI6h3u4c/QMAP/QMAP%20Part%202%20-%20Syllabus%20Units%203%2C%204%20%26%205/QMAP%202%20Final%20Video.mov?rlkey=aqaymo4mfbkftwnnqhys06wxv&dl=0",
+    3: "https://www.dropbox.com/scl/fo/01oosyg2icccbv7cem2mm/AJzqw3IQhydW46kI7BohL-s/QMAP/QMAP%20Part%203%20-%20Syllabus%20Units%206%2C%207%20%26%208/QMAP%203%20Final%20Video.mov?rlkey=aqaymo4mfbkftwnnqhys06wxv&dl=0",
+}
+
+# Anonymous links to each video inside the shared "March 2026" Dropbox folder (no new share links created).
+DBX = "https://www.dropbox.com/scl/fo/01oosyg2icccbv7cem2mm/"
+RLKEY = "?rlkey=aqaymo4mfbkftwnnqhys06wxv&dl=0"
+VIDEO_LINKS = {
+    "Respite Video Final 2026.mov": DBX + "ANiRSOv10KaEPYBhB1YBBr8/Respite%20Video%20Final%202026.mov" + RLKEY,
+    "Documentation Video Final 2026.mov": DBX + "ABVPZNskkXI83WRF8-JaXWA/Documentation%20Video%20Final%202026.mov" + RLKEY,
+    "injection video.mov": DBX + "AKel0ieVg6eSg9Dweubo698/injection%20video.mov" + RLKEY,
+    "Employee Training.mov": DBX + "ANhupr_Ns0_hodb1cpktTTk/Employee%20Training.mov" + RLKEY,
+}
+
+
+def dropbox(file_name):
+    return VIDEO_LINKS[file_name]
+
+
+def quiz_from(pairs, pass_percent=80):
+    return ("quiz", "Quiz", "Prueba", [(pe, ps, oe, os_, c, xe, xs) for pe, ps, oe, os_, c, xe, xs in pairs], pass_percent)
+
+
+def en_only(qs):
+    # QMAP quizzes exist in English only for now; Spanish fields show the English text.
+    return [(p, p, o, o, c, x, x) for p, o, c, x in qs]
+
+
+ES_PENDING = "*La versión en español de esta lección está en preparación. Por ahora se muestra en inglés.*\n\n"
+
+for slug, stem, te, ts, de, ds, video, secs, specialty, price in [
+    ("respite", "03-Respite-Training", "Respite Training", "Capacitación de cuidado de relevo",
+     "Respite care: what it is, who may provide it, scheduling with the Primary Provider, documentation and billing.",
+     "Cuidado de relevo: qué es, quién puede darlo, cómo coordinar con el Proveedor Principal, documentación y facturación.",
+     "Respite Video Final 2026.mov", 609, True, 1000),
+    ("documentation", "02-Documentation-Compliance", "Documentation Submissions & Compliance", "Entrega de documentación y cumplimiento",
+     "Monthly deadlines, what to submit, how submissions are reviewed, and what happens when paperwork is late.",
+     "Fechas límite mensuales, qué entregar, cómo se revisan las entregas y qué pasa cuando la documentación llega tarde.",
+     "Documentation Video Final 2026.mov", None, False, 1000),
+    ("injection-admin", "04-Injection-Admin", "RCI Injection Administration", "Administración de inyecciones (RCI)",
+     "Giving delegated injections safely: nurse delegation, preparation, sharps, reactions and documentation.",
+     "Cómo aplicar inyecciones delegadas de forma segura: delegación de enfermería, preparación, objetos punzantes, reacciones y documentación.",
+     "injection video.mov", None, True, 1000),
+    ("employee-orientation", "01-Employee-Orientation", "Employee Orientation", "Orientación para empleados",
+     "For Real Care office staff: history, schedules, time off, communication, dress code and client-centered work.",
+     "Para el personal de oficina de Real Care: historia, horarios, permisos, comunicación, código de vestimenta y trabajo centrado en el cliente.",
+     "Employee Training.mov", None, False, 0),
+]:
+    courses.append((slug, te, ts, de, ds, specialty, price, [
+        ("video", "Watch the training", "Vea la capacitación",
+         cc.transcript(f"{stem}-Voiceover-EN.md"), cc.transcript(f"{stem}-Voiceover-ES.md"), dropbox(video), secs, "embed"),
+        quiz_from(cc.pair(f"{stem}-Quiz-EN.md", f"{stem}-Quiz-ES.md")),
+    ]))
+
+QMAP_PARTS = [
+    (1, "Part 1: Units 1 and 2", "Parte 1: Unidades 1 y 2", "QMAP 1 Final Video.mov", None),
+    (2, "Part 2: Units 3, 4 and 5", "Parte 2: Unidades 3, 4 y 5", "QMAP 2 Final Video.mov", "qmap-2-voiceover-en.md"),
+    (3, "Part 3: Units 6, 7 and 8", "Parte 3: Unidades 6, 7 y 8", "QMAP 3 Final Video.mov", "qmap-3-voiceover-en.md"),
+]
+qmap_lessons = []
+for n, te, ts, video, vo in QMAP_PARTS:
+    body = cc.transcript(vo) if vo else ""
+    qmap_lessons.append(("video", f"{te} video", f"{ts}: video", body, (ES_PENDING + body) if body else "", QMAP_VIDEOS[n], None, "embed"))
+    qz = quiz_from(en_only(cc.parse_quiz(f"qmap-{n}-quiz-en.md")), 85)
+    qmap_lessons.append(("quiz", f"{te} quiz", f"{ts}: prueba", qz[3], 85))
+courses.append(("qmap", "QMAP", "QMAP",
+  "Qualified Medication Administration Personnel: medication orders, the MAR, administration, errors and storage. Three parts, each with a video and a quiz (85% to pass). 60 days of access.",
+  "Personal calificado para administrar medicamentos: órdenes, el MAR, administración, errores y almacenamiento. Tres partes, cada una con video y prueba (85% para aprobar). 60 días de acceso.",
+  True, 3000, qmap_lessons))
+
 order = ["welcome", "system-values", "scc", "supports-services", "respect-dignity", "pcp", "mane", "individual-rights",
-         "health-safety", "driving-safety", "dei", "confidentiality", "communication", "crisis", "qmap", "respite"]
+         "health-safety", "driving-safety", "dei", "confidentiality", "communication", "crisis", "qmap", "respite",
+         "documentation", "injection-admin", "employee-orientation"]
 courses.sort(key=lambda c: order.index(c[0]))
 
 course_ids = {}
@@ -325,13 +389,15 @@ for idx, (slug, te, ts, de, ds, specialty, price, lessons) in enumerate(courses)
     for li, les in enumerate(lessons):
         lid = uid(f"lesson:{slug}:{li}")
         if les[0] == "quiz":
-            _, le, ls, questions = les
-            w(f"insert into public.lessons (id, course_id, sort, kind, title_en, title_es) values ('{lid}', '{cid}', {li}, 'quiz', {q(le)}, {q(ls)});")
+            _, le, ls, questions = les[:4]
+            pp = les[4] if len(les) > 4 else 80
+            w(f"insert into public.lessons (id, course_id, sort, kind, title_en, title_es, pass_percent) values ('{lid}', '{cid}', {li}, 'quiz', {q(le)}, {q(ls)}, {pp});")
             for qi, (pe, ps, oe, os_, c, xe, xs) in enumerate(questions):
-                w(f"insert into public.quiz_questions (lesson_id, sort, prompt_en, prompt_es, options_en, options_es, correct, explanation_en, explanation_es) values ('{lid}', {qi}, {q(pe)}, {q(ps)}, {j(oe)}, {j(os_)}, {c + 1}, {q(xe)}, {q(xs)});")
+                w(f"insert into public.quiz_questions (lesson_id, sort, prompt_en, prompt_es, options_en, options_es, correct, explanation_en, explanation_es) values ('{lid}', {qi}, {q(pe)}, {q(ps)}, {j(oe)}, {j(os_)}, {c + 1}, {q(xe or '')}, {q(xs or '')});")
         elif les[0] == "video":
-            _, le, ls, be, bs, url, secs = les
-            w(f"insert into public.lessons (id, course_id, sort, kind, title_en, title_es, body_en, body_es, video_url, video_seconds) values ('{lid}', '{cid}', {li}, 'video', {q(le)}, {q(ls)}, {q(be)}, {q(bs)}, {q(url)}, {secs});")
+            _, le, ls, be, bs, url, secs = les[:7]
+            src = les[7] if len(les) > 7 else "file"
+            w(f"insert into public.lessons (id, course_id, sort, kind, title_en, title_es, body_en, body_es, video_url, video_seconds, video_source) values ('{lid}', '{cid}', {li}, 'video', {q(le)}, {q(ls)}, {q(be)}, {q(bs)}, {q(url)}, {'null' if secs is None else secs}, {q(src)});")
         else:
             kind, le, ls, be, bs = les
             w(f"insert into public.lessons (id, course_id, sort, kind, title_en, title_es, body_en, body_es) values ('{lid}', '{cid}', {li}, {q(kind)}, {q(le)}, {q(ls)}, {q(be)}, {q(bs)});")

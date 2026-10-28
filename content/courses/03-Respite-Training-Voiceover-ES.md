@@ -1,24 +1,7 @@
-files
-/
-03-Respite-Training-Voiceover-ES
-MD
-File
-Edit
-View
-Help
-JB
-12 of 21
-Share
-Edit content
-View as plain text
-UTF-8
 Real Care, Inc. — Cuidado de Respiro: Descripción General y Responsabilidades del Proveedor
 Guión de Capacitación (Español)
 
 Tiempo estimado de lectura: ~6 minutos a ritmo natural de habla
-
-﻿
-
 
 Bienvenido a Real Care. Esta capacitación cubre el Cuidado de Respiro — qué es, cómo funciona y qué se espera tanto de los proveedores principales como de los Proveedores de Respiro. Al final de esta capacitación, comprenderá la elegibilidad, la programación, los requisitos del proveedor, la documentación, los reportes, los procesos de pago y las expectativas de cuidado centrado en la persona.
 
