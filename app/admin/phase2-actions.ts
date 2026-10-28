@@ -59,7 +59,7 @@ export async function assignForm(_p: R | undefined, fd: FormData): Promise<R> {
   if (providers.length === 0) return { error: "Choose at least one provider." };
   if (!DATE.test(due)) return { error: "Pick a due date." };
   if (!["once", "daily", "weekly", "monthly", "quarterly"].includes(frequency)) return { error: "Choose how often." };
-  const { data, error } = await supabase.rpc("assign_form", { p_template: template, p_providers: providers, p_individual: individual, p_due: due, p_frequency: frequency });
+  const { data, error } = await supabase.rpc("assign_form", { p_template: template, p_providers: providers, p_individual: individual, p_due: due, p_frequency: frequency === "once" ? null : frequency });
   if (error) return { error: error.message };
   revalidatePath("/admin", "layout");
   return { ok: true, message: `Assigned to ${data} provider(s)${frequency !== "once" ? `, repeating ${frequency}` : ""}. Each got a notification.` };
