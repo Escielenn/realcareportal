@@ -46,7 +46,27 @@ for (const [path, text] of [
   ["/dashboard", "Hello, Maria"], ["/training", "My training"], ["/training/confidentiality", "Confidentiality"],
   ["/training/qmap", "This course needs to be purchased"], ["/training/welcome", "A quick tour"], ["/forms", "Returned for a correction"],
   ["/messages", "Messages"], ["/notifications", "Notifications"], ["/profile", "My profile"],
+  ["/training/documentation", "Documentation Submissions"], ["/training/injection-admin", "RCI Injection Administration"],
 ]) await visit(p, path, text);
+
+await step(p, "linked video lesson + transcript", async () => {
+  await p.page.goto(BASE + "/training/documentation");
+  await p.page.click("a:has-text('Watch the training')");
+  await p.page.waitForSelector("text=Watch the training video", { timeout: 15000 });
+  await p.page.click("summary:has-text('Read the transcript')");
+  await p.page.waitForSelector("text=Welcome to Real Care", { timeout: 5000 });
+});
+if (process.env.SHOTS) {
+  const dir = process.env.SHOTS;
+  for (const [path, name] of [["/dashboard", "dashboard"], ["/training", "training"], ["/training/documentation", "course"]]) {
+    await p.page.goto(BASE + path, { waitUntil: "networkidle" });
+    await p.page.screenshot({ path: `${dir}/${name}.png`, fullPage: false });
+  }
+  await p.page.setViewportSize({ width: 390, height: 844 });
+  await p.page.goto(BASE + "/dashboard", { waitUntil: "networkidle" });
+  await p.page.screenshot({ path: `${dir}/dashboard-phone.png` });
+  await p.page.setViewportSize({ width: 1280, height: 900 });
+}
 
 await step(p, "open video lesson", async () => {
   await p.page.goto(BASE + "/training/welcome");
@@ -107,6 +127,10 @@ for (const [path, text] of [
   ["/admin/invites", "Invite providers"], ["/admin/import", "Import training history"], ["/admin/outbox", "Email outbox"], ["/admin/audit", "Audit log"],
 ]) await visit(s, path, text);
 
+if (process.env.SHOTS) {
+  await s.page.goto(BASE + "/admin", { waitUntil: "networkidle" });
+  await s.page.screenshot({ path: `${process.env.SHOTS}/admin.png` });
+}
 await step(s, "provider detail", async () => {
   await s.page.goto(BASE + "/admin/providers");
   await s.page.click("a:has-text('Maria Delgado')");
