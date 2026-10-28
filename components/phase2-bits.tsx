@@ -161,7 +161,7 @@ export function TemplateEditor({ templateId, initial, individual }: { templateId
   }, [text]);
   return (
     <div className="grid gap-6 xl:grid-cols-2">
-      <div className="space-y-3">
+      <div className="min-w-0 space-y-3">
         <label className="label" htmlFor="schema">Form definition (JSON)</label>
         <textarea id="schema" spellCheck={false} className="input h-[36rem] font-mono text-[13px] leading-5" value={text} onChange={(e) => setText(e.target.value)} />
         {parsed.err && <p role="alert" className="text-sm text-coral">JSON problem: {parsed.err}</p>}
@@ -175,7 +175,7 @@ export function TemplateEditor({ templateId, initial, individual }: { templateId
           <p className="mt-2">text, textarea, date, time, number, currency, phone, select, radio, checkboxes (with <code>options</code>), signature, file (attachment), info (<code>body_en</code>/<code>body_es</code> text block), prefill (<code>source</code>: individual.full_name or individual.goals), and repeater (rows with <code>columns</code>; a column of type <code>hours</code> with <code>from: [timeIn, timeOut]</code> calculates hours; <code>totals</code> lists columns to sum). <code>show_if</code> takes <code>{"{"}field, equals{"}"}</code> or <code>{"{"}logic: all|any, action: show|hide, rules: [{"{"}field, op, value{"}"}]{"}"}</code>. Every field has <code>label_en</code> and <code>label_es</code>.</p>
         </details>
       </div>
-      <div className="space-y-3">
+      <div className="min-w-0 space-y-3">
         <div className="flex items-center justify-between">
           <p className="label mb-0">Live preview (fictional person)</p>
           <div className="flex rounded-full border border-line p-0.5 text-sm">

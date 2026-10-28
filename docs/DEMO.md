@@ -50,6 +50,7 @@ About 35 minutes. Do the renewal step last, because it opens Maria's next cycle.
 4. **Forms & assignments**:
    - **Assign a form**: pick Standard Goal Tracking for Jordan, repeat **every week**. Only providers currently linked to Jordan are offered. The nightly job creates each new copy on its due date.
    - **Form library → Incident Report**: edit the form definition on the left and watch the live preview on the right, in English or Spanish. **Publish new version** keeps a history; forms already started keep their version.
+   - **Converted intranet forms**: the library also holds the 12 Gravity Forms from the intranet, converted automatically and marked **Draft**. Open **DSP/SCC Provider Timesheet** to show rows that calculate hours (an overnight shift counts correctly) with totals, or **Medicaid Residential Attendance Record** to show the month grid with the special codes. Turning on **Active** makes a draft assignable. `docs/forms-conversion-report.md` lists what each one needs checked.
    - The **QR code** prints as a sign. Scanning it asks the provider to sign in, then opens a new copy of the form.
 5. **Applications**: two people applied on the public **/apply** page. **Invite** creates their portal invitation link.
 

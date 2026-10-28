@@ -257,7 +257,7 @@ function Repeater({ f, lang, can, rows, onChange, label, req, help }: {
       {rows.length > 0 && (
         <div className="hidden overflow-x-auto md:block">
           <table className="w-full text-left text-sm">
-            <thead className="text-muted"><tr>{cols.map((c) => <th key={c.id} className="px-1 pb-1 font-semibold">{colLabel(c)}</th>)}<th className="w-16" /></tr></thead>
+            <thead className="text-muted"><tr>{cols.map((c) => <th key={c.id} className={`px-1 pb-1 font-semibold ${c.type === "number" || c.type === "hours" ? "w-20" : ""}`}>{colLabel(c)}</th>)}<th className="w-16" /></tr></thead>
             <tbody>
               {rows.map((r, i) => (
                 <tr key={i}>
@@ -275,7 +275,8 @@ function Repeater({ f, lang, can, rows, onChange, label, req, help }: {
             const c = cols.find((x) => x.id === id);
             if (!c) return null;
             const t = columnTotal(c, rows);
-            return <span key={id}>{L.total[lang]} {colLabel(c).toLowerCase()}: <span className="tabular-nums">{c.type === "currency" ? money(t) : t}</span></span>;
+            const name = colLabel(c);
+            return <span key={id}>{/^(total|sum)/i.test(name) ? name : `${L.total[lang]} ${name.toLowerCase()}`}: <span className="tabular-nums">{c.type === "currency" ? money(t) : t}</span></span>;
           })}
         </div>
       )}
