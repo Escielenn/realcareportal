@@ -1,8 +1,9 @@
+import { DEMO_MODE } from "@/lib/config";
 import { LoginForm } from "./login-form";
 import { Logo } from "@/components/logo";
 
 export default function LoginPage() {
-  const demo = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+  const demo = DEMO_MODE;
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center px-4 py-10">
       <div className="w-full max-w-md">
