@@ -163,4 +163,9 @@ await browser.close();
 const bad = results.filter((r) => !r.ok);
 for (const r of results) console.log(`${r.ok ? "PASS" : "FAIL"}  ${r.who.padEnd(9)} ${r.path}${r.note ? "  -> " + r.note : ""}`);
 console.log(`\n${results.length - bad.length}/${results.length} passed`);
+if (process.env.GITHUB_ACTIONS) {
+  const enc = (t) => t.replace(/%/g, "%25").replace(/\r/g, "").replace(/\n/g, "%0A");
+  const lines = results.map((r) => `${r.ok ? "PASS" : "FAIL"} ${r.who} ${r.path}${r.note ? " -> " + r.note : ""}`).join("\n");
+  console.log(`::notice title=Smoke ${results.length - bad.length}/${results.length} passed::${enc(lines)}`);
+}
 process.exit(bad.length ? 1 : 0);
