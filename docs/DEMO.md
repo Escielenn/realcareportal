@@ -23,7 +23,7 @@ About 35 minutes. Do the renewal step last, because it opens Maria's next cycle.
 5. Switch **EN → ES**. Everything switches, including courses, quizzes, forms and notifications.
 6. **Forms → RCI Log Notes (Jordan)**: name and goals pre-fill; answer "Yes" to medication to show the follow-up question. Submit.
 7. **Messages**: send staff a question. **Profile**: language, phone and email preferences.
-8. **Training → Documentation Submissions & Compliance**: one of Real Care's own trainings. The video opens from Dropbox, the full transcript is underneath (Spanish too), and the 10-question quiz uses the real answer key. Respite, RCI Injection Administration, Employee Orientation and the three-part QMAP are built the same way.
+8. **Training → Documentation Submissions & Compliance**: one of Real Care's own trainings. The video plays right in the lesson (the watch counter only counts real viewing; the lesson completes at 90%), the full transcript is underneath (Spanish too), and the 10-question quiz uses the real answer key. Respite, RCI Injection Administration, Employee Orientation and the three-part QMAP are built the same way.
 9. **Documents**: send a photo of a physician visit form for Jordan. On a phone, the file button opens the camera.
 10. **Forms → Start a form → Incident Report**: the same page a QR code opens.
 
@@ -78,7 +78,7 @@ This restores every fictional record, including Riley's pending invite.
 | --- | --- | --- |
 | Card payments | Demo checkout, no card | Stripe Checkout + webhooks |
 | Emails | Shown in the outbox, not sent | Postmark/Resend, same PHI-free templates |
-| Video hosting | Real Care's videos open from the shared Dropbox folder; the provider confirms they watched (the uploaded portal-tour video still uses the 90% watch rule) | Mux streaming with captions and watch tracking |
+| Video hosting | Real Care's videos as 720p MP4 in private Supabase Storage, streamed through short-lived signed links; only providers with access to the course can stream it | Same, or Mux if adaptive streaming and captions are needed |
 | Invitations | Link copied by staff | Emailed automatically via Supabase Auth |
 | Staff MFA | Not enforced | Required (Phase 0, T14) |
 | Forms and uploads with real PHI | Fictional data only | After BAAs and the HIPAA review (Phase 2) |
