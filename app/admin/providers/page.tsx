@@ -2,7 +2,8 @@ import Link from "next/link";
 import { requireStaff } from "@/lib/auth";
 import { providerRows } from "@/lib/admin-data";
 import { fmtDate, providerTypeLabel } from "@/lib/i18n";
-import { TrainingPill, ProgressBar } from "@/components/status";
+import { TrainingPill } from "@/components/status";
+import { ProvidersTable } from "@/components/admin-bits";
 
 const STATUSES = [
   { v: "", l: "All" },
@@ -31,7 +32,7 @@ export default async function ProvidersPage({ searchParams }: { searchParams: Pr
     <div className="space-y-5">
       <div>
         <h1 className="text-2xl font-bold">Providers &amp; training</h1>
-        <p className="text-muted">Current-cycle compliance for every provider. Required courses come from each provider type.</p>
+        <p className="text-muted">Current-cycle compliance for every provider. Select providers to send reminders, open a new cycle or move due dates in one step.</p>
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
@@ -49,36 +50,14 @@ export default async function ProvidersPage({ searchParams }: { searchParams: Pr
         </form>
       </div>
 
-      <div className="card overflow-x-auto">
-        <table className="w-full min-w-[720px] text-left">
-          <thead className="border-b border-line bg-sand/60 text-sm text-muted">
-            <tr>
-              <th className="px-4 py-3 font-semibold">Provider</th>
-              <th className="px-4 py-3 font-semibold">Type</th>
-              <th className="px-4 py-3 font-semibold">Current cycle due</th>
-              <th className="w-56 px-4 py-3 font-semibold">Required courses</th>
-              <th className="px-4 py-3 font-semibold">Status</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-line">
-            {rows.map((r) => (
-              <tr key={r.provider_id} className="hover:bg-sand/40">
-                <td className="px-4 py-3">
-                  <Link href={`/admin/providers/${r.provider_id}`} className="font-semibold text-teal hover:underline">{r.full_name}</Link>
-                  <p className="text-sm text-muted">{r.email}{r.locale === "es" ? " · Español" : ""}</p>
-                </td>
-                <td className="px-4 py-3 text-sm">{r.provider_types.map((t) => providerTypeLabel[t]?.en ?? t).join(", ")}</td>
-                <td className="px-4 py-3 text-sm">{fmtDate(r.due_on)}<p className="text-muted">Cycle {r.cycle_number}</p></td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-2"><ProgressBar value={r.done_count} max={r.required_count} /><span className="shrink-0 text-sm font-semibold">{r.done_count}/{r.required_count}</span></div>
-                </td>
-                <td className="px-4 py-3"><TrainingPill status={r.status} /></td>
-              </tr>
-            ))}
-            {rows.length === 0 && <tr><td colSpan={5} className="px-4 py-6 text-center text-muted">No providers match.</td></tr>}
-          </tbody>
-        </table>
-      </div>
+      <ProvidersTable
+        rows={rows.map((r) => ({
+          id: r.provider_id, name: r.full_name, email: r.email, spanish: r.locale === "es",
+          types: r.provider_types.map((t) => providerTypeLabel[t]?.en ?? t).join(", "),
+          due: fmtDate(r.due_on), cycle: r.cycle_number, done: r.done_count, required: r.required_count,
+          statusEl: <TrainingPill status={r.status} />,
+        }))}
+      />
     </div>
   );
 }

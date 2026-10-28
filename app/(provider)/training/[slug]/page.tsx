@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requireProvider } from "@/lib/auth";
 import { getLang, t, fmtDate } from "@/lib/i18n";
 import { title } from "@/lib/data";
+import { Paywall } from "@/components/provider-bits";
 
 export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -10,9 +11,10 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
   const lang = await getLang();
   const { data: course } = await supabase.from("courses").select("*").eq("slug", slug).single();
   if (!course) notFound();
-  const [{ data: lessons }, { data: cycleId }] = await Promise.all([
+  const [{ data: lessons }, { data: cycleId }, { data: access }] = await Promise.all([
     supabase.from("lessons").select("id, sort, kind, title_en, title_es").eq("course_id", course.id).order("sort"),
     supabase.rpc("current_cycle_id", { p_provider: profile.id }),
+    supabase.rpc("has_course_access", { p_provider: profile.id, p_course: course.id }),
   ]);
   const [{ data: progress }, { data: completion }] = await Promise.all([
     supabase.from("lesson_progress").select("lesson_id").eq("provider_id", profile.id).eq("cycle_id", cycleId),
@@ -34,12 +36,8 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
             <p className="font-semibold text-green">✓ {t(lang, "complete")} · {fmtDate(completion.completed_at, lang)}{completion.score ? ` · ${completion.score}%` : ""}</p>
             <Link href={`/certificate/${completion.id}`} className="btn-ghost">{t(lang, "viewCertificate")}</Link>
           </div>
-        ) : course.price_cents > 1000 ? (
-          <div className="bg-amber-soft px-5 py-3 text-sm text-amber">
-            {lang === "es"
-              ? `Este curso cuesta $${course.price_cents / 100}. En el portal completo, el pago se hace aquí con Stripe; en esta demostración está abierto.`
-              : `This course costs $${course.price_cents / 100}. In the full portal you pay here through Stripe; it is open in this demo.`}
-          </div>
+        ) : !access ? (
+          <Paywall courseId={course.id} priceCents={course.price_cents} accessDays={course.access_days} inAllAccess={course.in_all_access} lang={lang} />
         ) : null}
         <div className="p-5">
           <h2 className="mb-3 font-bold">{t(lang, "lessons")}</h2>
@@ -51,12 +49,12 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
                     {done.has(l.id) ? "✓" : i + 1}
                   </span>
                   <span className="flex-1 font-medium">{title(l, lang)}</span>
-                  <span className="text-xs font-semibold text-muted uppercase">{l.kind === "quiz" ? (lang === "es" ? "Prueba" : "Quiz") : lang === "es" ? "Lectura" : "Reading"}</span>
+                  <span className="text-xs font-semibold text-muted uppercase">{l.kind === "quiz" ? (lang === "es" ? "Prueba" : "Quiz") : l.kind === "video" ? "Video" : lang === "es" ? "Lectura" : "Reading"}</span>
                 </Link>
               </li>
             ))}
           </ol>
-          {!completion && next && (
+          {!completion && access && next && (
             <Link href={`/training/${slug}/${next.id}`} className="btn-primary mt-5 w-full">
               {done.size ? t(lang, "continueTraining") : t(lang, "start")} →
             </Link>

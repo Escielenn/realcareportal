@@ -2,7 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 
 export type Course = {
   id: string; slug: string; title_en: string; title_es: string; description_en: string; description_es: string;
-  sort: number; is_specialty: boolean; price_cents: number;
+  sort: number; is_specialty: boolean; price_cents: number; in_all_access: boolean; access_days: number; published: boolean;
 };
 export type Cycle = { id: string; cycle_number: number; starts_on: string; due_on: string; label: string | null };
 

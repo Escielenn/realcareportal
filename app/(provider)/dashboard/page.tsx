@@ -4,7 +4,8 @@ import { getLang, t, fmtDate, fmtDateTime, trainingStatus, daysBetween, todayDen
 import { trainingFor, title } from "@/lib/data";
 import { ProgressBar, TrainingPill, SubmissionPill } from "@/components/status";
 
-export default async function Dashboard() {
+export default async function Dashboard({ searchParams }: { searchParams: Promise<{ welcome?: string }> }) {
+  const { welcome } = await searchParams;
   const { supabase, profile } = await requireProvider();
   const lang = await getLang();
   const today = todayDenver();
@@ -39,6 +40,31 @@ export default async function Dashboard() {
         <h1 className="text-2xl font-bold md:text-3xl">{t(lang, "hello")}, {firstName}</h1>
         <p className="mt-1 text-muted">{t(lang, "dashIntro")}</p>
       </div>
+
+      {(welcome || tr.completions.length === 0) && (
+        <section className="card overflow-hidden">
+          <div className="bg-teal px-5 py-4 text-white">
+            <h2 className="text-lg font-bold">{lang === "es" ? "Primeros pasos" : "Getting started"}</h2>
+            <p className="text-white/85">{lang === "es" ? "Cuatro pasos para empezar en el portal." : "Four quick steps to get set up."}</p>
+          </div>
+          <ol className="divide-y divide-line">
+            {[
+              { done: true, href: "/profile", en: "Choose your language and contact details", es: "Elija su idioma y sus datos de contacto" },
+              { done: tr.completions.length > 0, href: "/training/welcome", en: "Take the Welcome course (about 5 minutes)", es: "Tome el curso de bienvenida (unos 5 minutos)" },
+              { done: false, href: "/forms", en: "See the forms assigned to you", es: "Vea los formularios que le asignaron" },
+              { done: !!lastMsg?.[0] && lastMsg[0].sender_id === profile.id, href: "/messages", en: "Say hello to Real Care staff", es: "Salude al personal de Real Care" },
+            ].map((s, i) => (
+              <li key={i}>
+                <Link href={s.href} className="flex items-center gap-3 px-5 py-3 hover:bg-sand/60">
+                  <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm font-bold ${s.done ? "bg-green text-white" : "bg-sand text-muted"}`}>{s.done ? "✓" : i + 1}</span>
+                  <span className={s.done ? "text-muted line-through" : "font-medium"}>{lang === "es" ? s.es : s.en}</span>
+                  <span className="ml-auto text-teal" aria-hidden>→</span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       {(returned.length > 0 || overdueForms.length > 0 || status === "overdue") && (
         <section className="card border-coral/30 bg-coral-soft/40 p-5">

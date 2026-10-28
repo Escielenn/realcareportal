@@ -5,6 +5,7 @@ import { trainingFor } from "@/lib/data";
 import { fmtDate, fmtDateTime, providerTypeLabel, trainingStatus } from "@/lib/i18n";
 import { TrainingPill, SubmissionPill } from "@/components/status";
 import { MessageComposer, RenewProviderButton } from "@/components/client-bits";
+import { MarkCompleteForm, GrantAccessForm } from "@/components/admin-bits";
 
 export default async function ProviderDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -13,12 +14,15 @@ export default async function ProviderDetail({ params }: { params: Promise<{ id:
   if (!p) notFound();
   await supabase.rpc("log_event", { p_action: "view_provider", p_table: "profiles", p_record: id });
 
-  const [tr, { data: links }, { data: assignments }, { data: msgs }] = await Promise.all([
+  const [tr, { data: links }, { data: assignments }, { data: msgs }, { data: ents }, { data: notes }] = await Promise.all([
     trainingFor(supabase, id, p.provider_types),
     supabase.from("provider_individuals").select("starts_on, ends_on, individuals(id, full_name)").eq("provider_id", id),
     supabase.from("assignments").select("id, due_on, form_templates(title_en), individuals(full_name), submissions(id, status, submitted_at)").eq("provider_id", id).order("due_on", { ascending: false }),
     supabase.from("messages").select("id, body, created_at, sender_id").eq("provider_id", id).order("created_at"),
+    supabase.from("entitlements").select("id, course_id, starts_on, ends_on, courses(title_en)").eq("provider_id", id).order("ends_on", { ascending: false }),
+    supabase.from("completions").select("course_id, note, source, completed_at").eq("provider_id", id).neq("source", "portal"),
   ]);
+  const today = new Date().toISOString().slice(0, 10);
   const status = trainingStatus(tr.required.length, tr.doneCount, tr.current?.due_on ?? null);
   const shown = tr.cycles.slice(0, 3);
   const byCycle = new Map<string, Map<string, { id: string; completed_at: string; source: string }>>();
@@ -91,7 +95,38 @@ export default async function ProviderDetail({ params }: { params: Promise<{ id:
           </table>
         </div>
         <p className="mt-3 text-sm text-muted">Each cycle keeps its own completions. Opening a new cycle never changes earlier columns.</p>
+        {(notes ?? []).filter((n) => n.source === "staff_override").length > 0 && (
+          <ul className="mt-3 space-y-1 text-sm">
+            {(notes ?? []).filter((n) => n.source === "staff_override").map((n, i) => (
+              <li key={i} className="rounded-lg bg-amber-soft px-3 py-1.5">Marked complete by staff: <strong>{tr.courses.find((c) => c.id === n.course_id)?.title_en}</strong> on {fmtDate(n.completed_at)}. Reason: {n.note}</li>
+            ))}
+          </ul>
+        )}
       </section>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <section className="card p-5">
+          <h2 className="mb-1 font-bold">Record training done elsewhere</h2>
+          <p className="mb-4 text-sm text-muted">For in-person classes or records from another agency. The reason is saved and shown on the record.</p>
+          <MarkCompleteForm providerId={p.id} courses={tr.required.filter((c) => !tr.doneNow.has(c.id)).map((c) => ({ id: c.id, title: c.title_en }))} />
+        </section>
+        <section className="card p-5">
+          <h2 className="mb-3 font-bold">Course access</h2>
+          <ul className="mb-4 divide-y divide-line text-sm">
+            {(ents ?? []).map((e) => {
+              const active = e.starts_on <= today && e.ends_on >= today;
+              return (
+                <li key={e.id} className="flex items-center justify-between py-1.5">
+                  <span>{(e.courses as unknown as { title_en: string } | null)?.title_en ?? "All-Access (14 courses)"}</span>
+                  <span className={active ? "text-green" : "text-muted"}>{active ? "until" : "ended"} {fmtDate(e.ends_on)}</span>
+                </li>
+              );
+            })}
+            {(ents ?? []).length === 0 && <li className="py-1.5 text-muted">No paid access.</li>}
+          </ul>
+          <GrantAccessForm providerId={p.id} courses={tr.courses.map((c) => ({ id: c.id, title: c.title_en }))} />
+        </section>
+      </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <section className="card p-5">

@@ -10,6 +10,11 @@ export default async function TrainingPage() {
   const tr = await trainingFor(supabase, profile.id, profile.provider_types);
   const { data: progress } = await supabase.from("lesson_progress").select("lesson_id, cycle_id, lessons(course_id)").eq("provider_id", profile.id).eq("cycle_id", tr.current?.id ?? "00000000-0000-0000-0000-000000000000");
   const started = new Set((progress ?? []).map((p) => (p.lessons as unknown as { course_id: string } | null)?.course_id));
+  const { data: ents } = await supabase.from("entitlements").select("course_id, starts_on, ends_on").eq("provider_id", profile.id);
+  const today = new Date().toISOString().slice(0, 10);
+  const activeEnts = (ents ?? []).filter((e) => e.starts_on <= today && e.ends_on >= today);
+  const hasAccess = (c: { id: string; price_cents: number; in_all_access?: boolean }) =>
+    c.price_cents === 0 || activeEnts.some((e) => e.course_id === c.id || (e.course_id === null && (c as { in_all_access?: boolean }).in_all_access));
   const status = trainingStatus(tr.required.length, tr.doneCount, tr.current?.due_on ?? null);
   const courseById = new Map(tr.courses.map((c) => [c.id, c]));
 
@@ -50,8 +55,8 @@ export default async function TrainingPage() {
                     </div>
                     {done ? (
                       <span className="pill bg-green-soft text-green">✓</span>
-                    ) : c.price_cents > 1000 ? (
-                      <span className="pill bg-sand text-muted">${(c.price_cents / 100).toFixed(0)}</span>
+                    ) : !hasAccess(c) ? (
+                      <span className="pill bg-amber-soft text-amber">🔒 ${(c.price_cents / 100).toFixed(0)}</span>
                     ) : null}
                   </Link>
                 </li>

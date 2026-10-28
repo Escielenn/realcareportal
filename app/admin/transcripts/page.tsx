@@ -5,7 +5,7 @@ import { fmtDate, fmtDateTime, providerTypeLabel } from "@/lib/i18n";
 import { PrintButton } from "@/components/client-bits";
 import { Logo } from "@/components/logo";
 
-export default async function Transcripts({ searchParams }: { searchParams: Promise<{ provider?: string; type?: string }> }) {
+export default async function Transcripts({ searchParams }: { searchParams: Promise<{ provider?: string; type?: string; from?: string; to?: string }> }) {
   const sp = await searchParams;
   const { supabase } = await requireStaff();
   let rows = await providerRows(supabase);
@@ -20,6 +20,10 @@ export default async function Transcripts({ searchParams }: { searchParams: Prom
     supabase.from("requirements").select("provider_type, course_id"),
   ]);
   await supabase.rpc("log_event", { p_action: "export_transcripts", p_table: "completions", p_record: `${ids.length} providers` });
+  const DATE = /^\d{4}-\d{2}-\d{2}$/;
+  const from = sp.from && DATE.test(sp.from) ? sp.from : null;
+  const to = sp.to && DATE.test(sp.to) ? sp.to : null;
+  const inPeriod = (d: string) => (!from || d.slice(0, 10) >= from) && (!to || d.slice(0, 10) <= to);
   const courseName = new Map((courses ?? []).map((c) => [c.id, c.title_en]));
   const courseSort = new Map((courses ?? []).map((c) => [c.id, c.sort]));
   const generated = new Date().toISOString();
@@ -50,10 +54,21 @@ export default async function Transcripts({ searchParams }: { searchParams: Prom
         ))}
       </div>
 
+      <form className="no-print card flex flex-wrap items-end gap-3 p-4" action="/admin/transcripts">
+        {sp.type && <input type="hidden" name="type" value={sp.type} />}
+        {sp.provider && <input type="hidden" name="provider" value={sp.provider} />}
+        <div><label className="label text-sm" htmlFor="from">Reporting period from</label><input id="from" name="from" type="date" defaultValue={from ?? ""} className="input py-1.5" /></div>
+        <div><label className="label text-sm" htmlFor="to">to</label><input id="to" name="to" type="date" defaultValue={to ?? ""} className="input py-1.5" /></div>
+        <button className="btn-ghost">Apply</button>
+        {(from || to) && <Link href="/admin/transcripts" className="text-sm text-teal underline">Clear</Link>}
+        <span className="text-sm text-muted">Leave blank for the full history.</span>
+      </form>
+
       <div className="no-print grid gap-4 md:grid-cols-[1fr_1fr]">
         <div className="card p-4 text-sm">
           <p><strong>Data as of:</strong> {fmtDateTime(generated)} (live)</p>
           <p><strong>Transcripts in this batch:</strong> {rows.length}</p>
+          <p><strong>Reporting period:</strong> {from || to ? `${from ? fmtDate(from) : "start"} to ${to ? fmtDate(to) : "today"}` : "All dates"}</p>
           <p className="text-muted">Generating this batch is recorded in the audit log.</p>
         </div>
         <div className="card p-4 text-sm">
@@ -79,17 +94,17 @@ export default async function Transcripts({ searchParams }: { searchParams: Prom
                   <p className="text-sm text-muted">{r.provider_types.map((t) => providerTypeLabel[t]?.en ?? t).join(", ")} · {r.email}</p>
                 </div>
                 <div className="flex items-start gap-3 text-right text-xs text-muted">
-                  <div>Generated {fmtDateTime(generated)}<br />Current cycle due {fmtDate(r.due_on)}<br /><strong className="text-ink">{r.done_count} of {r.required_count} required complete</strong></div>
+                  <div>Generated {fmtDateTime(generated)}<br />{(from || to) && <>Period {from ? fmtDate(from) : "start"} – {to ? fmtDate(to) : "today"}<br /></>}Current cycle due {fmtDate(r.due_on)}<br /><strong className="text-ink">{r.done_count} of {r.required_count} required complete</strong></div>
                   <Logo className="h-10 w-10" />
                 </div>
               </header>
               {myCycles.map((cy) => {
-                const items = (comps ?? []).filter((c) => c.provider_id === r.provider_id && c.cycle_id === cy.id).sort((a, b) => (courseSort.get(a.course_id) ?? 0) - (courseSort.get(b.course_id) ?? 0));
+                const items = (comps ?? []).filter((c) => c.provider_id === r.provider_id && c.cycle_id === cy.id && inPeriod(c.completed_at)).sort((a, b) => (courseSort.get(a.course_id) ?? 0) - (courseSort.get(b.course_id) ?? 0));
                 return (
                   <section key={cy.id} className="mt-4">
                     <h3 className="mb-1 font-semibold">{cy.label ?? `Cycle ${cy.cycle_number}`} <span className="font-normal text-muted">· {fmtDate(cy.starts_on)} – {fmtDate(cy.due_on)}</span></h3>
                     {items.length === 0 ? (
-                      <p className="text-sm text-muted">No completions yet in this cycle.</p>
+                      <p className="text-sm text-muted">{from || to ? "No completions in this period." : "No completions yet in this cycle."}</p>
                     ) : (
                       <table className="w-full text-left text-sm">
                         <thead className="text-muted"><tr><th className="py-1 font-medium">Course</th><th className="py-1 font-medium">Completed</th><th className="py-1 font-medium">Score</th><th className="py-1 font-medium">Language</th></tr></thead>
@@ -99,7 +114,7 @@ export default async function Transcripts({ searchParams }: { searchParams: Prom
                               <td className="py-1">{courseName.get(c.course_id)}</td>
                               <td className="py-1">{fmtDate(c.completed_at)}</td>
                               <td className="py-1">{c.score ? `${c.score}%` : "—"}</td>
-                              <td className="py-1">{c.language === "es" ? "Spanish" : "English"}{c.source === "legacy_wix" ? " · imported" : ""}</td>
+                              <td className="py-1">{c.language === "es" ? "Spanish" : "English"}{c.source === "legacy_wix" ? " · imported" : c.source === "staff_override" ? " · recorded by staff" : ""}</td>
                             </tr>
                           ))}
                         </tbody>

@@ -133,3 +133,61 @@ export async function renewProvider(providerId: string) {
   revalidatePath("/admin", "layout");
   return { ok: true };
 }
+
+// ---------- Phase 1: provider
+export async function reportVideo(lessonId: string, position: number, duration: number, lang: string) {
+  if (!Number.isFinite(position) || !Number.isFinite(duration) || duration <= 0) return { error: "Invalid progress" };
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("report_video_progress", {
+    p_lesson: assertUuid(lessonId), p_position: Math.max(0, position), p_duration: duration, p_lang: lang === "es" ? "es" : "en",
+  });
+  if (error) return { error: error.message };
+  return { ok: true, result: data as { watched: number; duration: number; lesson_complete: boolean; course_complete: boolean } };
+}
+
+export async function demoCheckout(courseId: string | null) {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("demo_checkout", { p_course: courseId ? assertUuid(courseId) : null });
+  if (error) return { error: error.message };
+  revalidatePath("/", "layout");
+  return { ok: true };
+}
+
+export async function markNotificationsRead(ids: string[] | null) {
+  const supabase = await createClient();
+  await supabase.rpc("mark_notifications_read", { p_ids: ids ? ids.map(assertUuid) : null });
+  revalidatePath("/", "layout");
+}
+
+export async function saveMyProfile(_prev: { ok?: boolean; error?: string } | undefined, formData: FormData) {
+  const locale = formData.get("locale") === "es" ? "es" : "en";
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("set_my_profile", {
+    p_locale: locale,
+    p_phone: String(formData.get("phone") ?? ""),
+    p_email_notifications: formData.get("email_notifications") === "on",
+  });
+  if (error) return { error: error.message };
+  const c = await cookies();
+  c.set("rc_lang", locale, { path: "/", sameSite: "lax", maxAge: 60 * 60 * 24 * 365 });
+  revalidatePath("/", "layout");
+  return { ok: true };
+}
+
+export async function acceptInvite(_prev: { error?: string } | undefined, formData: FormData) {
+  const token = String(formData.get("token") ?? "");
+  const password = String(formData.get("password") ?? "");
+  const confirm = String(formData.get("confirm") ?? "");
+  if (!UUID.test(token)) return { error: "This invitation link is not valid." };
+  if (password.length < 10) return { error: "Use at least 10 characters for your password." };
+  if (password !== confirm) return { error: "The two passwords don't match." };
+  const supabase = await createClient();
+  const { data: email, error } = await supabase.rpc("accept_invite", { p_token: token, p_password: password });
+  if (error) return { error: error.message };
+  const { error: signInError } = await supabase.auth.signInWithPassword({ email: email as string, password });
+  if (signInError) return { error: "Your account was created. Please sign in." };
+  const { data: profile } = await supabase.from("profiles").select("locale").eq("email", email as string).single();
+  const c = await cookies();
+  c.set("rc_lang", profile?.locale === "es" ? "es" : "en", { path: "/", sameSite: "lax", maxAge: 60 * 60 * 24 * 365 });
+  redirect("/dashboard?welcome=1");
+}
