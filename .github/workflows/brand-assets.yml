@@ -1,0 +1,27 @@
+name: Fetch brand assets (one-off)
+on:
+  push:
+    branches: [brand-assets]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          set -e
+          sudo apt-get install -y -qq webp >/dev/null
+          mkdir -p public/brand
+          B='https://mlb22qnfdtsu.i.optimole.com/w:auto/h:auto/q:mauto/f:best/http://realcarecolorado.com/wp-content/uploads/2025/03'
+          curl -fsSL "$B/real-care-colorado-logo-color-revised-on-transparent.png" -o /tmp/logo.png
+          curl -fsSL -H 'Accept: image/jpeg' "$B/peter-pryharski-BZ_pzyTd-hE-unsplash-scaled-1.jpg" -o /tmp/m1
+          curl -fsSL -H 'Accept: image/jpeg' "$B/melanie-magdalena-dDWLTcR9Gpc-unsplash-scaled-1.jpg" -o /tmp/m2
+          file /tmp/logo.png /tmp/m1 /tmp/m2
+          convert /tmp/logo.png -resize 480x -strip public/brand/real-care-logo.png
+          convert /tmp/logo.png -resize 96x -strip public/brand/real-care-logo-96.png
+          convert /tmp/m1 -resize 2000x -strip -quality 70 public/brand/mountains-1.jpg
+          convert /tmp/m2 -resize 2000x -strip -quality 70 public/brand/mountains-2.jpg
+          ls -la public/brand
+          git config user.name "Jason D. Batt"; git config user.email "pixeljedi7@gmail.com"
+          git add public/brand && git commit -m "Add Real Care brand assets (logo, mountain photos)" && git push
