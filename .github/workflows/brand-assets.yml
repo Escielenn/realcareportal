@@ -1,4 +1,4 @@
-name: Fetch brand assets (one-off)
+name: Fetch Gravity Forms exports (one-off)
 on:
   push:
     branches: [brand-assets]
@@ -11,10 +11,11 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           set -e
-          mkdir -p content/courses
-          for f in qmap-1-quiz-en.md qmap-2-voiceover-en.md qmap-2-quiz-en.md qmap-3-voiceover-en.md qmap-3-quiz-en.md; do for _ in 1; do for __ in 1; do
-            curl -fsS -X POST "https://lrduhuzykvvozunbcpem.supabase.co/rest/v1/rpc/_brand_get" -H "apikey: sb_publishable_rwZ57jSMoHGS-xCdleUO1w_falnprdB" -H "Content-Type: application/json" -d "{\"p_name\":\"$f\"}" | python3 -c "import json,sys;open('content/courses/$f','w').write(json.load(sys.stdin) or '')"
-          done; done; done
-          ls -la content/courses
+          mkdir -p content/gravity-forms
+          for f in scc_log_notes_json.json menu_tracking_json.json dsp_timesheet_json.json goal_tracking_gf_json.json medicaid_attendance_gf.json gravityforms-export-2025-12-04.json RESIDENTIAL-TRACKING_Grid-List_autoadd_gravityforms-export.json RESIDENTIAL-TRACKING-FORM_full-month_gravityforms-export.json FIRE-DISASTER-SAFETY_gravityforms-export.json WEEKLY-LOG-NOTES_three-page_gravityforms-export.json REAL-CARE-INC-LOG-NOTES_gravityforms-export.json COMMUNITY-ACCOUNT-RECORD_currency-logic_gravityforms-export.json ATTENDANCE-RECORD_gravityforms-export.json SCC-LOG-NOTES-ONLY_gravityforms-export.json SCC-TIMESHEETS-ONLY_gravityforms-export.json INCIDENT-REPORT_gravityforms-export.json MENU-TRACKING_gravityforms-export.json; do
+            curl -fsS -X POST "https://lrduhuzykvvozunbcpem.supabase.co/rest/v1/rpc/_file_get" -H "apikey: sb_publishable_rwZ57jSMoHGS-xCdleUO1w_falnprdB" -H "Content-Type: application/json" -d "{\"p_name\":\"$f\"}" \
+              | python3 -c "import json,sys; d=json.loads(json.load(sys.stdin)); json.dump(d, open('content/gravity-forms/$f','w'), indent=1, ensure_ascii=False)"
+          done
+          ls -la content/gravity-forms
           git config user.name "Jason D. Batt"; git config user.email "pixeljedi7@gmail.com"
-          git add content/courses && git commit -m "Add Real Care QMAP course scripts" && git push
+          git add content/gravity-forms && git commit -m "Add Gravity Forms definition exports (no entries, no PHI)" && git push
