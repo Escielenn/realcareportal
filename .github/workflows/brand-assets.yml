@@ -31,6 +31,11 @@ jobs:
           fit('/tmp/m1', 2000, 'public/brand/mountains-1.jpg', quality=70, optimize=True, progressive=True)
           fit('/tmp/m2', 2000, 'public/brand/mountains-2.jpg', quality=70, optimize=True, progressive=True)
           PY
-          ls -la public/brand
+          mkdir -p content/courses
+          for p in 01-Employee-Orientation 02-Documentation-Compliance 03-Respite-Training 04-Injection-Admin; do for k in Quiz Voiceover; do for l in EN ES; do
+            f="$p-$k-$l.md"
+            curl -fsS -X POST "https://lrduhuzykvvozunbcpem.supabase.co/rest/v1/rpc/_brand_get" -H "apikey: sb_publishable_rwZ57jSMoHGS-xCdleUO1w_falnprdB" -H "Content-Type: application/json" -d "{\"p_name\":\"$f\"}" | python3 -c "import json,sys;open('content/courses/$f','w').write(json.load(sys.stdin) or '')"
+          done; done; done
+          ls -la public/brand content/courses
           git config user.name "Jason D. Batt"; git config user.email "pixeljedi7@gmail.com"
-          git add public/brand && git commit -m "Add Real Care brand assets (logo, mountain photos)" && git push
+          git add public/brand content/courses && git commit -m "Add Real Care brand assets and course scripts" && git push
