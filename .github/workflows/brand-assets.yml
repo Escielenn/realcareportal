@@ -11,31 +11,10 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           set -e
-          pip install -q pillow
-          mkdir -p public/brand
-          B='https://mlb22qnfdtsu.i.optimole.com/w:auto/h:auto/q:mauto/f:best/http://realcarecolorado.com/wp-content/uploads/2025/03'
-          curl -fsSL "$B/real-care-colorado-logo-color-revised-on-transparent.png" -o /tmp/logo.png
-          curl -fsSL -H 'Accept: image/jpeg' "$B/peter-pryharski-BZ_pzyTd-hE-unsplash-scaled-1.jpg" -o /tmp/m1
-          curl -fsSL -H 'Accept: image/jpeg' "$B/melanie-magdalena-dDWLTcR9Gpc-unsplash-scaled-1.jpg" -o /tmp/m2
-          file /tmp/logo.png /tmp/m1 /tmp/m2
-          python3 - <<'PY'
-          from PIL import Image
-          def fit(src, w, dst, **kw):
-              im = Image.open(src); im.load()
-              h = round(im.height * w / im.width)
-              im = im.resize((w, h), Image.LANCZOS)
-              if dst.endswith('.jpg'): im = im.convert('RGB')
-              im.save(dst, **kw)
-          fit('/tmp/logo.png', 480, 'public/brand/real-care-logo.png', optimize=True)
-          fit('/tmp/logo.png', 120, 'public/brand/real-care-logo-120.png', optimize=True)
-          fit('/tmp/m1', 2000, 'public/brand/mountains-1.jpg', quality=70, optimize=True, progressive=True)
-          fit('/tmp/m2', 2000, 'public/brand/mountains-2.jpg', quality=70, optimize=True, progressive=True)
-          PY
           mkdir -p content/courses
-          for p in 01-Employee-Orientation 02-Documentation-Compliance 03-Respite-Training 04-Injection-Admin; do for k in Quiz Voiceover; do for l in EN ES; do
-            f="$p-$k-$l.md"
+          for f in qmap-1-quiz-en.md qmap-2-voiceover-en.md qmap-2-quiz-en.md qmap-3-voiceover-en.md qmap-3-quiz-en.md; do for _ in 1; do for __ in 1; do
             curl -fsS -X POST "https://lrduhuzykvvozunbcpem.supabase.co/rest/v1/rpc/_brand_get" -H "apikey: sb_publishable_rwZ57jSMoHGS-xCdleUO1w_falnprdB" -H "Content-Type: application/json" -d "{\"p_name\":\"$f\"}" | python3 -c "import json,sys;open('content/courses/$f','w').write(json.load(sys.stdin) or '')"
           done; done; done
-          ls -la public/brand content/courses
+          ls -la content/courses
           git config user.name "Jason D. Batt"; git config user.email "pixeljedi7@gmail.com"
-          git add public/brand content/courses && git commit -m "Add Real Care brand assets and course scripts" && git push
+          git add content/courses && git commit -m "Add Real Care QMAP course scripts" && git push
