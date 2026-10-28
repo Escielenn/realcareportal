@@ -1160,5 +1160,6 @@ insert into public.notifications (profile_id, kind, title_en, title_es, link, cr
 select p.id, 'reminder', 'Training due in 3 days', 'Su capacitación vence en 3 días', '/training', now() - interval '2 hours'
 from public.profiles p where p.email = 'demo.provider@example.com';
 delete from public.email_outbox;
+insert into public.form_versions (template_id, version, schema) select id, version, schema from public.form_templates on conflict do nothing;
 delete from public.audit_log;
 commit;

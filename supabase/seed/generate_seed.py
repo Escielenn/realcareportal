@@ -634,6 +634,7 @@ select p.id, 'reminder', 'Training due in 3 days', 'Su capacitación vence en 3 
 from public.profiles p where p.email = 'demo.provider@example.com';
 delete from public.email_outbox;""")
 
+w("insert into public.form_versions (template_id, version, schema) select id, version, schema from public.form_templates on conflict do nothing;")
 w("delete from public.audit_log;")
 w("commit;")
 print("\n".join(out))
