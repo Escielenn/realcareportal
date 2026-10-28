@@ -1,4 +1,4 @@
-# Demo script: Real Care Portal (Phase 1 preview)
+# Demo script: Real Care Portal (Phase 1 + Phase 2 preview)
 
 **URL:** https://realcareportal.vercel.app
 **Data:** everything is fictional. Demo accounts sign in with one click on the login page (shared password `RealCare-Demo-2026`).
@@ -10,7 +10,7 @@
 | Real Care staff | Dana Whitfield | Staff console, course builder, import, invites, renewal, transcripts |
 | New provider | Riley Morgan (pending invite) | First-time experience from an invitation link |
 
-About 25 minutes. Do the renewal step last, because it opens Maria's next cycle.
+About 35 minutes. Do the renewal step last, because it opens Maria's next cycle.
 
 ## 1. A provider's day (Maria, about 8 minutes)
 
@@ -23,6 +23,9 @@ About 25 minutes. Do the renewal step last, because it opens Maria's next cycle.
 5. Switch **EN → ES**. Everything switches, including courses, quizzes, forms and notifications.
 6. **Forms → RCI Log Notes (Jordan)**: name and goals pre-fill; answer "Yes" to medication to show the follow-up question. Submit.
 7. **Messages**: send staff a question. **Profile**: language, phone and email preferences.
+8. **Training → Documentation Submissions & Compliance**: one of Real Care's own trainings. The video opens from Dropbox, the full transcript is underneath (Spanish too), and the 10-question quiz uses the real answer key. Respite, RCI Injection Administration, Employee Orientation and the three-part QMAP are built the same way.
+9. **Documents**: send a photo of a physician visit form for Jordan. On a phone, the file button opens the camera.
+10. **Forms → Start a form → Incident Report**: the same page a QR code opens.
 
 ## 2. The staff side (Dana, about 12 minutes)
 
@@ -39,13 +42,25 @@ About 25 minutes. Do the renewal step last, because it opens Maria's next cycle.
 11. **Overview → Annual training renewal**: run as of **Oct 30, 2026**. Maria's next cycle opens; her history stays. Show the "Your annual training is open" email in the outbox. (Also runs automatically every night at 1:15 AM.)
 12. **Audit log**: sign-ins, views, submissions, reviews, imports, grants, renewals, with who and when, never the values.
 
-## 3. Points to make
+## 3. Paperwork and documents (Phase 2, about 10 minutes)
+
+1. **Alerts**: incident reports, provider messages and new applications arrive here. The alert emails say only what kind of item is waiting.
+2. **Documents**: accept Maria's upload, or return it with a note. Each open uses a 60-second private link and is logged.
+3. **People supported**: open Jordan Avery. Links to providers have start and end dates; ending a link removes the provider's access to Jordan's forms and documents from that day.
+4. **Forms & assignments**:
+   - **Assign a form**: pick Standard Goal Tracking for Jordan, repeat **every week**. Only providers currently linked to Jordan are offered. The nightly job creates each new copy on its due date.
+   - **Form library → Incident Report**: edit the form definition on the left and watch the live preview on the right, in English or Spanish. **Publish new version** keeps a history; forms already started keep their version.
+   - The **QR code** prints as a sign. Scanning it asks the provider to sign in, then opens a new copy of the form.
+5. **Applications**: two people applied on the public **/apply** page. **Invite** creates their portal invitation link.
+
+## 4. Points to make
 
 - One site replaces the intranet forms and the Wix training site.
 - Providers only ever see their own records and the people they currently support. The database enforces this, not the screens.
 - Renewal never deletes history; each year is its own cycle.
 - The 14 Wix CSV downloads become a one-time import, then go away.
 - Emails never carry private information, so the portal stays the only place PHI lives.
+- The look matches realcarecolorado.com: same purple and cyan, Raleway and Open Sans, the Real Care logo and Colorado mountains.
 
 ## Reset between demos
 
@@ -63,7 +78,8 @@ This restores every fictional record, including Riley's pending invite.
 | --- | --- | --- |
 | Card payments | Demo checkout, no card | Stripe Checkout + webhooks |
 | Emails | Shown in the outbox, not sent | Postmark/Resend, same PHI-free templates |
-| Video hosting | Supabase Storage with signed links | Mux streaming with captions |
+| Video hosting | Real Care's videos open from the shared Dropbox folder; the provider confirms they watched (the uploaded portal-tour video still uses the 90% watch rule) | Mux streaming with captions and watch tracking |
 | Invitations | Link copied by staff | Emailed automatically via Supabase Auth |
 | Staff MFA | Not enforced | Required (Phase 0, T14) |
 | Forms and uploads with real PHI | Fictional data only | After BAAs and the HIPAA review (Phase 2) |
+| QMAP in Spanish | English text shown, marked as pending | Spanish transcripts and quizzes once translated |
