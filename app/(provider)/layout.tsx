@@ -4,7 +4,7 @@ import { getLang, t } from "@/lib/i18n";
 import { signOut } from "@/app/actions";
 import { Logo } from "@/components/logo";
 import { LangToggle } from "@/components/client-bits";
-import { ProviderNav, Icons } from "@/components/nav";
+import { ProviderNav } from "@/components/nav";
 
 export default async function ProviderLayout({ children }: { children: React.ReactNode }) {
   const { supabase, profile } = await requireProvider();
@@ -21,10 +21,10 @@ export default async function ProviderLayout({ children }: { children: React.Rea
           </Link>
           <ProviderNav
             items={[
-              { href: "/dashboard", label: t(lang, "home"), icon: Icons.home },
-              { href: "/training", label: t(lang, "training"), icon: Icons.training },
-              { href: "/forms", label: t(lang, "forms"), icon: Icons.forms, badge: returned ?? 0 },
-              { href: "/messages", label: t(lang, "messages"), icon: Icons.messages },
+              { href: "/dashboard", label: t(lang, "home"), icon: "home" as const },
+              { href: "/training", label: t(lang, "training"), icon: "training" as const },
+              { href: "/forms", label: t(lang, "forms"), icon: "forms" as const, badge: returned ?? 0 },
+              { href: "/messages", label: t(lang, "messages"), icon: "messages" as const },
             ]}
           />
           <div className="ml-auto flex items-center gap-2">
