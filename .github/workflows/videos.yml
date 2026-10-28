@@ -1,0 +1,35 @@
+name: Move course videos (Dropbox -> portal storage)
+on:
+  push:
+    branches: [videos]
+permissions:
+  contents: read
+jobs:
+  video:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        i: [0, 1, 2, 3, 4, 5, 6]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+      - run: npm install --no-save @supabase/supabase-js@2.118.0
+      - name: Download, transcode, upload
+        run: |
+          set -e
+          V=$(jq -c ".[${{ matrix.i }}]" content/videos.json)
+          SRC=$(echo "$V" | jq -r .src); P=$(echo "$V" | jq -r .path); N=$(echo "$V" | jq -r .name)
+          curl -fsSL --retry 3 "$SRC" -o in.mov
+          ls -la in.mov
+          DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 in.mov)
+          # 720p H.264 tuned for narrated slides: small files, plays everywhere (iPhone, Android, desktop).
+          ffmpeg -nostdin -loglevel error -i in.mov -vf "scale='min(1280,iw)':-2,fps=24" -c:v libx264 -preset slow -tune stillimage -crf 28 -profile:v high -pix_fmt yuv420p \
+            -c:a aac -b:a 96k -ac 2 -movflags +faststart out.mp4
+          ls -la out.mp4
+          R=$(node scripts/upload-video.mjs out.mp4 "$P")
+          echo "::notice title=video $N::{\"name\":\"$N\",\"path\":\"$P\",\"seconds\":$DUR,\"result\":$R}"
