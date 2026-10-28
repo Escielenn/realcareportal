@@ -1,0 +1,51 @@
+files
+/
+03-Respite-Training-Voiceover-ES
+MD
+File
+Edit
+View
+Help
+JB
+12 of 21
+Share
+Edit content
+View as plain text
+UTF-8
+Real Care, Inc. — Cuidado de Respiro: Descripción General y Responsabilidades del Proveedor
+Guión de Capacitación (Español)
+
+Tiempo estimado de lectura: ~6 minutos a ritmo natural de habla
+
+﻿
+
+
+Bienvenido a Real Care. Esta capacitación cubre el Cuidado de Respiro — qué es, cómo funciona y qué se espera tanto de los proveedores principales como de los Proveedores de Respiro. Al final de esta capacitación, comprenderá la elegibilidad, la programación, los requisitos del proveedor, la documentación, los reportes, los procesos de pago y las expectativas de cuidado centrado en la persona.
+
+¿Qué es el respiro? El respiro es un servicio de apoyo temporal diseñado para proporcionar alivio a los cuidadores principales mientras asegura que el individuo continúe recibiendo atención segura, consistente y centrada en la persona. Les da a los cuidadores tiempo para descansar y prevenir el agotamiento, viajar o asistir a citas, y atender emergencias o necesidades personales. Durante el respiro, el individuo es apoyado por un Proveedor de Respiro capacitado y aprobado que continúa la atención alineada con el plan centrado en la persona y mantiene las rutinas, apoyos de seguridad y necesidades de supervisión. El mensaje clave es que el respiro apoya el bienestar del cuidador y la continuidad de la atención de calidad.
+
+Es importante entender que el respiro no está garantizado. La disponibilidad depende de varios factores, incluyendo la disponibilidad de Proveedores de Respiro aprobados, las necesidades de atención, supervisión y apoyo del individuo, y si el proveedor puede satisfacer esas necesidades de manera segura. Otros factores incluyen las fechas y duración solicitadas, si la atención es dentro o fuera del hogar, los requisitos médicos, de comportamiento o de supervisión, la capacidad del proveedor y la dotación de personal, y las solicitudes en competencia durante períodos de alta demanda. Real Care revisa cuidadosamente cada solicitud, hace esfuerzos para encontrar una coincidencia segura y apropiada, y se comunica abiertamente a través de los Coordinadores de Apoyo de Programas si se necesitan alternativas.
+
+El respiro puede ser rutinario o según sea necesario. El respiro rutinario depende de la disponibilidad del proveedor, y las necesidades recurrentes o únicas deben discutirse con su Coordinador de Apoyo de Programas con anticipación. El respiro puede ser por horas, durante la noche, o de múltiples días o semanas, y puede realizarse dentro o fuera del hogar. Fuera del hogar es generalmente preferido debido a las limitaciones de personal.
+
+Para solicitar respiro, complete el Formulario de Solicitud de Respiro y la Hoja de Información de Respiro y envíelos a su Coordinador de Apoyo de Programas lo antes posible. El personal de la oficina puede asistir si es necesario. Después de enviar, su coordinador revisará los formularios, identificará un Proveedor de Respiro apropiado y coordinará las fechas, detalles y expectativas. Si tiene un Proveedor de Respiro conocido que desea utilizar, esto se permite siempre que el proveedor cumpla con los requisitos de Real Care. Si ya está activo, indíquelo en el formulario de solicitud. Si aún no está activo, el Equipo de Admisión o su coordinador asistirá con la incorporación.
+
+Todos los Proveedores de Respiro deben cumplir con requisitos específicos antes de proporcionar atención. Estos incluyen verificación de antecedentes, verificación de APS de Colorado, verificación de referencias, inspección del hogar, verificación del registro de conductor, seguro y vehículo, certificación de RCP y Primeros Auxilios, certificación QMAP, y orientación básica más cualquier capacitación adicional requerida. Estos requisitos existen para garantizar la seguridad del individuo, el cumplimiento regulatorio, la continuidad de la atención y la protección tanto de los individuos como de los proveedores.
+
+Prepararse para un respiro exitoso es una responsabilidad compartida. El proveedor principal debe comunicar rutinas, preferencias y apoyos importantes al Proveedor de Respiro, empacar todas las pertenencias necesarias incluyendo ropa, artículos de higiene y artículos de confort, y preparar y enviar todos los medicamentos. Los medicamentos deben estar vigentes, correctamente etiquetados y en sus envases originales. Incluya el MAR y cualquier instrucción de medicamentos. El proveedor principal también debe coordinar los detalles de recogida y confirmar la preparación con el Proveedor de Respiro.
+
+Las responsabilidades del Proveedor de Respiro incluyen revisar todos los documentos antes del respiro, hacer preguntas temprano si se necesita aclaración, seguir el plan centrado en la persona y el Plan de Salud y Seguridad, registrar toda la administración de medicamentos en el Registro de Administración de Medicamentos, y comunicarse con el Coordinador de Apoyo de Programas y el proveedor principal sobre preocupaciones, incidentes o cambios. Se recomienda que el proveedor que recoge al individuo sea el conductor. Ambos proveedores pueden llenar la misma documentación, pero cada proveedor debe enviar su propia documentación por separado.
+
+Al apoyar a los individuos durante el respiro, las expectativas de supervisión varían según la persona y pueden incluir supervisión en línea de visión, verificaciones periódicas, supervisión uno a uno, supervisión nocturna o requisitos de supervisión comunitaria. Si hay Modificaciones de Derechos vigentes, se comparten solo cuando aplica. Los proveedores deben entender las modificaciones, seguir el plan exactamente como está escrito y documentar apropiadamente. El cuidado centrado en la persona significa respetar las preferencias, rutinas y metas individuales, y apoyar los horarios de programas diurnos o trabajo, la participación comunitaria y las metas y objetivos del ISP.
+
+Para salud, seguridad y medicamentos, los proveedores deben revisar el Plan de Salud y Seguridad, la Hoja de Información de Respiro, las directrices dietéticas y los protocolos de emergencia. Si aplican protocolos o delegaciones, los proveedores deben revisar todos los protocolos aplicables, completar la delegación con una enfermera de la agencia cuando sea requerido, entender los riesgos y pasos de respuesta, rastrear datos relacionados con el protocolo y conocer los contactos de emergencia. Para medicamentos, los proveedores deben revisar las Órdenes de Medicamentos, administrar según lo prescrito, documentar en el MAR incluso si el proveedor principal no deja uno, monitorear los efectos secundarios y seguir los protocolos de medicamentos de emergencia.
+
+Cualquier incidente que impacte la salud, seguridad o derechos debe reportarse. Envíe los Reportes de Incidentes al personal de Real Care dentro de veinticuatro horas. La puntualidad es crítica. Los Proveedores de Respiro deben enviar su propia documentación, incluyendo notas de registro, seguimiento residencial, seguimiento de metas, seguimiento de protocolo, seguimiento de modificación de derechos, MAR, Reportes de Incidentes y hojas de tiempo. Si Real Care es el Representante de Pagos, también rastree los gastos personales usando el Registro de Cuenta Comunitaria y guarde todos los recibos.
+
+Para registros de asistencia y hojas de tiempo: si el respiro ocurre entre el primero y el veintidós, envíe antes del veintidós. Si el respiro ocurre entre el veintitrés y el final del mes, envíe lo antes posible. Envíe correcciones si es necesario. El proveedor principal marca R de Respiro en su registro de asistencia, y el Proveedor de Respiro marca X en los días que se proporcionó atención nocturna. Si el respiro es por horas, necesitará una hoja de tiempo por hora. Envíe las hojas de tiempo al personal de Real Care.
+
+Antes de proporcionar servicios de Respiro, todos los Proveedores de Respiro deben revisar, inicializar y firmar el Paquete de Reconocimiento del Proveedor de Cuidado de Respiro. Firmar este paquete confirma la comprensión, apoya el cumplimiento y protege tanto a los proveedores como a los individuos.
+
+Respecto al pago, al proveedor nocturno se le paga la tarifa diaria. Las tarifas se confirman en el Formulario de Solicitud de Respiro. El pago se emite después de que se procesa la documentación, típicamente alrededor del dieciocho del mes siguiente, si toda la documentación está en cumplimiento. Los archivos de proveedores deben mantenerse actualizados.
+
+Gracias por completar la capacitación de Cuidado de Respiro. Si tiene alguna pregunta, por favor contacte al personal de Real Care.

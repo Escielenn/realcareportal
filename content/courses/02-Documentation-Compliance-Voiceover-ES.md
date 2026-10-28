@@ -1,0 +1,63 @@
+files
+/
+02-Documentation-Compliance-Voiceover-ES
+MD
+File
+Edit
+View
+Help
+JB
+21 of 21
+Share
+Edit content
+View as plain text
+UTF-8
+Real Care, Inc. — Envío de Documentación y Cumplimiento
+Guión de Capacitación (Español)
+
+Tiempo estimado de lectura: ~7 minutos a ritmo natural de habla
+
+﻿
+
+
+Bienvenido a Real Care. Esta capacitación cubre el Envío de Documentación y Cumplimiento. La documentación precisa y oportuna es una de las partes más importantes de lo que hacemos. Asegura el cumplimiento con las regulaciones estatales, apoya la facturación y el financiamiento, y protege la salud y seguridad de las personas que servimos. Por favor escuche con atención y tome nota de las fechas límite y requisitos clave que se cubren aquí.
+
+Primero, revisemos los tipos de proveedores con los que trabajará. Los Proveedores de Hogar Anfitrión, o HHPs, son cuidadores no relacionados que proporcionan atención las veinticuatro horas en sus propios hogares y pueden atender hasta tres clientes a la vez. Los Cuidadores Familiares, o FCGs, son personas relacionadas que proporcionan apoyo diario en el hogar del individuo. Los Profesionales de Apoyo Directo, o DSPs, proporcionan servicios residenciales por hora en el hogar del individuo o de la familia. Los Proveedores de Respiro dan alivio temporal a los cuidadores principales. Los Proveedores de Conexión Comunitaria con Apoyo, o SCCs, proporcionan servicios comunitarios por hora. Y los Proveedores de Transporte No Médico, o NMTs, transportan a los clientes hacia y desde programas diurnos o trabajo.
+
+Un concepto importante que debe entender es el de Apoyo Natural versus Sin Apoyo Natural. Los Apoyos Naturales son personas no remuneradas — como familiares, amigos o tutores — que ayudan con el cuidado y la supervisión. Pueden ayudar con la supervisión de medicamentos, comidas y apoyo nutricional, transporte y gestión financiera. Esta distinción importa porque afecta los requisitos de documentación. En entornos de Cuidadores Familiares donde hay Apoyo Natural presente, la documentación de medicamentos puede completarse a través de Notas de Registro con Verificación de Medicamentos. Los MARs no son requeridos a menos que lo indique específicamente un Coordinador o Gerente de RCI. La documentación de comidas y nutrición tampoco es requerida a menos que lo indique un médico o coordinador. Sin embargo, en entornos de Cuidadores Familiares sin Apoyo Natural, el cuidador es totalmente responsable de toda la administración de medicamentos, comidas, transporte y gestión financiera. Esto significa que los MARs, Registros de Narcóticos cuando aplique, y el Seguimiento Trimestral de Menús son todos requeridos. Nota importante: los Proveedores de Hogar Anfitrión, Proveedores de Respiro, Profesionales de Apoyo Directo, Proveedores de Conexión Comunitaria y Proveedores de Transporte No Médico no tienen Apoyos Naturales. Todas las responsabilidades de cuidado recaen únicamente en el proveedor.
+
+Ahora revisemos la frecuencia de envío. Hay cuatro categorías: mensual, trimestral, según sea necesario y anual. La ventana principal de procesamiento va del primero al diez de cada mes, y la ventana de procesamiento de asistencia y hojas de tiempo va del veinte al veintidós.
+
+Para los envíos mensuales, la mayoría de los documentos vencen el tercero de cada mes.
+
+Las Notas de Registro Semanales son requeridas para Cuidadores Familiares, Proveedores de Hogar Anfitrión, Profesionales de Apoyo Directo y Proveedores de Respiro. Las Notas de Registro sirven como el registro principal de la prestación de servicios semanales, confirmando que los servicios autorizados fueron proporcionados según lo establecido en el Plan de Servicios. Documentan cambios de salud, seguridad y comportamiento que pueden requerir seguimiento. Apoyan la supervisión de medicamentos cuando aplica y proporcionan evidencia de progreso hacia las metas del ISP. Esta documentación se usa para revisión de cumplimiento, auditorías y entrada precisa en la base de datos. Las Notas de Registro deben ser legibles y completas, fechadas y firmadas, cubrir todo el período de reporte, ser consistentes con los servicios autorizados y el rol del proveedor, y enviadas antes de la fecha límite.
+
+El Seguimiento de ISP y Metas es requerido para Cuidadores Familiares, Proveedores de Hogar Anfitrión, Profesionales de Apoyo Directo, Proveedores de Respiro y Proveedores de Conexión Comunitaria. Cada individuo debe tener al menos una meta, mostrar progreso semanal continuo hacia cada meta y mostrar el nivel de apoyo del proveedor o la independencia del individuo. El seguimiento de metas puede aparecer en una Hoja de Seguimiento de Metas, en las Notas de Registro Semanales o en una Hoja de Seguimiento de Protocolo.
+
+Los Recibos Diarios de Atención son requeridos para todos los Proveedores de Hogar Anfitrión y Profesionales de Apoyo Directo a menos que exista una excepción aprobada. Estos demuestran al estado que se está proporcionando atención todos los días, lo cual asegura el financiamiento a través de la tarifa diaria. Esto puede incluir Seguimiento de Protocolo, Seguimiento de Modificación de Derechos o Seguimiento Residencial.
+
+La documentación de medicamentos también vence el tercero. Dependiendo del entorno, los proveedores envían MARs y Registros de Narcóticos, Notas de Registro con Verificación de Medicamentos, o Notas de Registro con Verificación de Auto-Medicación si el individuo se auto-administra medicamentos.
+
+Los registros financieros vencen el tercero cuando Real Care es el Representante de Pagos. Esto incluye el formulario de Registro de Cuenta Comunitaria que documenta todos los gastos y depósitos personales, recibos como prueba de compras de los Fondos de Necesidades Personales y estados de cuenta bancarios para verificar saldos y transacciones. Asegúrese de que los recibos coincidan con los montos reportados en el formulario CAR.
+
+Los registros de asistencia y hojas de tiempo tienen una fecha límite diferente — vencen el veintidós de cada mes. Los Cuidadores Familiares, Proveedores de Hogar Anfitrión y Proveedores de Respiro envían registros de asistencia diaria. Los Profesionales de Apoyo Directo y Proveedores de Conexión Comunitaria envían hojas de tiempo por hora. Los Proveedores de Transporte No Médico envían viajes, donde cada viaje equivale a una unidad, con un máximo de dos viajes diarios y ocho por semana. Fechas límite mensuales clave: el dieciocho comienza el procesamiento, el veinte es el inicio estándar del procesamiento, el mediodía del veintidós es el primer recordatorio, el veinticinco se envían los registros procesados y el listado a Ed, y el primero del mes siguiente es la fecha límite para correcciones finales y escalación.
+
+Para envíos trimestrales, los Simulacros de Incendio y Desastres son requeridos para todos los individuos. El Seguimiento de Menús es requerido para Cuidadores Familiares sin Apoyo Natural y para Proveedores de Hogar Anfitrión, y cuando existe una dieta prescrita médicamente.
+
+Para envíos según sea necesario, los Reportes de Incidentes deben enviarse dentro de veinticuatro a cuarenta y ocho horas. Son requeridos para todos los cuidadores y proveedores, y la puntualidad es crítica. Envíe los Reportes de Incidentes al personal de Real Care lo antes posible. La documentación de Citas Médicas también se envía según sea necesario.
+
+Los requisitos médicos anuales incluyen Órdenes de Medicamentos, Órdenes PRN y OTC, Listas de Verificación de Equipo Adaptativo cuando aplique, Exámenes Físicos, Visitas Dentales al menos dos veces al año, Exámenes de la Vista cada uno a dos años y visitas a Proveedores Especialistas como neurología, psicología, cardiología u oncología.
+
+Respecto al flujo de trabajo de procesamiento: reciba y abra el correo electrónico, revise los archivos adjuntos, imprima y prepare los documentos, regístrelos en el listado y la base de datos, identifique problemas, comuníquese con el proveedor, archive y organice, y haga seguimiento.
+
+Para el procesamiento de correos, procese completamente un correo a la vez, comenzando con los envíos más antiguos primero. Si recibe múltiples correos del mismo proveedor, procéselos juntos. Para la impresión, use una sola cara, orientación correcta, y asegúrese de que los documentos sean legibles. No imprima en masa.
+
+Al verificar documentos, resalte y confirme el nombre del cliente, nombre del proveedor, mes y año, total de días u horas o unidades, y la firma y fecha del proveedor. Si falta un nombre o fecha, escríbalo claramente e inicialice. Si falta una firma, envíe un correo al proveedor, use DocuSign si es necesario y documente en el listado.
+
+La base de datos del cliente usa codificación de colores: Verde significa nuevo servicio, cliente o documento. Amarillo significa uno a dos meses sin cumplimiento. Rojo significa dos o más meses vencidos y escalado. Blanco significa completamente en cumplimiento.
+
+Para la comunicación con proveedores, las respuestas deben reconocer lo que se recibió, indicar claramente lo que falta, recapitular todos los elementos cuando existen múltiples correos, usar solo plantillas aprobadas y mantener un tono calmado y profesional. Los correos de recordatorio siguen un calendario: mediodía del veintidós es el primer recordatorio, mediodía del veinticinco es el recordatorio final, y entre el veintiséis y el primero puede enviar un máximo de un seguimiento. No se permiten recordatorios diarios o no programados.
+
+Como Coordinador de Apoyo de Documentación, usted es el centro de recepción, seguimiento y seguimiento de documentación. Su rol asegura el cumplimiento, la facturación precisa y los pagos ininterrumpidos. El enfoque es en el seguimiento y la escalación — no la perfección.
+
+Gracias por completar la capacitación de Envío de Documentación y Cumplimiento. Si tiene alguna pregunta, por favor contacte al personal de Real Care.

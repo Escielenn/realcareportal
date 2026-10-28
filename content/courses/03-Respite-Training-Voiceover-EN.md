@@ -1,0 +1,51 @@
+files
+/
+03-Respite-Training-Voiceover-EN
+MD
+File
+Edit
+View
+Help
+JB
+16 of 21
+Share
+Edit content
+View as plain text
+UTF-8
+Real Care, Inc. — Respite Care Overview & Provider Responsibilities
+Voiceover Script (English)
+
+Estimated Read Time: ~6 minutes at natural speaking pace
+
+﻿
+
+
+Welcome to Real Care! This training covers Respite Care — what it is, how it works, and what is expected of both primary providers and Respite Providers. By the end of this training, you will understand eligibility, scheduling, provider requirements, documentation, reporting, payment processes, and person-centered care expectations.
+
+So what is respite? Respite is a temporary support service designed to provide relief for primary caregivers while ensuring the individual continues to receive safe, consistent, and person-centered care. It gives caregivers time to rest and prevent burnout, travel or attend appointments, and address emergencies or personal needs. During respite, the individual is supported by a trained, approved Respite Provider who continues care aligned with the person-centered plan and maintains routines, safety supports, and supervision needs. The key message here is that respite supports caregiver well-being and continuity of quality care.
+
+It is important to understand that respite is not guaranteed. Availability depends on several factors, including approved Respite Provider availability, the individual's care, supervision, and support needs, and whether the provider can safely meet those needs. Other factors that may affect availability include the requested dates and duration, whether care is in-home or out-of-home, medical, behavioral, or supervision requirements, provider capacity and staffing, and competing requests during high-demand periods. Real Care carefully reviews every request, makes efforts to find a safe and appropriate match, and communicates openly through Program Support Coordinators if alternatives are needed.
+
+Respite can be routine or as-needed. Routine respite depends on provider availability, and recurring or unique needs should be discussed with your Program Support Coordinator in advance. Respite can be hourly, overnight, or multiple days or weeks, and it can take place in-home or out-of-home. Out-of-home is generally preferred due to staffing limitations.
+
+To request respite, complete the Respite Request Form and Respite Information Sheet and submit them to your Program Support Coordinator as early as possible. Office staff can assist if needed. After you submit, your coordinator will review the forms, identify an appropriate Respite Provider, and coordinate dates, details, and expectations. If you have a known Respite Provider you would like to use, that is allowed as long as the provider meets Real Care requirements. If they are already active, list them on the request form. If they are not yet active, the Intake Team or your coordinator will assist with onboarding.
+
+All Respite Providers must meet specific requirements before providing care. These include a background check, Colorado APS check, reference checks, home inspection, driver's record, insurance, and vehicle verification, CPR and First Aid certification, QMAP certification, and basic orientation plus any additional training as required. These requirements exist to ensure individual safety, regulatory compliance, continuity of care, and protection for both individuals and providers.
+
+Preparing for a successful respite is a shared responsibility. The primary provider must communicate important routines, preferences, and supports to the Respite Provider, pack all belongings needed for respite including clothing, hygiene items, and comfort items, and prepare and send all medications. Medications must be current, properly labeled, and in original containers. Include the MAR and any medication instructions. The primary provider should also coordinate pick-up details and confirm readiness with the Respite Provider.
+
+The Respite Provider's responsibilities include reviewing all documents prior to respite, asking questions early if clarification is needed, following the person-centered plan and Health and Safety Plan, tracking all medication administration on the Medication Administration Record, and communicating with the Program Support Coordinator and primary provider regarding concerns, incidents, or changes. The provider picking up the individual is recommended to be the driver. Both providers may fill out the same paperwork, but each provider must submit their own documentation separately.
+
+When supporting individuals during respite, supervision expectations vary by person and may include line-of-sight supervision, periodic checks, one-to-one supervision, overnight supervision, or community supervision requirements. If Rights Modifications are in place, they are shared only when applicable. Providers must understand the modifications, follow the plan exactly as written, and document appropriately. Person-centered care means respecting individual preferences, routines, and goals, and supporting day program or work schedules, community participation, and ISP goals and objectives.
+
+For health, safety, and medications, providers must review the Health and Safety Plan, Respite Information Sheet, dietary guidelines, and emergency protocols. If protocols or delegations apply, providers must review all applicable protocols, complete delegation with an agency nurse when required, understand risks and response steps, track protocol-related data, and know emergency contacts. For medications, providers must review Medication Orders, administer as prescribed, document on the MAR even if the primary provider does not leave one, monitor for side effects, and follow emergency medication protocols.
+
+Any incident impacting health, safety, or rights must be reported. Submit Incident Reports to Real Care staff within twenty-four hours. Timeliness is critical. Respite Providers must submit their own paperwork, including log notes, residential tracking, goal tracking, protocol tracking, rights modification tracking, MAR, Incident Reports, and timesheets. If Real Care is the Representative Payee, also track personal spending using the Community Account Record and save all receipts.
+
+For attendance records and timesheets: if respite occurs between the first and the twenty-second, submit by the twenty-second. If respite occurs between the twenty-third and the end of the month, submit as soon as possible. Submit corrections if needed. The primary provider marks R for Respite on their attendance record, and the Respite Provider marks X on days that overnight care was provided. If respite is hourly, you will need an hourly timesheet. Submit timesheets to Real Care staff.
+
+Before providing Respite services, all Respite Providers must review, initial, and sign the Respite Care Provider Acknowledgement Packet. This packet covers day program and work hours, health and safety plans, protocols and emergency response, individualized goals and tracking, medication orders and administration, rights modifications when applicable, medical appointments during respite, incident reporting requirements, documentation expectations, financial tracking, timesheets and payroll submission, payment timelines, provider file compliance, important contact information, and due process, rights, and HIPAA notices. Signing this packet confirms understanding, supports compliance, and protects both providers and individuals.
+
+Regarding payment, the overnight provider is paid the daily rate. Rates are confirmed on the Respite Request Form. Payment is issued after documentation is processed, typically around the eighteenth of the following month, if all documentation is compliant. Provider files must remain current. Submit file documents to Real Care staff, and your Program Support Coordinator can assist with compliance questions. Client documentation must also be submitted in a timely manner to Real Care staff.
+
+Thank you for completing the Respite Care training. If you have any questions, please contact Real Care staff.

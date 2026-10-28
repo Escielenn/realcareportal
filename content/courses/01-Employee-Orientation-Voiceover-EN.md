@@ -1,0 +1,55 @@
+files
+/
+01-Employee-Orientation-Voiceover-EN
+MD
+File
+Edit
+View
+Help
+JB
+10 of 21
+Share
+Edit content
+View as plain text
+UTF-8
+Real Care, Inc. — Employee Orientation
+Voiceover Script (English)
+
+Estimated Read Time: ~6 minutes at natural speaking pace
+
+﻿
+
+
+Welcome to Real Care! This is your Employee Orientation training. We are glad to have you on the team, and this training will walk you through what you need to know as a new member of the Real Care family.
+
+Real Care, Inc. was founded in 2008. Nicole and her business partner combined their knowledge and experience in service delivery for individuals with developmental and intellectual disabilities, elderly, and at-risk individuals to start this organization. Real Care began with just three clients, and work was done around a dining room table. Since then, the organization has grown to support over one hundred and seventy clients and two hundred caregivers. Real Care is dedicated to helping individuals live their best lives, providing fair compensation to providers and caregivers, and prioritizing well-being through a tailored approach that ensures every person receives the support they need.
+
+As a new hire, you will receive a paperwork packet from our Finance and Benefits Coordinator. This packet includes required employment documents such as your W-4, I-9, direct deposit authorization, and employee policies. Please fill that out promptly and provide copies of your IDs, CPR certification, and any other required documents.
+
+Your standard work schedule is Monday through Friday, eight AM to four PM. You must clock in and out during your shift. If you need to make corrections, use the Alter Clock form. Employees are considered tardy if arriving more than five minutes late. If you anticipate being late or absent, you must notify the Executive Director or the Operations Manager as soon as possible. Schedule flexibility may be approved for medical appointments or other necessary obligations, but missed time must be made up by flexing your schedule within the same workweek. Requests for planned time off must be submitted with at least one week's notice to the Executive Director.
+
+You will be introduced to our leadership and administrative team. The Executive Director leads the agency, ensures compliance, and oversees program quality and financials. The Operations Manager handles daily operations and supports staff efficiency. The Program Manager oversees service delivery and ensures alignment with client needs and regulations. Our coordinators include the Finance and Benefits Coordinator, Program Coordinator, and Intake and Development Coordinator. Our support staff includes the Documentation Support Coordinator, Program Support Coordinator, Front Desk Support Coordinator, and Administrative Support Staff.
+
+Let me walk you through a few things about the office. Office supplies are located in the cabinet in the Provider File Room — take what you need to get started, and let the Front Desk Support Coordinator know if supplies are running low. The conference room is available for meetings with clients, providers, and staff, so please schedule its use appropriately. Restrooms are located outside of the suite at the end of the hallway on the left.
+
+You may take one paid fifteen-minute break for every four hours worked. An unpaid lunch break of up to one hour may be taken. You are responsible for flexing your schedule to ensure a total of eight hours worked each day. There is a lock box on the outside of the suite, and all locking and security procedures must be followed. Door codes are confidential and should not be shared. All employees are responsible for maintaining a clean workspace and reporting any environmental or equipment issues to the Executive Director.
+
+We all share two main printers — please do not take others' prints, and return them promptly if you do. Be mindful of HIPAA while in main areas, as visitors may be present or someone may be on a confidential call. Each employee is assigned their own office. You may personalize your workspace as long as it remains professional and non-offensive. No safety hazards like space heaters. Furniture layout may not be changed without approval, and doors should remain open unless you are in a meeting or on the phone.
+
+For office phones, the Front Desk Support Coordinator is primarily responsible for answering incoming calls, and all other staff serve as backup. All calls must be answered courteously. Each office has an assigned extension, and a list of extensions will be provided. For email, all messages must maintain a professional and respectful tone, use approved templates when applicable, and be responded to within two business days.
+
+Regarding the dress code, employees are expected to use good judgment. Acceptable attire includes dress slacks, khakis, blouses, dress shirts, sweaters, and conservative footwear. Leggings are only permitted when worn under a long shirt, tunic, or dress. Jeans without rips or tears are allowed on Fridays and one other day of your choice each week. Unacceptable attire includes sweatpants, shorts, mini-skirts, tank tops with straps under one inch, shirts with offensive language, sweatshirts or hoodies worn alone, and flip-flops or slippers. If attire does not meet standards, you may be asked not to wear the item again, and continued violations may lead to disciplinary action.
+
+Cell phones are allowed for brief personal use — no more than fifteen minutes per day — and should be used during breaks or lunch. Keep your phone on vibrate or off when asked. Games, social media, and recording confidential information are prohibited. Electronic systems and internet access are for work-related purposes only. All company systems and data are the property of Real Care and may be monitored. There is no expectation of privacy on company systems.
+
+Now let's talk about the people we serve. At Real Care, everything we do is centered around the client. Every decision, interaction, and process should keep their needs, preferences, and goals in mind. Even if you are not directly providing care, your work in an administrative role still impacts clients' lives. The way you process correspondence, respond to calls, or handle records can affect a client's day-to-day experience. Our clients have the same rights as anyone else, including the right to privacy, respect, and self-determination. As staff, you should encourage self-advocacy and make sure clients know what they are entitled to.
+
+You will work with several types of providers. Host Home Providers offer twenty-four-hour care in their own homes and can serve up to three clients. Family Caregivers are related individuals providing daily support in the client's home. Direct Support Professionals and Personal Care Assistants provide comprehensive care in the family home or assist in independent apartments. Supported Community Connection Providers deliver community-based services for clients who do not fit into traditional day program settings. These providers are independent contractors — Family Caregivers and Host Home Providers are ten-ninety-nine non-reportable, while Supported Community Connection and Non-Medical Transportation Providers are ten-ninety-nine taxable.
+
+For file management, provider and client files are maintained in the office and through our cloud storage system, Datto. We also use DocuSign for secure electronic signatures and CamScanner to improve the clarity of unclear documents. File sections cannot be modified — do not move, add, or delete sections. Always maintain organization and confidentiality.
+
+Any changes involving a client or provider are managed through official change forms, which are routed through the office so everyone who needs the information receives it. Many routed documents include router slips where each staff member signs off when they have completed their assigned task.
+
+Our agency values open communication. If you have questions or need guidance, please take advantage of our open-door policy. The more informed and supported you are, the higher the quality of service we can provide. Never hesitate to ask for clarification, resources, or assistance — your questions help everyone succeed.
+
+Thank you for completing the Employee Orientation training. If you have any questions, please contact Real Care staff.
