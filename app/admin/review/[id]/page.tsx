@@ -1,3 +1,4 @@
+import { holdsValue, isVisible } from "@/lib/forms";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireStaff } from "@/lib/auth";
@@ -25,7 +26,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
   const names = Object.fromEntries((people ?? []).map((p) => [p.id, p.full_name]));
   const schema = a.form_templates.schema;
   const data = s.data as Record<string, unknown>;
-  const fields = schema.sections.flatMap((sec) => sec.fields).filter((f) => f.type !== "prefill" && (!f.show_if || data[f.show_if.field] === f.show_if.equals)).map((f) => ({ id: f.id, label: f.label_en }));
+  const fields = schema.sections.flatMap((sec) => sec.fields).filter((f) => holdsValue(f) && isVisible(f, data)).map((f) => ({ id: f.id, label: f.label_en }));
 
   return (
     <div className="space-y-5">

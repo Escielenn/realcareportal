@@ -1,0 +1,518 @@
+{
+ "meta": {
+  "slug": "standard-goal-tracking",
+  "title_en": "Standard Goal Tracking",
+  "title_es": "Seguimiento estándar de metas",
+  "category": "daily",
+  "per_individual": true,
+  "self_start": false,
+  "source": "goal_tracking_gf_json.json",
+  "gf_form_id": 2,
+  "fields": 28,
+  "gf_fields": 36,
+  "staff_only": [],
+  "dropped": [
+   "Form Header (decoration)"
+  ]
+ },
+ "schema": {
+  "instructions_en": [
+   {
+    "title": "How to Complete This Form",
+    "steps": [
+     "This form tracks an individual's progress on independence goals throughout the month. Complete one form per goal, per month.",
+     "The form is divided into 4 weekly tracking periods. For each period, record:",
+     "Client Name: Enter the full name of the individual whose goal is being tracked.",
+     "Goal: Write the specific independence goal being worked on (e.g., \"Increase independent living skills focused on meal preparation\").",
+     "Effective Date: Enter the date this goal became active.",
+     "Month / Year: Enter the month and year you are tracking (e.g., \"December 2025\")."
+    ]
+   },
+   {
+    "title": "For Each Week",
+    "steps": [
+     "# of times individual worked on the goal: Enter the number of times during that week period. Must be 1 or more times per week.",
+     "# of times provider supported individual: Enter how many times you provided support to help increase their independence related to this goal.",
+     "Type of support provided: Check all that apply: - Verbal - Verbal prompts, encouragement, or instructions",
+     "Supervision - Watching and monitoring the individual",
+     "Physical Assistance - Hands-on help with the task",
+     "Other - Specify any other type of support"
+    ]
+   },
+   {
+    "title": "The Four Weekly Periods",
+    "steps": [
+     "At the end of the tracking period, evaluate whether to continue this goal:",
+     "Days 1-7 (First week)",
+     "Days 8-14 (Second week)",
+     "Days 15-21 (Third week)",
+     "Days 22-31 (Fourth week/end of month)",
+     "Does the individual still express interest? Select Yes or No.",
+     "If No: Describe what new goal the individual wants to work on.",
+     "What would be needed: List resources, training, or support needed to implement the new goal.",
+     "Provider able to assist? Indicate if you can help with the new goal.",
+     "If not able: Explain why you cannot assist with achieving the new goal.",
+     "Additional Comments / Notes: Add any relevant observations, progress notes, barriers encountered, or successes achieved.",
+     "Provider Signature: Enter your name to certify this information.",
+     "Date: Select the date you completed this form.",
+     "Click Submit to finalize the form."
+    ]
+   }
+  ],
+  "instructions_es": [
+   {
+    "title": "Cómo llenar este formulario",
+    "steps": [
+     "Conteste cada pregunta.",
+     "Revise sus respuestas.",
+     "Firme y envíe."
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "title_en": "Details",
+    "title_es": "Details",
+    "fields": [
+     {
+      "id": "f3",
+      "type": "prefill",
+      "source": "individual.full_name",
+      "label_en": "Client Name",
+      "label_es": "Persona"
+     },
+     {
+      "id": "f4",
+      "label_en": "Goal",
+      "label_es": "Goal",
+      "required": true,
+      "help_en": "Describe the specific independence goal (e.g., \"Increase independent living skills focused on meal preparation\")",
+      "help_es": "Describe the specific independence goal (e.g., \"Increase independent living skills focused on meal preparation\")",
+      "type": "textarea"
+     },
+     {
+      "id": "f5",
+      "label_en": "Effective Date",
+      "label_es": "Effective Date",
+      "required": true,
+      "type": "date"
+     },
+     {
+      "id": "f6",
+      "label_en": "Month / Year",
+      "label_es": "Month / Year",
+      "required": true,
+      "help_en": "Enter the month and year for this tracking period (e.g., December 2025)",
+      "help_es": "Enter the month and year for this tracking period (e.g., December 2025)",
+      "type": "text"
+     }
+    ]
+   },
+   {
+    "title_en": "Week 1: Days 1st - 7th",
+    "title_es": "Week 1: Days 1st - 7th",
+    "fields": [
+     {
+      "id": "f8",
+      "label_en": "# of times individual worked on the goal",
+      "label_es": "# of times individual worked on the goal",
+      "required": true,
+      "help_en": "Must be 1 or more times per week",
+      "help_es": "Must be 1 or more times per week",
+      "type": "number"
+     },
+     {
+      "id": "f9",
+      "label_en": "# of times provider supported individual with increasing their independence related to this goal",
+      "label_es": "# of times provider supported individual with increasing their independence related to this goal",
+      "required": true,
+      "type": "number"
+     },
+     {
+      "id": "f10",
+      "label_en": "Type of support provided (Days 1-7)",
+      "label_es": "Type of support provided (Days 1-7)",
+      "required": true,
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "Verbal",
+        "en": "Verbal",
+        "es": "Verbal"
+       },
+       {
+        "value": "Supervision",
+        "en": "Supervision",
+        "es": "Supervision"
+       },
+       {
+        "value": "Physical Assistance",
+        "en": "Physical Assistance",
+        "es": "Physical Assistance"
+       },
+       {
+        "value": "Other",
+        "en": "Other",
+        "es": "Other"
+       }
+      ]
+     },
+     {
+      "id": "f11",
+      "label_en": "If Other, please specify (Days 1-7)",
+      "label_es": "If Other, please specify (Days 1-7)",
+      "type": "text",
+      "show_if": {
+       "logic": "all",
+       "action": "show",
+       "rules": [
+        {
+         "field": "f10",
+         "op": "is",
+         "value": "Other"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "title_en": "Week 2: Days 8th - 14th",
+    "title_es": "Week 2: Days 8th - 14th",
+    "fields": [
+     {
+      "id": "f13",
+      "label_en": "# of times individual worked on the goal",
+      "label_es": "# of times individual worked on the goal",
+      "required": true,
+      "help_en": "Must be 1 or more times per week",
+      "help_es": "Must be 1 or more times per week",
+      "type": "number"
+     },
+     {
+      "id": "f14",
+      "label_en": "# of times provider supported individual with increasing their independence related to this goal",
+      "label_es": "# of times provider supported individual with increasing their independence related to this goal",
+      "required": true,
+      "type": "number"
+     },
+     {
+      "id": "f15",
+      "label_en": "Type of support provided (Days 8-14)",
+      "label_es": "Type of support provided (Days 8-14)",
+      "required": true,
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "Verbal",
+        "en": "Verbal",
+        "es": "Verbal"
+       },
+       {
+        "value": "Supervision",
+        "en": "Supervision",
+        "es": "Supervision"
+       },
+       {
+        "value": "Physical Assistance",
+        "en": "Physical Assistance",
+        "es": "Physical Assistance"
+       },
+       {
+        "value": "Other",
+        "en": "Other",
+        "es": "Other"
+       }
+      ]
+     },
+     {
+      "id": "f16",
+      "label_en": "If Other, please specify (Days 8-14)",
+      "label_es": "If Other, please specify (Days 8-14)",
+      "type": "text",
+      "show_if": {
+       "logic": "all",
+       "action": "show",
+       "rules": [
+        {
+         "field": "f15",
+         "op": "is",
+         "value": "Other"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "title_en": "Week 3: Days 15th - 21st",
+    "title_es": "Week 3: Days 15th - 21st",
+    "fields": [
+     {
+      "id": "f18",
+      "label_en": "# of times individual worked on the goal",
+      "label_es": "# of times individual worked on the goal",
+      "required": true,
+      "help_en": "Must be 1 or more times per week",
+      "help_es": "Must be 1 or more times per week",
+      "type": "number"
+     },
+     {
+      "id": "f19",
+      "label_en": "# of times provider supported individual with increasing their independence related to this goal",
+      "label_es": "# of times provider supported individual with increasing their independence related to this goal",
+      "required": true,
+      "type": "number"
+     },
+     {
+      "id": "f20",
+      "label_en": "Type of support provided (Days 15-21)",
+      "label_es": "Type of support provided (Days 15-21)",
+      "required": true,
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "Verbal",
+        "en": "Verbal",
+        "es": "Verbal"
+       },
+       {
+        "value": "Supervision",
+        "en": "Supervision",
+        "es": "Supervision"
+       },
+       {
+        "value": "Physical Assistance",
+        "en": "Physical Assistance",
+        "es": "Physical Assistance"
+       },
+       {
+        "value": "Other",
+        "en": "Other",
+        "es": "Other"
+       }
+      ]
+     },
+     {
+      "id": "f21",
+      "label_en": "If Other, please specify (Days 15-21)",
+      "label_es": "If Other, please specify (Days 15-21)",
+      "type": "text",
+      "show_if": {
+       "logic": "all",
+       "action": "show",
+       "rules": [
+        {
+         "field": "f20",
+         "op": "is",
+         "value": "Other"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "title_en": "Week 4: Days 22nd - 31st",
+    "title_es": "Week 4: Days 22nd - 31st",
+    "fields": [
+     {
+      "id": "f23",
+      "label_en": "# of times individual worked on the goal",
+      "label_es": "# of times individual worked on the goal",
+      "required": true,
+      "help_en": "Must be 1 or more times per week",
+      "help_es": "Must be 1 or more times per week",
+      "type": "number"
+     },
+     {
+      "id": "f24",
+      "label_en": "# of times provider supported individual with increasing their independence related to this goal",
+      "label_es": "# of times provider supported individual with increasing their independence related to this goal",
+      "required": true,
+      "type": "number"
+     },
+     {
+      "id": "f25",
+      "label_en": "Type of support provided (Days 22-31)",
+      "label_es": "Type of support provided (Days 22-31)",
+      "required": true,
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "Verbal",
+        "en": "Verbal",
+        "es": "Verbal"
+       },
+       {
+        "value": "Supervision",
+        "en": "Supervision",
+        "es": "Supervision"
+       },
+       {
+        "value": "Physical Assistance",
+        "en": "Physical Assistance",
+        "es": "Physical Assistance"
+       },
+       {
+        "value": "Other",
+        "en": "Other",
+        "es": "Other"
+       }
+      ]
+     },
+     {
+      "id": "f26",
+      "label_en": "If Other, please specify (Days 22-31)",
+      "label_es": "If Other, please specify (Days 22-31)",
+      "type": "text",
+      "show_if": {
+       "logic": "all",
+       "action": "show",
+       "rules": [
+        {
+         "field": "f25",
+         "op": "is",
+         "value": "Other"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "title_en": "Goal Assessment",
+    "title_es": "Goal Assessment",
+    "fields": [
+     {
+      "id": "f28",
+      "label_en": "Does the individual still express interest in increasing their independence in this area?",
+      "label_es": "Does the individual still express interest in increasing their independence in this area?",
+      "required": true,
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f29",
+      "label_en": "If not, what goal does the individual want to work on?",
+      "label_es": "If not, what goal does the individual want to work on?",
+      "type": "textarea",
+      "show_if": {
+       "logic": "all",
+       "action": "show",
+       "rules": [
+        {
+         "field": "f28",
+         "op": "is",
+         "value": "No"
+        }
+       ]
+      }
+     },
+     {
+      "id": "f30",
+      "label_en": "What would be needed to implement the new goal?",
+      "label_es": "What would be needed to implement the new goal?",
+      "type": "textarea",
+      "show_if": {
+       "logic": "all",
+       "action": "show",
+       "rules": [
+        {
+         "field": "f28",
+         "op": "is",
+         "value": "No"
+        }
+       ]
+      }
+     },
+     {
+      "id": "f31",
+      "label_en": "Is the provider able to assist the individual with achieving this goal?",
+      "label_es": "Is the provider able to assist the individual with achieving this goal?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ],
+      "show_if": {
+       "logic": "all",
+       "action": "show",
+       "rules": [
+        {
+         "field": "f28",
+         "op": "is",
+         "value": "No"
+        }
+       ]
+      }
+     },
+     {
+      "id": "f32",
+      "label_en": "If not, please explain why?",
+      "label_es": "If not, please explain why?",
+      "type": "textarea",
+      "show_if": {
+       "logic": "all",
+       "action": "show",
+       "rules": [
+        {
+         "field": "f31",
+         "op": "is",
+         "value": "No"
+        }
+       ]
+      }
+     },
+     {
+      "id": "f33",
+      "label_en": "Additional Comments / Notes",
+      "label_es": "Additional Comments / Notes",
+      "type": "textarea"
+     }
+    ]
+   },
+   {
+    "title_en": "Certification",
+    "title_es": "Certification",
+    "fields": [
+     {
+      "id": "f35",
+      "label_en": "Provider Signature",
+      "label_es": "Provider Signature",
+      "required": true,
+      "help_en": "Enter your name to certify this record",
+      "help_es": "Enter your name to certify this record",
+      "type": "signature"
+     },
+     {
+      "id": "f36",
+      "label_en": "Date",
+      "label_es": "Date",
+      "required": true,
+      "type": "date"
+     }
+    ]
+   }
+  ]
+ }
+}

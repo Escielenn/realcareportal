@@ -172,7 +172,7 @@ export function TemplateEditor({ templateId, initial, individual }: { templateId
         <Msg r={r} />
         <details className="rounded-xl border border-line p-3 text-sm text-muted">
           <summary className="cursor-pointer font-semibold text-ink">Field types</summary>
-          <p className="mt-2">text, textarea, date, time, number, select, radio, checkboxes (with <code>options</code>), signature, and prefill (<code>source</code>: individual.full_name or individual.goals). Add <code>show_if</code> to show a field only after a certain answer. Every field has <code>label_en</code> and <code>label_es</code>.</p>
+          <p className="mt-2">text, textarea, date, time, number, currency, phone, select, radio, checkboxes (with <code>options</code>), signature, file (attachment), info (<code>body_en</code>/<code>body_es</code> text block), prefill (<code>source</code>: individual.full_name or individual.goals), and repeater (rows with <code>columns</code>; a column of type <code>hours</code> with <code>from: [timeIn, timeOut]</code> calculates hours; <code>totals</code> lists columns to sum). <code>show_if</code> takes <code>{"{"}field, equals{"}"}</code> or <code>{"{"}logic: all|any, action: show|hide, rules: [{"{"}field, op, value{"}"}]{"}"}</code>. Every field has <code>label_en</code> and <code>label_es</code>.</p>
         </details>
       </div>
       <div className="space-y-3">

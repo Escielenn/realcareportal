@@ -1,0 +1,296 @@
+{
+ "meta": {
+  "slug": "community-account-record",
+  "title_en": "Community Account Record",
+  "title_es": "Registro de cuenta comunitaria",
+  "category": "monthly",
+  "per_individual": true,
+  "self_start": false,
+  "source": "COMMUNITY-ACCOUNT-RECORD_currency-logic_gravityforms-export.json",
+  "gf_form_id": 12,
+  "fields": 19,
+  "gf_fields": 22,
+  "staff_only": [],
+  "dropped": []
+ },
+ "schema": {
+  "instructions_en": [
+   {
+    "title": "How to fill out this form",
+    "steps": [
+     "Answer each question.",
+     "Check your answers.",
+     "Sign and submit."
+    ]
+   }
+  ],
+  "instructions_es": [
+   {
+    "title": "Cómo llenar este formulario",
+    "steps": [
+     "Conteste cada pregunta.",
+     "Revise sus respuestas.",
+     "Firme y envíe."
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "title_en": "Details",
+    "title_es": "Details",
+    "fields": [
+     {
+      "id": "f1",
+      "type": "prefill",
+      "source": "individual.full_name",
+      "label_en": "Name",
+      "label_es": "Persona"
+     },
+     {
+      "id": "f2",
+      "label_en": "Provider",
+      "label_es": "Provider",
+      "required": true,
+      "type": "text"
+     },
+     {
+      "id": "f3",
+      "label_en": "Month / Year (pick any day in month)",
+      "label_es": "Month / Year (pick any day in month)",
+      "required": true,
+      "type": "date"
+     }
+    ]
+   },
+   {
+    "title_en": "Personal Needs / Cash On Hand — Ledger",
+    "title_es": "Personal Needs / Cash On Hand — Ledger",
+    "fields": [
+     {
+      "id": "f11",
+      "type": "info",
+      "label_en": "",
+      "label_es": "",
+      "body_en": "Enter each transaction row below (e.g., Balance Forward, Personal Needs Money Deposit). Columns: Date, Description, +, −, =, Receipt Attached.",
+      "body_es": "Enter each transaction row below (e.g., Balance Forward, Personal Needs Money Deposit). Columns: Date, Description, +, −, =, Receipt Attached."
+     },
+     {
+      "id": "f12",
+      "type": "repeater",
+      "label_en": "Personal Needs Ledger (add rows as needed)",
+      "label_es": "Personal Needs Ledger (add rows as needed)",
+      "columns": [
+       {
+        "id": "date",
+        "type": "date",
+        "label_en": "Date",
+        "label_es": "Date"
+       },
+       {
+        "id": "description_type_of_tran",
+        "type": "text",
+        "label_en": "Description / Type of Transaction",
+        "label_es": "Description / Type of Transaction"
+       },
+       {
+        "id": "addition",
+        "type": "currency",
+        "label_en": "+ (Addition)",
+        "label_es": "+ (Addition)"
+       },
+       {
+        "id": "expenditure",
+        "type": "currency",
+        "label_en": "- (Expenditure)",
+        "label_es": "- (Expenditure)"
+       },
+       {
+        "id": "balance",
+        "type": "currency",
+        "label_en": "= (Balance)",
+        "label_es": "= (Balance)"
+       },
+       {
+        "id": "receipt_attached_y_n",
+        "type": "select",
+        "label_en": "Receipt Attached (Y/N)",
+        "label_es": "Receipt Attached (Y/N)",
+        "options": [
+         {
+          "value": "Y",
+          "en": "Y",
+          "es": "Y"
+         },
+         {
+          "value": "N",
+          "en": "N",
+          "es": "N"
+         }
+        ]
+       }
+      ],
+      "totals": [
+       "addition",
+       "expenditure"
+      ]
+     },
+     {
+      "id": "f13",
+      "label_en": "Ending Balance (Personal Needs/Cash on Hand)",
+      "label_es": "Ending Balance (Personal Needs/Cash on Hand)",
+      "type": "currency"
+     }
+    ]
+   },
+   {
+    "title_en": "Bank Account Summary",
+    "title_es": "Bank Account Summary",
+    "fields": [
+     {
+      "id": "f21",
+      "label_en": "Account Type",
+      "label_es": "Account Type",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "checking",
+        "en": "Checking Account",
+        "es": "Checking Account"
+       },
+       {
+        "value": "savings",
+        "en": "Savings Account",
+        "es": "Savings Account"
+       }
+      ]
+     },
+     {
+      "id": "f22",
+      "label_en": "Beginning Balance",
+      "label_es": "Beginning Balance",
+      "type": "currency"
+     },
+     {
+      "id": "f23",
+      "label_en": "Total Deposits",
+      "label_es": "Total Deposits",
+      "type": "currency"
+     },
+     {
+      "id": "f24",
+      "label_en": "Total Expenditures",
+      "label_es": "Total Expenditures",
+      "type": "currency"
+     },
+     {
+      "id": "f25",
+      "label_en": "Ending Balance (calculated)",
+      "label_es": "Ending Balance (calculated)",
+      "type": "currency"
+     },
+     {
+      "id": "f26",
+      "label_en": "Attachments Required",
+      "label_es": "Attachments Required",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "bank_statement",
+        "en": "Bank Statement must be attached",
+        "es": "Bank Statement must be attached"
+       },
+       {
+        "value": "receipts",
+        "en": "Receipts must be attached",
+        "es": "Receipts must be attached"
+       }
+      ]
+     },
+     {
+      "id": "f27",
+      "label_en": "Additional Info",
+      "label_es": "Additional Info",
+      "type": "textarea"
+     },
+     {
+      "id": "f28",
+      "label_en": "Individual has earned income",
+      "label_es": "Individual has earned income",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f29",
+      "label_en": "Earned Income has been reported to SSI?",
+      "label_es": "Earned Income has been reported to SSI?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ],
+      "show_if": {
+       "logic": "all",
+       "action": "show",
+       "rules": [
+        {
+         "field": "f28",
+         "op": "is",
+         "value": "Yes"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "title_en": "Signatures & Review",
+    "title_es": "Signatures & Review",
+    "fields": [
+     {
+      "id": "f31",
+      "label_en": "Provider Signature (typed)",
+      "label_es": "Provider Signature (typed)",
+      "type": "signature"
+     },
+     {
+      "id": "f32",
+      "label_en": "Provider Sign Date",
+      "label_es": "Provider Sign Date",
+      "type": "date"
+     },
+     {
+      "id": "f33",
+      "label_en": "Reviewed By (Real Care Admin)",
+      "label_es": "Reviewed By (Real Care Admin)",
+      "type": "text"
+     },
+     {
+      "id": "f34",
+      "label_en": "Reviewed Date",
+      "label_es": "Reviewed Date",
+      "type": "date"
+     }
+    ]
+   }
+  ]
+ }
+}

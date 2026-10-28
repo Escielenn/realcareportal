@@ -3,6 +3,7 @@
 Run:  python3 supabase/seed/generate_seed.py > supabase/seed.sql
 """
 import json
+import os
 import random
 import uuid
 from datetime import date, timedelta
@@ -644,6 +645,15 @@ select p.id, 'reminder', 'Training due in 3 days', 'Su capacitación vence en 3 
 from public.profiles p where p.email = 'demo.provider@example.com';
 delete from public.email_outbox;""")
 
+# The intranet's Gravity Forms, converted by scripts/convert_gravity_forms.py, loaded as drafts until Real Care signs off.
+import glob as _glob
+for _p in sorted(_glob.glob(os.path.join(os.path.dirname(__file__), "..", "..", "content", "forms", "*.json"))):
+    _d = json.load(open(_p))
+    _m, _sch = _d["meta"], _d["schema"]
+    w(f"insert into public.form_templates (id, slug, title_en, title_es, schema, per_individual, version, category, self_start, active, description_en, description_es) values "
+      f"('{uid('template:' + _m['slug'])}', {q(_m['slug'])}, {q(_m['title_en'])}, {q(_m['title_es'])}, {j(_sch)}, {str(_m['per_individual']).lower()}, 1, {q(_m['category'])}, {str(_m['self_start']).lower()}, false, "
+      f"{q('Converted from the intranet Gravity Form (' + _m['source'] + '). Draft until Real Care checks it against the original.')}, "
+      f"{q('Convertido del formulario de la intranet. Borrador hasta que Real Care lo revise.')});")
 w("update public.form_templates set self_start = true, category = 'incident' where slug = 'incident-report';")
 w("update public.form_templates set self_start = true, category = 'daily' where slug in ('rci-log-notes', 'goal-tracking');")
 w("update public.form_templates set category = 'safety' where slug = 'fire-drill';")

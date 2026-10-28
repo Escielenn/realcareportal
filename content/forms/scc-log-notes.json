@@ -1,0 +1,466 @@
+{
+ "meta": {
+  "slug": "scc-log-notes",
+  "title_en": "SCC Log Notes",
+  "title_es": "Notas de registro SCC",
+  "category": "daily",
+  "per_individual": true,
+  "self_start": true,
+  "source": "scc_log_notes_json.json",
+  "gf_form_id": 5,
+  "fields": 28,
+  "gf_fields": 33,
+  "staff_only": [],
+  "dropped": [
+   "Form Header (decoration)"
+  ]
+ },
+ "schema": {
+  "instructions_en": [
+   {
+    "title": "How to Complete SCC Log Notes",
+    "steps": [
+     "This form documents daily activities provided through Supported Community Connections (SCC) services. Complete one entry for each service session.",
+     "⚠️ Important: Date/Times MUST match the timesheet submitted. Any discrepancy will not be billed/paid to the independent contractor. Please submit your notes and timesheet on the 20th of each month.",
+     "Person Receiving Services Name: Enter the full name of the individual.",
+     "IP Goal: Enter the relevant Individual Plan goal being addressed."
+    ]
+   },
+   {
+    "title": "Basic Information",
+    "steps": [
+     "Date: Date of service",
+     "Start Time: When service began",
+     "End Time: When service ended"
+    ]
+   },
+   {
+    "title": "Activity Documentation",
+    "steps": [
+     "Choices of Activities Offered: List all activity options you presented to the individual",
+     "Specific Location and Activity Selected: Document where you went and what activity the person chose"
+    ]
+   },
+   {
+    "title": "Purpose/Goal (Check all that apply)",
+    "steps": [
+     "Development of Natural Supports in the Community",
+     "Development or introduction to new skill",
+     "Sensory Stimulation (visual, auditory, tactile, etc.)",
+     "Recreation and/or leisure",
+     "Educational/Knowledge Building",
+     "Other (specify)"
+    ]
+   },
+   {
+    "title": "Detailed Explanation",
+    "steps": [
+     "What is the purpose, or the goal of the activity? Check off the opportunities that the activity provided. Use the explanation area to detail:",
+     "The individual's level of participation",
+     "Their response to the activity",
+     "DO NOT use: \"Good day, bad day, etc.\"",
+     "Be specific and objective in your observations"
+    ]
+   },
+   {
+    "title": "Community Connections",
+    "steps": [
+     "Who did individual connect with in the community? Were prompts needed?",
+     "Describe interactions with community members",
+     "Indicate level of support: Verbal, Physical, or Independent"
+    ]
+   },
+   {
+    "title": "Successes and Support Needs",
+    "steps": [
+     "Discuss Successes and/or areas where additional support may be needed:",
+     "What went well?",
+     "What challenges were encountered?",
+     "What additional support might help?"
+    ]
+   },
+   {
+    "title": "Goal Implementation",
+    "steps": [
+     "Document how the goal was implemented today:",
+     "If you provided a second service session on the same day or a different day, complete Entry #2 with the same level of detail as Entry #1.",
+     "Each entry should document:",
+     "Deadline: Submit notes and timesheet by the 20th of each month.",
+     "How did today's activity relate to the IP goal?",
+     "What specific actions supported goal progress?",
+     "What outcomes were observed?",
+     "Separate date and times",
+     "Different activities or locations",
+     "Distinct observations and outcomes",
+     "SCC Provider Signature: Enter your name to certify these notes",
+     "Date: Date of completion",
+     "Review all entries for accuracy and completeness",
+     "Verify times match your timesheet"
+    ]
+   }
+  ],
+  "instructions_es": [
+   {
+    "title": "Cómo llenar este formulario",
+    "steps": [
+     "Conteste cada pregunta.",
+     "Revise sus respuestas.",
+     "Firme y envíe."
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "title_en": "Details",
+    "title_es": "Details",
+    "fields": [
+     {
+      "id": "f3",
+      "type": "prefill",
+      "source": "individual.full_name",
+      "label_en": "Person Receiving Services Name",
+      "label_es": "Persona"
+     },
+     {
+      "id": "f4",
+      "label_en": "IP Goal",
+      "label_es": "IP Goal",
+      "required": true,
+      "help_en": "Enter the Individual Plan goal being addressed",
+      "help_es": "Enter the Individual Plan goal being addressed",
+      "type": "textarea"
+     }
+    ]
+   },
+   {
+    "title_en": "Service Entry #1",
+    "title_es": "Service Entry #1",
+    "fields": [
+     {
+      "id": "f6",
+      "label_en": "Date (Entry #1)",
+      "label_es": "Date (Entry #1)",
+      "required": true,
+      "type": "date"
+     },
+     {
+      "id": "f7",
+      "label_en": "Start Time (Entry #1)",
+      "label_es": "Start Time (Entry #1)",
+      "required": true,
+      "type": "time"
+     },
+     {
+      "id": "f8",
+      "label_en": "End Time (Entry #1)",
+      "label_es": "End Time (Entry #1)",
+      "required": true,
+      "type": "time"
+     },
+     {
+      "id": "f9",
+      "label_en": "Choices of Activities Offered (Entry #1)",
+      "label_es": "Choices of Activities Offered (Entry #1)",
+      "required": true,
+      "help_en": "List all activity options presented to the individual",
+      "help_es": "List all activity options presented to the individual",
+      "type": "textarea"
+     },
+     {
+      "id": "f10",
+      "label_en": "Specific Location and Activity Selected by Person Receiving Services (Entry #1)",
+      "label_es": "Specific Location and Activity Selected by Person Receiving Services (Entry #1)",
+      "required": true,
+      "help_en": "Document where you went and what activity the person chose",
+      "help_es": "Document where you went and what activity the person chose",
+      "type": "textarea"
+     },
+     {
+      "id": "f11",
+      "label_en": "Purpose / Goal of Activity (Entry #1)",
+      "label_es": "Purpose / Goal of Activity (Entry #1)",
+      "required": true,
+      "help_en": "Check all opportunities that the activity provided",
+      "help_es": "Check all opportunities that the activity provided",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "Natural Supports",
+        "en": "Development of Natural Supports in the Community",
+        "es": "Development of Natural Supports in the Community"
+       },
+       {
+        "value": "New Skill",
+        "en": "Development or introduction to new skill",
+        "es": "Development or introduction to new skill"
+       },
+       {
+        "value": "Sensory Stimulation",
+        "en": "Sensory Stimulation (visual, auditory, tactile, etc.)",
+        "es": "Sensory Stimulation (visual, auditory, tactile, etc.)"
+       },
+       {
+        "value": "Recreation",
+        "en": "Recreation and / or leisure",
+        "es": "Recreation and / or leisure"
+       },
+       {
+        "value": "Educational",
+        "en": "Educational / Knowledge Building",
+        "es": "Educational / Knowledge Building"
+       },
+       {
+        "value": "Other",
+        "en": "Other",
+        "es": "Other"
+       }
+      ]
+     },
+     {
+      "id": "f12",
+      "label_en": "If Other, please specify (Entry #1)",
+      "label_es": "If Other, please specify (Entry #1)",
+      "type": "text",
+      "show_if": {
+       "logic": "all",
+       "action": "show",
+       "rules": [
+        {
+         "field": "f11",
+         "op": "is",
+         "value": "Other"
+        }
+       ]
+      }
+     },
+     {
+      "id": "f13",
+      "label_en": "Detailed Explanation (Entry #1)",
+      "label_es": "Detailed Explanation (Entry #1)",
+      "required": true,
+      "help_en": "Detail the individual's level of participation and their response to the activity. DO NOT use: Good day, bad day, etc. Be specific and objective.",
+      "help_es": "Detail the individual's level of participation and their response to the activity. DO NOT use: Good day, bad day, etc. Be specific and objective.",
+      "type": "textarea"
+     },
+     {
+      "id": "f14",
+      "label_en": "Who did individual connect with in the community? Were prompts needed? (Entry #1)",
+      "label_es": "Who did individual connect with in the community? Were prompts needed? (Entry #1)",
+      "required": true,
+      "help_en": "Describe interactions with community members",
+      "help_es": "Describe interactions with community members",
+      "type": "textarea"
+     },
+     {
+      "id": "f15",
+      "label_en": "Level of Prompts Needed (Entry #1)",
+      "label_es": "Level of Prompts Needed (Entry #1)",
+      "required": true,
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "Verbal",
+        "en": "Verbal",
+        "es": "Verbal"
+       },
+       {
+        "value": "Physical",
+        "en": "Physical",
+        "es": "Physical"
+       },
+       {
+        "value": "Independent",
+        "en": "Independent",
+        "es": "Independent"
+       }
+      ]
+     },
+     {
+      "id": "f16",
+      "label_en": "Discuss Successes and / or areas where additional support may be needed (Entry #1)",
+      "label_es": "Discuss Successes and / or areas where additional support may be needed (Entry #1)",
+      "required": true,
+      "type": "textarea"
+     },
+     {
+      "id": "f17",
+      "label_en": "Document how the goal was implemented today (Entry #1)",
+      "label_es": "Document how the goal was implemented today (Entry #1)",
+      "required": true,
+      "type": "textarea"
+     }
+    ]
+   },
+   {
+    "title_en": "Service Entry #2 (Optional)",
+    "title_es": "Service Entry #2 (Optional)",
+    "fields": [
+     {
+      "id": "f19",
+      "label_en": "Date (Entry #2)",
+      "label_es": "Date (Entry #2)",
+      "type": "date"
+     },
+     {
+      "id": "f20",
+      "label_en": "Start Time (Entry #2)",
+      "label_es": "Start Time (Entry #2)",
+      "type": "time"
+     },
+     {
+      "id": "f21",
+      "label_en": "End Time (Entry #2)",
+      "label_es": "End Time (Entry #2)",
+      "type": "time"
+     },
+     {
+      "id": "f22",
+      "label_en": "Choices of Activities Offered (Entry #2)",
+      "label_es": "Choices of Activities Offered (Entry #2)",
+      "help_en": "List all activity options presented to the individual",
+      "help_es": "List all activity options presented to the individual",
+      "type": "textarea"
+     },
+     {
+      "id": "f23",
+      "label_en": "Specific Location and Activity Selected by Person Receiving Services (Entry #2)",
+      "label_es": "Specific Location and Activity Selected by Person Receiving Services (Entry #2)",
+      "help_en": "Document where you went and what activity the person chose",
+      "help_es": "Document where you went and what activity the person chose",
+      "type": "textarea"
+     },
+     {
+      "id": "f24",
+      "label_en": "Purpose / Goal of Activity (Entry #2)",
+      "label_es": "Purpose / Goal of Activity (Entry #2)",
+      "help_en": "Check all opportunities that the activity provided",
+      "help_es": "Check all opportunities that the activity provided",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "Natural Supports",
+        "en": "Development of Natural Supports in the Community",
+        "es": "Development of Natural Supports in the Community"
+       },
+       {
+        "value": "New Skill",
+        "en": "Development or introduction to new skill",
+        "es": "Development or introduction to new skill"
+       },
+       {
+        "value": "Sensory Stimulation",
+        "en": "Sensory Stimulation (visual, auditory, tactile, etc.)",
+        "es": "Sensory Stimulation (visual, auditory, tactile, etc.)"
+       },
+       {
+        "value": "Recreation",
+        "en": "Recreation and / or leisure",
+        "es": "Recreation and / or leisure"
+       },
+       {
+        "value": "Educational",
+        "en": "Educational / Knowledge Building",
+        "es": "Educational / Knowledge Building"
+       },
+       {
+        "value": "Other",
+        "en": "Other",
+        "es": "Other"
+       }
+      ]
+     },
+     {
+      "id": "f25",
+      "label_en": "If Other, please specify (Entry #2)",
+      "label_es": "If Other, please specify (Entry #2)",
+      "type": "text",
+      "show_if": {
+       "logic": "all",
+       "action": "show",
+       "rules": [
+        {
+         "field": "f24",
+         "op": "is",
+         "value": "Other"
+        }
+       ]
+      }
+     },
+     {
+      "id": "f26",
+      "label_en": "Detailed Explanation (Entry #2)",
+      "label_es": "Detailed Explanation (Entry #2)",
+      "help_en": "Detail the individual's level of participation and their response to the activity. DO NOT use: Good day, bad day, etc. Be specific and objective.",
+      "help_es": "Detail the individual's level of participation and their response to the activity. DO NOT use: Good day, bad day, etc. Be specific and objective.",
+      "type": "textarea"
+     },
+     {
+      "id": "f27",
+      "label_en": "Who did individual connect with in the community? Were prompts needed? (Entry #2)",
+      "label_es": "Who did individual connect with in the community? Were prompts needed? (Entry #2)",
+      "help_en": "Describe interactions with community members",
+      "help_es": "Describe interactions with community members",
+      "type": "textarea"
+     },
+     {
+      "id": "f28",
+      "label_en": "Level of Prompts Needed (Entry #2)",
+      "label_es": "Level of Prompts Needed (Entry #2)",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "Verbal",
+        "en": "Verbal",
+        "es": "Verbal"
+       },
+       {
+        "value": "Physical",
+        "en": "Physical",
+        "es": "Physical"
+       },
+       {
+        "value": "Independent",
+        "en": "Independent",
+        "es": "Independent"
+       }
+      ]
+     },
+     {
+      "id": "f29",
+      "label_en": "Discuss Successes and / or areas where additional support may be needed (Entry #2)",
+      "label_es": "Discuss Successes and / or areas where additional support may be needed (Entry #2)",
+      "type": "textarea"
+     },
+     {
+      "id": "f30",
+      "label_en": "Document how the goal was implemented today (Entry #2)",
+      "label_es": "Document how the goal was implemented today (Entry #2)",
+      "type": "textarea"
+     }
+    ]
+   },
+   {
+    "title_en": "Certification",
+    "title_es": "Certification",
+    "fields": [
+     {
+      "id": "f32",
+      "label_en": "SCC Provider Signature",
+      "label_es": "SCC Provider Signature",
+      "required": true,
+      "help_en": "Enter your name to certify these log notes",
+      "help_es": "Enter your name to certify these log notes",
+      "type": "signature"
+     },
+     {
+      "id": "f33",
+      "label_en": "Date",
+      "label_es": "Date",
+      "required": true,
+      "type": "date"
+     }
+    ]
+   }
+  ]
+ }
+}

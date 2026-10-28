@@ -1,0 +1,740 @@
+{
+ "0": {
+  "title": "REAL CARE INC. LOG NOTES",
+  "description": "Three-page monthly log notes form with repeating weekly blocks and medication verification.",
+  "labelPlacement": "top_label",
+  "descriptionPlacement": "below",
+  "button": {
+   "type": "text",
+   "text": "Submit",
+   "imageUrl": ""
+  },
+  "version": "2.1.1.8",
+  "id": 13,
+  "pagination": {
+   "type": "percentage",
+   "style": "blue",
+   "pages": [
+    {
+     "text": "Weeks 1–14"
+    },
+    {
+     "text": "Weeks 15–28"
+    },
+    {
+     "text": "Week 29–End & Monthly Summary"
+    }
+   ]
+  },
+  "confirmations": [
+   {
+    "id": "f4eccb0512bd",
+    "name": "Default Confirmation",
+    "isDefault": true,
+    "type": "message",
+    "message": "Thanks—your monthly Log Notes were submitted.",
+    "url": "",
+    "pageId": "",
+    "queryString": ""
+   }
+  ],
+  "notifications": [
+   {
+    "id": "21232f297a57",
+    "to": "{admin_email}",
+    "name": "Admin Notification",
+    "event": "form_submission",
+    "toType": "email",
+    "subject": "Log Notes submitted for {Client’s Name:1}",
+    "message": "{all_fields}"
+   }
+  ],
+  "fields": [
+   {
+    "type": "text",
+    "id": 1,
+    "label": "Client’s Name",
+    "isRequired": true,
+    "size": "medium"
+   },
+   {
+    "type": "text",
+    "id": 2,
+    "label": "Provider Name",
+    "isRequired": true,
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 3,
+    "label": "Month / Year (pick any day in month)",
+    "isRequired": true,
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "3.1",
+      "label": "MM"
+     },
+     {
+      "id": "3.2",
+      "label": "DD"
+     },
+     {
+      "id": "3.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "page",
+    "id": 4,
+    "paginationType": "percentage",
+    "displayOnly": true,
+    "nextButton": {
+     "type": "text",
+     "text": "Next"
+    },
+    "previousButton": {
+     "type": "text",
+     "text": "Previous"
+    },
+    "pageNumber": 1
+   },
+   {
+    "type": "section",
+    "id": 10,
+    "label": "Log Notes — 1st through 7th",
+    "displayOnly": true,
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 11,
+    "label": "Changes This Week",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "Change to medical Status",
+      "value": "change_med_status"
+     },
+     {
+      "text": "Change to medication or medical routine / procedure",
+      "value": "change_med_routine"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "11.1",
+      "label": "Change to medical Status"
+     },
+     {
+      "id": "11.2",
+      "label": "Change to medication or medical routine / procedure"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 12,
+    "label": "Discuss any Dr. appointments or health concerns from this week:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "textarea",
+    "id": 13,
+    "label": "Discuss any community activities within the week:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "textarea",
+    "id": 14,
+    "label": "Discuss Successes and/or areas where additional support may be needed:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 15,
+    "label": "Requests",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "Additional Services Requested",
+      "value": "additional_services"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "15.1",
+      "label": "Additional Services Requested"
+     }
+    ]
+   },
+   {
+    "type": "html",
+    "id": 16,
+    "label": "Medication Administration Verification",
+    "displayOnly": true,
+    "content": "<h3>Medication Administration Verification</h3>\n<p>By checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed.</p>",
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 17,
+    "label": "Verification Acknowledgment",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "I verify the statement above for this period.",
+      "value": "verify"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "17.1",
+      "label": "I verify the statement above for this period."
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 18,
+    "label": "Family Caregiver Signature (typed name)",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "section",
+    "id": 40,
+    "label": "Log Notes — 8th through 14th",
+    "displayOnly": true,
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 41,
+    "label": "Changes This Week",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "Change to medical Status",
+      "value": "change_med_status"
+     },
+     {
+      "text": "Change to medication or medical routine / procedure",
+      "value": "change_med_routine"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "41.1",
+      "label": "Change to medical Status"
+     },
+     {
+      "id": "41.2",
+      "label": "Change to medication or medical routine / procedure"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 42,
+    "label": "Discuss any Dr. appointments or health concerns from this week:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "textarea",
+    "id": 43,
+    "label": "Discuss any community activities within the week:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "textarea",
+    "id": 44,
+    "label": "Discuss Successes and/or areas where additional support may be needed:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 45,
+    "label": "Requests",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "Additional Services Requested",
+      "value": "additional_services"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "45.1",
+      "label": "Additional Services Requested"
+     }
+    ]
+   },
+   {
+    "type": "html",
+    "id": 46,
+    "label": "Medication Administration Verification",
+    "displayOnly": true,
+    "content": "<h3>Medication Administration Verification</h3>\n<p>By checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed.</p>",
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 47,
+    "label": "Verification Acknowledgment",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "I verify the statement above for this period.",
+      "value": "verify"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "47.1",
+      "label": "I verify the statement above for this period."
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 48,
+    "label": "Family Caregiver Signature (typed name)",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "page",
+    "id": 99,
+    "paginationType": "percentage",
+    "displayOnly": true,
+    "nextButton": {
+     "type": "text",
+     "text": "Next"
+    },
+    "previousButton": {
+     "type": "text",
+     "text": "Previous"
+    },
+    "pageNumber": 2
+   },
+   {
+    "type": "section",
+    "id": 110,
+    "label": "Log Notes — 15th through 21st",
+    "displayOnly": true,
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 111,
+    "label": "Changes This Week",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "Change to medical Status",
+      "value": "change_med_status"
+     },
+     {
+      "text": "Change to medication or medical routine / procedure",
+      "value": "change_med_routine"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "111.1",
+      "label": "Change to medical Status"
+     },
+     {
+      "id": "111.2",
+      "label": "Change to medication or medical routine / procedure"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 112,
+    "label": "Discuss any Dr. appointments or health concerns from this week:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "textarea",
+    "id": 113,
+    "label": "Discuss any community activities within the week:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "textarea",
+    "id": 114,
+    "label": "Discuss Successes and/or areas where additional support may be needed:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 115,
+    "label": "Requests",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "Additional Services Requested",
+      "value": "additional_services"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "115.1",
+      "label": "Additional Services Requested"
+     }
+    ]
+   },
+   {
+    "type": "html",
+    "id": 116,
+    "label": "Medication Administration Verification",
+    "displayOnly": true,
+    "content": "<h3>Medication Administration Verification</h3>\n<p>By checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed.</p>",
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 117,
+    "label": "Verification Acknowledgment",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "I verify the statement above for this period.",
+      "value": "verify"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "117.1",
+      "label": "I verify the statement above for this period."
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 118,
+    "label": "Family Caregiver Signature (typed name)",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "section",
+    "id": 140,
+    "label": "Log Notes — 22nd through 28th",
+    "displayOnly": true,
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 141,
+    "label": "Changes This Week",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "Change to medical Status",
+      "value": "change_med_status"
+     },
+     {
+      "text": "Change to medication or medical routine / procedure",
+      "value": "change_med_routine"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "141.1",
+      "label": "Change to medical Status"
+     },
+     {
+      "id": "141.2",
+      "label": "Change to medication or medical routine / procedure"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 142,
+    "label": "Discuss any Dr. appointments or health concerns from this week:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "textarea",
+    "id": 143,
+    "label": "Discuss any community activities within the week:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "textarea",
+    "id": 144,
+    "label": "Discuss Successes and/or areas where additional support may be needed:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 145,
+    "label": "Requests",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "Additional Services Requested",
+      "value": "additional_services"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "145.1",
+      "label": "Additional Services Requested"
+     }
+    ]
+   },
+   {
+    "type": "html",
+    "id": 146,
+    "label": "Medication Administration Verification",
+    "displayOnly": true,
+    "content": "<h3>Medication Administration Verification</h3>\n<p>By checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed.</p>",
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 147,
+    "label": "Verification Acknowledgment",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "I verify the statement above for this period.",
+      "value": "verify"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "147.1",
+      "label": "I verify the statement above for this period."
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 148,
+    "label": "Family Caregiver Signature (typed name)",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "page",
+    "id": 199,
+    "paginationType": "percentage",
+    "displayOnly": true,
+    "nextButton": {
+     "type": "text",
+     "text": "Next"
+    },
+    "previousButton": {
+     "type": "text",
+     "text": "Previous"
+    },
+    "pageNumber": 3
+   },
+   {
+    "type": "section",
+    "id": 210,
+    "label": "Log Notes — 29th through 31st (or end of month)",
+    "displayOnly": true,
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 211,
+    "label": "Changes This Week",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "Change to medical Status",
+      "value": "change_med_status"
+     },
+     {
+      "text": "Change to medication or medical routine / procedure",
+      "value": "change_med_routine"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "211.1",
+      "label": "Change to medical Status"
+     },
+     {
+      "id": "211.2",
+      "label": "Change to medication or medical routine / procedure"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 212,
+    "label": "Discuss any Dr. appointments or health concerns from this week:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "textarea",
+    "id": 213,
+    "label": "Discuss any community activities within the week:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "textarea",
+    "id": 214,
+    "label": "Discuss Successes and/or areas where additional support may be needed:",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 215,
+    "label": "Requests",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "Additional Services Requested",
+      "value": "additional_services"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "215.1",
+      "label": "Additional Services Requested"
+     }
+    ]
+   },
+   {
+    "type": "html",
+    "id": 216,
+    "label": "Medication Administration Verification",
+    "displayOnly": true,
+    "content": "<h3>Medication Administration Verification</h3>\n<p>By checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed.</p>",
+    "formId": 13
+   },
+   {
+    "type": "checkbox",
+    "id": 217,
+    "label": "Verification Acknowledgment",
+    "formId": 13,
+    "choices": [
+     {
+      "text": "I verify the statement above for this period.",
+      "value": "verify"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "217.1",
+      "label": "I verify the statement above for this period."
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 218,
+    "label": "Family Caregiver Signature (typed name)",
+    "size": "medium",
+    "formId": 13
+   },
+   {
+    "type": "section",
+    "id": 240,
+    "label": "Monthly Summary",
+    "displayOnly": true
+   },
+   {
+    "type": "checkbox",
+    "id": 241,
+    "label": "During this month, the following occurred:",
+    "choices": [
+     {
+      "text": "Hospital Stay",
+      "value": "hospital_stay"
+     },
+     {
+      "text": "Over Night Trip",
+      "value": "overnight_trip"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "241.1",
+      "label": "Hospital Stay"
+     },
+     {
+      "id": "241.2",
+      "label": "Over Night Trip"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 242,
+    "label": "Date(s)",
+    "size": "medium"
+   },
+   {
+    "type": "number",
+    "id": 243,
+    "label": "I submitted billing for # of days",
+    "size": "small",
+    "rangeMin": "0"
+   },
+   {
+    "type": "html",
+    "id": 244,
+    "label": "Billing Statement",
+    "displayOnly": true,
+    "content": "<p>I have submitted log notes that support the billing of services on each of these days.</p>"
+   },
+   {
+    "type": "text",
+    "id": 245,
+    "label": "Provider / Caregiver Signature (typed)",
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 246,
+    "label": "Signature Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "246.1",
+      "label": "MM"
+     },
+     {
+      "id": "246.2",
+      "label": "DD"
+     },
+     {
+      "id": "246.3",
+      "label": "YYYY"
+     }
+    ]
+   }
+  ]
+ },
+ "version": "2.1.1.8"
+}

@@ -1,0 +1,220 @@
+{
+ "meta": {
+  "slug": "medicaid-attendance",
+  "title_en": "Medicaid Residential Attendance Record",
+  "title_es": "Registro de asistencia residencial de Medicaid",
+  "category": "monthly",
+  "per_individual": true,
+  "self_start": false,
+  "source": "medicaid_attendance_gf.json",
+  "gf_form_id": 1,
+  "fields": 10,
+  "gf_fields": 19,
+  "staff_only": [],
+  "dropped": [
+   "Form Header (decoration)",
+   "Total # of days residential services were provided to individual named above by the caregiver (replaced by a native grid)",
+   "Total # of trips that were provided to individual named above by the caregiver (replaced by a native grid)",
+   "Submission Info (decoration)"
+  ]
+ },
+ "schema": {
+  "instructions_en": [
+   {
+    "title": "How to Complete This Form",
+    "steps": [
+     "This form tracks residential services and transportation provided each day of the month. Mark the days you provided services using the interactive grids below.",
+     "In the Residential Services Grid, mark each day you provided residential services:",
+     "Only complete this section if you are an approved Non-Medical Transport Provider with Real Care.",
+     "In the Transportation Services Grid, mark each day you provided transportation:",
+     "After marking all days:",
+     "Once all information is complete and accurate:",
+     "Month: Enter the month you are reporting (e.g., January, February).",
+     "Year: Enter the four-digit year (e.g., 2025).",
+     "Provider's Name: Enter your full name as the service provider.",
+     "Person Receiving Services: Enter the full name of the client receiving services.",
+     "Click on any date (1-31) to mark it with an X indicating service was provided that day.",
+     "You can also use special codes: E (Enrollment), H (Hospital), R (Respite), V (Visit), I (Ineligible), T (Termination), VT (Vacant), J (Jail).",
+     "The grid automatically saves your selections as you work.",
+     "The total number of residential days will be calculated automatically."
+    ]
+   }
+  ],
+  "instructions_es": [
+   {
+    "title": "Cómo llenar este formulario",
+    "steps": [
+     "Conteste cada pregunta.",
+     "Revise sus respuestas.",
+     "Firme y envíe."
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "title_en": "Details",
+    "title_es": "Details",
+    "fields": [
+     {
+      "id": "f3",
+      "label_en": "Month",
+      "label_es": "Month",
+      "required": true,
+      "type": "text"
+     },
+     {
+      "id": "f4",
+      "label_en": "Year",
+      "label_es": "Year",
+      "required": true,
+      "type": "text"
+     },
+     {
+      "id": "f5",
+      "label_en": "Provider's Name",
+      "label_es": "Provider's Name",
+      "required": true,
+      "type": "text"
+     },
+     {
+      "id": "f6",
+      "type": "prefill",
+      "source": "individual.full_name",
+      "label_en": "Person Receiving Services",
+      "label_es": "Persona"
+     }
+    ]
+   },
+   {
+    "title_en": "Residential Services",
+    "title_es": "Residential Services",
+    "fields": [
+     {
+      "id": "residential_days",
+      "type": "daygrid",
+      "label_en": "Residential services by day",
+      "label_es": "Servicios residenciales por día",
+      "cell": "code",
+      "codes": [
+       {
+        "value": "E",
+        "en": "Enrollment / admission date",
+        "es": "Fecha de inscripción / admisión"
+       },
+       {
+        "value": "X",
+        "en": "Client in residence",
+        "es": "Cliente en la residencia"
+       },
+       {
+        "value": "H",
+        "en": "Hospital day / nursing home",
+        "es": "Día de hospital / asilo"
+       },
+       {
+        "value": "R",
+        "en": "Respite",
+        "es": "Relevo"
+       },
+       {
+        "value": "V",
+        "en": "Visit to family, friends or special program",
+        "es": "Visita a familia, amigos o programa especial"
+       },
+       {
+        "value": "I",
+        "en": "Ineligible day",
+        "es": "Día no elegible"
+       },
+       {
+        "value": "T",
+        "en": "Termination / discharge date",
+        "es": "Fecha de terminación / alta"
+       },
+       {
+        "value": "VT",
+        "en": "Visit with transportation",
+        "es": "Visita con transporte"
+       },
+       {
+        "value": "J",
+        "en": "Jail",
+        "es": "Cárcel"
+       }
+      ],
+      "rows": [
+       {
+        "id": "res",
+        "en": "Residential",
+        "es": "Residencial"
+       }
+      ],
+      "help_en": "Choose X for each day the person was in residence, or one of the special codes.",
+      "help_es": "Elija X para cada día que la persona estuvo en la residencia, o uno de los códigos especiales."
+     }
+    ]
+   },
+   {
+    "title_en": "Transportation Services",
+    "title_es": "Transportation Services",
+    "fields": [
+     {
+      "id": "transport_days",
+      "type": "daygrid",
+      "label_en": "Transportation trips (approved NMT providers only)",
+      "label_es": "Viajes de transporte (solo proveedores NMT aprobados)",
+      "cell": "check",
+      "rows": [
+       {
+        "id": "am",
+        "en": "AM trip",
+        "es": "Viaje de la mañana"
+       },
+       {
+        "id": "pm",
+        "en": "PM trip",
+        "es": "Viaje de la tarde"
+       }
+      ],
+      "help_en": "Maximum 2 trips per day (one there, one back).",
+      "help_es": "Máximo 2 viajes por día (ida y vuelta)."
+     }
+    ]
+   },
+   {
+    "title_en": "Participation Certified",
+    "title_es": "Participation Certified",
+    "fields": [
+     {
+      "id": "f15",
+      "label_en": "Name",
+      "label_es": "Name",
+      "required": true,
+      "type": "text"
+     },
+     {
+      "id": "f16",
+      "label_en": "Title",
+      "label_es": "Title",
+      "required": true,
+      "type": "text"
+     },
+     {
+      "id": "f17",
+      "label_en": "Phone No.",
+      "label_es": "Phone No.",
+      "required": true,
+      "type": "phone"
+     },
+     {
+      "id": "f18",
+      "label_en": "Date",
+      "label_es": "Date",
+      "required": true,
+      "type": "date"
+     }
+    ]
+   }
+  ]
+ }
+}

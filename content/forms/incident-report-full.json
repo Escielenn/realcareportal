@@ -1,0 +1,633 @@
+{
+ "meta": {
+  "slug": "incident-report-full",
+  "title_en": "Incident Report (full)",
+  "title_es": "Informe de incidente (completo)",
+  "category": "incident",
+  "per_individual": true,
+  "self_start": true,
+  "source": "INCIDENT-REPORT_gravityforms-export.json",
+  "gf_form_id": 6,
+  "fields": 52,
+  "gf_fields": 58,
+  "staff_only": [],
+  "dropped": []
+ },
+ "schema": {
+  "instructions_en": [
+   {
+    "title": "How to fill out this form",
+    "steps": [
+     "Answer each question.",
+     "Check your answers.",
+     "Sign and submit."
+    ]
+   }
+  ],
+  "instructions_es": [
+   {
+    "title": "Cómo llenar este formulario",
+    "steps": [
+     "Conteste cada pregunta.",
+     "Revise sus respuestas.",
+     "Firme y envíe."
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "title_en": "Details",
+    "title_es": "Details",
+    "fields": [
+     {
+      "id": "f1",
+      "type": "prefill",
+      "source": "individual.full_name",
+      "label_en": "Name of Individual Receiving Services",
+      "label_es": "Persona"
+     },
+     {
+      "id": "f2",
+      "label_en": "Initiated By",
+      "label_es": "Initiated By",
+      "required": true,
+      "type": "text"
+     },
+     {
+      "id": "f3",
+      "label_en": "Date Incident Occurred",
+      "label_es": "Date Incident Occurred",
+      "required": true,
+      "type": "date"
+     },
+     {
+      "id": "f4",
+      "label_en": "Time",
+      "label_es": "Time",
+      "type": "time"
+     },
+     {
+      "id": "f5",
+      "label_en": "How Long Did Incident Last",
+      "label_es": "How Long Did Incident Last",
+      "type": "text"
+     },
+     {
+      "id": "f6",
+      "label_en": "Where Did the Incident Occur (Home, Community, Day Program, etc.)",
+      "label_es": "Where Did the Incident Occur (Home, Community, Day Program, etc.)",
+      "type": "text"
+     },
+     {
+      "id": "f7",
+      "label_en": "Other People Involved (names)",
+      "label_es": "Other People Involved (names)",
+      "type": "text"
+     },
+     {
+      "id": "f8",
+      "label_en": "Witness(es)",
+      "label_es": "Witness(es)",
+      "type": "text"
+     },
+     {
+      "id": "f9",
+      "label_en": "Did you see the incident occur?",
+      "label_es": "Did you see the incident occur?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title_en": "Check the Type of Incident",
+    "title_es": "Check the Type of Incident",
+    "fields": [
+     {
+      "id": "f11",
+      "label_en": "Type of Incident",
+      "label_es": "Type of Incident",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "injury_client_service",
+        "en": "Injury to Client in service setting",
+        "es": "Injury to Client in service setting"
+       },
+       {
+        "value": "lost_missing",
+        "en": "Lost or Missing Person",
+        "es": "Lost or Missing Person"
+       },
+       {
+        "value": "injury_client_unknown",
+        "en": "Injury to Client — unknown",
+        "es": "Injury to Client — unknown"
+       },
+       {
+        "value": "aggression_others",
+        "en": "Aggression towards Others",
+        "es": "Aggression towards Others"
+       },
+       {
+        "value": "medical_emergency",
+        "en": "Medical Emergency",
+        "es": "Medical Emergency"
+       },
+       {
+        "value": "self_injurious",
+        "en": "Self‑Injurious Behavior",
+        "es": "Self‑Injurious Behavior"
+       },
+       {
+        "value": "hospitalization",
+        "en": "Hospitalization",
+        "es": "Hospitalization"
+       },
+       {
+        "value": "property_damage",
+        "en": "Property Damage",
+        "es": "Property Damage"
+       },
+       {
+        "value": "med_chart_error",
+        "en": "Medication/Charting Error",
+        "es": "Medication/Charting Error"
+       },
+       {
+        "value": "death_consumer",
+        "en": "Death of Consumer",
+        "es": "Death of Consumer"
+       },
+       {
+        "value": "theft_vandalism",
+        "en": "Theft or Vandalism",
+        "es": "Theft or Vandalism"
+       },
+       {
+        "value": "seizure",
+        "en": "Seizure",
+        "es": "Seizure"
+       },
+       {
+        "value": "unusual_behavior",
+        "en": "Unusual Behavior",
+        "es": "Unusual Behavior"
+       },
+       {
+        "value": "alleged_mistreatment",
+        "en": "Alleged Mistreatment, Abuse, Neglect, Exploitation",
+        "es": "Alleged Mistreatment, Abuse, Neglect, Exploitation"
+       },
+       {
+        "value": "emergency_control",
+        "en": "Emergency Control Procedure",
+        "es": "Emergency Control Procedure"
+       },
+       {
+        "value": "safety_control",
+        "en": "Safety Control Procedure",
+        "es": "Safety Control Procedure"
+       },
+       {
+        "value": "stolen_property",
+        "en": "Stolen Property of Client",
+        "es": "Stolen Property of Client"
+       },
+       {
+        "value": "workers_comp",
+        "en": "Worker’s Compensation",
+        "es": "Worker’s Compensation"
+       },
+       {
+        "value": "other",
+        "en": "Other (specify below)",
+        "es": "Other (specify below)"
+       }
+      ]
+     },
+     {
+      "id": "f12",
+      "label_en": "If 'Other', specify",
+      "label_es": "If 'Other', specify",
+      "type": "text"
+     },
+     {
+      "id": "f13",
+      "label_en": "Describe Point of Injury and/or pain",
+      "label_es": "Describe Point of Injury and/or pain",
+      "type": "textarea"
+     },
+     {
+      "id": "f14",
+      "label_en": "First Aid Given",
+      "label_es": "First Aid Given",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f15",
+      "label_en": "Who Provided First Aid",
+      "label_es": "Who Provided First Aid",
+      "type": "text"
+     },
+     {
+      "id": "f16",
+      "label_en": "Description of Injury / pain",
+      "label_es": "Description of Injury / pain",
+      "type": "textarea"
+     }
+    ]
+   },
+   {
+    "title_en": "Persons Notified",
+    "title_es": "Persons Notified",
+    "fields": [
+     {
+      "id": "f18",
+      "label_en": "Persons Notified — Select all that apply",
+      "label_es": "Persons Notified — Select all that apply",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "guardian",
+        "en": "Guardian",
+        "es": "Guardian"
+       },
+       {
+        "value": "hhp_fcg",
+        "en": "HHP / FCG",
+        "es": "HHP / FCG"
+       },
+       {
+        "value": "pasa_rep",
+        "en": "PASA Rep",
+        "es": "PASA Rep"
+       },
+       {
+        "value": "nurse",
+        "en": "Nurse",
+        "es": "Nurse"
+       },
+       {
+        "value": "other",
+        "en": "Other (specify below)",
+        "es": "Other (specify below)"
+       }
+      ]
+     },
+     {
+      "id": "f19",
+      "label_en": "If Other person notified, specify",
+      "label_es": "If Other person notified, specify",
+      "type": "text"
+     },
+     {
+      "id": "f20",
+      "label_en": "Guardian — Date Notified",
+      "label_es": "Guardian — Date Notified",
+      "type": "date"
+     },
+     {
+      "id": "f21",
+      "label_en": "Guardian — Routed",
+      "label_es": "Guardian — Routed",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "guardian_routed",
+        "en": "Routed",
+        "es": "Routed"
+       }
+      ]
+     },
+     {
+      "id": "f22",
+      "label_en": "HHP/FCG — Date Notified",
+      "label_es": "HHP/FCG — Date Notified",
+      "type": "date"
+     },
+     {
+      "id": "f23",
+      "label_en": "HHP/FCG — Routed",
+      "label_es": "HHP/FCG — Routed",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "hhp_routed",
+        "en": "Routed",
+        "es": "Routed"
+       }
+      ]
+     },
+     {
+      "id": "f24",
+      "label_en": "PASA Rep — Date Notified",
+      "label_es": "PASA Rep — Date Notified",
+      "type": "date"
+     },
+     {
+      "id": "f25",
+      "label_en": "PASA Rep — Routed",
+      "label_es": "PASA Rep — Routed",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "pasa_routed",
+        "en": "Routed",
+        "es": "Routed"
+       }
+      ]
+     },
+     {
+      "id": "f26",
+      "label_en": "Nurse — Date Notified",
+      "label_es": "Nurse — Date Notified",
+      "type": "date"
+     },
+     {
+      "id": "f27",
+      "label_en": "Nurse — Routed",
+      "label_es": "Nurse — Routed",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "nurse_routed",
+        "en": "Routed",
+        "es": "Routed"
+       }
+      ]
+     },
+     {
+      "id": "f28",
+      "label_en": "Describe the Incident — factual information only",
+      "label_es": "Describe the Incident — factual information only",
+      "type": "textarea"
+     }
+    ]
+   },
+   {
+    "title_en": "More details",
+    "title_es": "More details",
+    "fields": [
+     {
+      "id": "f30",
+      "label_en": "Describe the events and environment leading up to the incident",
+      "label_es": "Describe the events and environment leading up to the incident",
+      "type": "textarea"
+     },
+     {
+      "id": "f31",
+      "label_en": "How was the situation handled?",
+      "label_es": "How was the situation handled?",
+      "type": "textarea"
+     },
+     {
+      "id": "f32",
+      "label_en": "Measures to be taken or suggestions for preventing a re‑occurrence of this incident",
+      "label_es": "Measures to be taken or suggestions for preventing a re‑occurrence of this incident",
+      "type": "textarea"
+     }
+    ]
+   },
+   {
+    "title_en": "For Behavioral Incidents Only",
+    "title_es": "For Behavioral Incidents Only",
+    "fields": [
+     {
+      "id": "f34",
+      "label_en": "Was an Emergency Control / Safety Procedure Used?",
+      "label_es": "Was an Emergency Control / Safety Procedure Used?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f35",
+      "label_en": "Starting time of Procedure",
+      "label_es": "Starting time of Procedure",
+      "type": "time"
+     },
+     {
+      "id": "f36",
+      "label_en": "Ending Time",
+      "label_es": "Ending Time",
+      "type": "time"
+     },
+     {
+      "id": "f37",
+      "label_en": "Describe the Procedure Used",
+      "label_es": "Describe the Procedure Used",
+      "type": "textarea"
+     },
+     {
+      "id": "f38",
+      "label_en": "Why was the Procedure Used?",
+      "label_es": "Why was the Procedure Used?",
+      "type": "textarea"
+     },
+     {
+      "id": "f39",
+      "label_en": "Has this type of behavior occurred before?",
+      "label_es": "Has this type of behavior occurred before?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f40",
+      "label_en": "Is it likely that this behavior will reoccur?",
+      "label_es": "Is it likely that this behavior will reoccur?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f41",
+      "label_en": "Is there a Behavioral ISSP?",
+      "label_es": "Is there a Behavioral ISSP?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f42",
+      "label_en": "Was it implemented?",
+      "label_es": "Was it implemented?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f43",
+      "label_en": "Comment",
+      "label_es": "Comment",
+      "type": "textarea"
+     },
+     {
+      "id": "f44",
+      "label_en": "Report Written By",
+      "label_es": "Report Written By",
+      "type": "text"
+     },
+     {
+      "id": "f45",
+      "label_en": "Date Written",
+      "label_es": "Date Written",
+      "type": "date"
+     }
+    ]
+   },
+   {
+    "title_en": "For Administration Only",
+    "title_es": "For Administration Only",
+    "fields": [
+     {
+      "id": "f47",
+      "label_en": "Follow‑up Action",
+      "label_es": "Follow‑up Action",
+      "type": "textarea"
+     },
+     {
+      "id": "f48",
+      "label_en": "Person Responsible for Follow‑Up",
+      "label_es": "Person Responsible for Follow‑Up",
+      "type": "text"
+     },
+     {
+      "id": "f49",
+      "label_en": "Follow‑up Action Completed",
+      "label_es": "Follow‑up Action Completed",
+      "type": "textarea"
+     }
+    ]
+   },
+   {
+    "title_en": "Signatures",
+    "title_es": "Signatures",
+    "fields": [
+     {
+      "id": "f51",
+      "label_en": "Real Care Inc. Representative (name)",
+      "label_es": "Real Care Inc. Representative (name)",
+      "type": "text"
+     },
+     {
+      "id": "f52",
+      "label_en": "Representative — Date",
+      "label_es": "Representative — Date",
+      "type": "date"
+     },
+     {
+      "id": "f53",
+      "label_en": "Client Relations Manager or Director (name)",
+      "label_es": "Client Relations Manager or Director (name)",
+      "type": "text"
+     },
+     {
+      "id": "f54",
+      "label_en": "Client Relations Manager/Director — Date",
+      "label_es": "Client Relations Manager/Director — Date",
+      "type": "date"
+     },
+     {
+      "id": "f55",
+      "label_en": "Real Care, Inc. Nurse (if applicable) — name",
+      "label_es": "Real Care, Inc. Nurse (if applicable) — name",
+      "type": "text"
+     },
+     {
+      "id": "f56",
+      "label_en": "Nurse — Date",
+      "label_es": "Nurse — Date",
+      "type": "date"
+     },
+     {
+      "id": "f57",
+      "label_en": "Case Management Representative (name)",
+      "label_es": "Case Management Representative (name)",
+      "type": "text"
+     },
+     {
+      "id": "f58",
+      "label_en": "Case Management Representative — Date",
+      "label_es": "Case Management Representative — Date",
+      "type": "date"
+     }
+    ]
+   }
+  ]
+ }
+}

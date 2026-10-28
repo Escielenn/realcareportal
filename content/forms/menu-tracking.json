@@ -1,0 +1,159 @@
+{
+ "meta": {
+  "slug": "menu-tracking",
+  "title_en": "Menu Tracking",
+  "title_es": "Registro de menú",
+  "category": "monthly",
+  "per_individual": true,
+  "self_start": false,
+  "source": "menu_tracking_json.json",
+  "gf_form_id": 4,
+  "fields": 4,
+  "gf_fields": 8,
+  "staff_only": [],
+  "dropped": [
+   "Form Header (decoration)",
+   "Menu Data (Hidden - Auto-Populated) (replaced by a native grid)",
+   "Submission Info (decoration)"
+  ]
+ },
+ "schema": {
+  "instructions_en": [
+   {
+    "title": "How to Complete This Menu Tracking Form",
+    "steps": [
+     "This form documents one week of meals provided to an individual. Complete this form every three months to ensure proper nutritional care and meal variety.",
+     "Use the interactive meal planning grid below to record what was served each day.",
+     "Name: Enter the full name of the individual receiving meals.",
+     "Week Sampled: Enter the date range for the week being documented (e.g., \"12/1/2025 - 12/7/2025\").",
+     "Provider: Enter the name of the meal provider or caregiver."
+    ]
+   },
+   {
+    "title": "For Each Day of the Week",
+    "steps": [
+     "Document meals in all four categories:",
+     "Breakfast: What was served for the morning meal",
+     "Lunch: What was served for the midday meal",
+     "Dinner: What was served for the evening meal",
+     "Snacks: Any snacks provided throughout the day"
+    ]
+   },
+   {
+    "title": "Meal Documentation Requirements",
+    "steps": [
+     "Write down specific foods and beverages served",
+     "Include main dishes, sides, and drinks",
+     "Be descriptive (e.g., \"Scrambled eggs, wheat toast, orange juice\" not just \"Breakfast\")",
+     "List multiple snacks if provided",
+     "Note any meal refusals or substitutions if relevant"
+    ]
+   },
+   {
+    "title": "Nutritional Guidelines",
+    "steps": [
+     "Before submitting, verify:",
+     "⚠️ Important: Documentation must be submitted to Real Care, Inc. no later than the 3rd of the following month. Submit to: documentation@realcarecolorado.com or call 303-284-5818 with questions.",
+     "Meals are to be wholesome and nutritious",
+     "Individuals need to be provided with a choice of meals and snacks",
+     "Ensure variety throughout the week",
+     "Consider dietary restrictions and preferences",
+     "All 7 days are documented (Monday through Sunday)",
+     "All 4 meal categories are filled in for each day",
+     "Meal descriptions are specific and detailed",
+     "Variety is shown across the week",
+     "Nutritious options are included",
+     "Choices are evident in the meal plan",
+     "Review all meal entries for accuracy",
+     "Ensure the week sampled dates are correct"
+    ]
+   }
+  ],
+  "instructions_es": [
+   {
+    "title": "Cómo llenar este formulario",
+    "steps": [
+     "Conteste cada pregunta.",
+     "Revise sus respuestas.",
+     "Firme y envíe."
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "title_en": "Details",
+    "title_es": "Details",
+    "fields": [
+     {
+      "id": "f3",
+      "label_en": "Name",
+      "label_es": "Name",
+      "required": true,
+      "help_en": "Full name of individual receiving meals",
+      "help_es": "Full name of individual receiving meals",
+      "type": "text"
+     },
+     {
+      "id": "f4",
+      "label_en": "Week Sampled",
+      "label_es": "Week Sampled",
+      "required": true,
+      "help_en": "Enter date range (e.g., 12/1/2025 - 12/7/2025)",
+      "help_es": "Enter date range (e.g., 12/1/2025 - 12/7/2025)",
+      "type": "text"
+     },
+     {
+      "id": "f5",
+      "label_en": "Provider",
+      "label_es": "Provider",
+      "required": true,
+      "help_en": "Name of meal provider or caregiver",
+      "help_es": "Name of meal provider or caregiver",
+      "type": "text"
+     },
+     {
+      "id": "menu",
+      "type": "repeater",
+      "label_en": "Meals served",
+      "label_es": "Comidas servidas",
+      "required": true,
+      "help_en": "Add a row for each day.",
+      "help_es": "Agregue una fila para cada día.",
+      "columns": [
+       {
+        "id": "date",
+        "type": "date",
+        "label_en": "Date",
+        "label_es": "Fecha"
+       },
+       {
+        "id": "breakfast",
+        "type": "text",
+        "label_en": "Breakfast",
+        "label_es": "Desayuno"
+       },
+       {
+        "id": "lunch",
+        "type": "text",
+        "label_en": "Lunch",
+        "label_es": "Almuerzo"
+       },
+       {
+        "id": "dinner",
+        "type": "text",
+        "label_en": "Dinner",
+        "label_es": "Cena"
+       },
+       {
+        "id": "snacks",
+        "type": "text",
+        "label_en": "Snacks",
+        "label_es": "Refrigerios"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

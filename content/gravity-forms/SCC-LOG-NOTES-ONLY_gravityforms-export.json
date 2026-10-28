@@ -1,0 +1,499 @@
+{
+ "0": {
+  "title": "SCC LOG NOTES (Only)",
+  "description": "Supported Community Connections daily log notes only — no timesheets.",
+  "labelPlacement": "top_label",
+  "descriptionPlacement": "below",
+  "button": {
+   "type": "text",
+   "text": "Submit",
+   "imageUrl": ""
+  },
+  "version": "2.1.1.8",
+  "id": 9,
+  "confirmations": [
+   {
+    "id": "f77214ea7800",
+    "name": "Default Confirmation",
+    "isDefault": true,
+    "type": "message",
+    "message": "Thanks—your SCC log notes were submitted.",
+    "url": "",
+    "pageId": "",
+    "queryString": ""
+   }
+  ],
+  "notifications": [
+   {
+    "id": "21232f297a57",
+    "to": "{admin_email}",
+    "name": "Admin Notification",
+    "event": "form_submission",
+    "toType": "email",
+    "subject": "SCC Log Notes submitted for {Person Receiving Services Name:1}",
+    "message": "{all_fields}"
+   }
+  ],
+  "fields": [
+   {
+    "type": "text",
+    "id": 1,
+    "label": "Person Receiving Services Name",
+    "isRequired": true,
+    "size": "medium"
+   },
+   {
+    "type": "text",
+    "id": 2,
+    "label": "IP Goal",
+    "size": "large"
+   },
+   {
+    "type": "html",
+    "id": 3,
+    "label": "Daily Receipt for Services",
+    "displayOnly": true,
+    "content": "<p><em>Date/Times must match the timesheet submitted. Submit notes by the 20th of each month.</em></p>"
+   },
+   {
+    "type": "section",
+    "id": 10,
+    "label": "Log Entry — Entry A",
+    "displayOnly": true,
+    "formId": 9
+   },
+   {
+    "type": "date",
+    "id": 11,
+    "label": "Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "formId": 9,
+    "inputs": [
+     {
+      "id": "11.1",
+      "label": "MM"
+     },
+     {
+      "id": "11.2",
+      "label": "DD"
+     },
+     {
+      "id": "11.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "time",
+    "id": 12,
+    "label": "Start Time",
+    "timeFormat": "12",
+    "formId": 9,
+    "inputs": [
+     {
+      "id": "12.1",
+      "label": "HH"
+     },
+     {
+      "id": "12.2",
+      "label": "MM"
+     },
+     {
+      "id": "12.3",
+      "label": "AM/PM"
+     }
+    ]
+   },
+   {
+    "type": "time",
+    "id": 13,
+    "label": "End Time",
+    "timeFormat": "12",
+    "formId": 9,
+    "inputs": [
+     {
+      "id": "13.1",
+      "label": "HH"
+     },
+     {
+      "id": "13.2",
+      "label": "MM"
+     },
+     {
+      "id": "13.3",
+      "label": "AM/PM"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 14,
+    "label": "Choices of Activities Offered",
+    "size": "medium",
+    "formId": 9
+   },
+   {
+    "type": "textarea",
+    "id": 15,
+    "label": "Specific Location and Activity Selected by Person Receiving Services",
+    "size": "medium",
+    "formId": 9
+   },
+   {
+    "type": "section",
+    "id": 16,
+    "label": "Purpose / Goal of Activity",
+    "displayOnly": true,
+    "formId": 9
+   },
+   {
+    "type": "checkbox",
+    "id": 17,
+    "label": "Check all opportunities the activity provided",
+    "formId": 9,
+    "choices": [
+     {
+      "text": "Development of Natural Supports in the Community",
+      "value": "natural_supports"
+     },
+     {
+      "text": "Development or introduction to new skill",
+      "value": "new_skill"
+     },
+     {
+      "text": "Sensory Stimulation (visual, auditory, tactile, etc.)",
+      "value": "sensory_stimulation"
+     },
+     {
+      "text": "Recreation and/or leisure",
+      "value": "recreation_leisure"
+     },
+     {
+      "text": "Educational / Knowledge Building",
+      "value": "education_knowledge"
+     },
+     {
+      "text": "Other (specify below)",
+      "value": "other"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "17.1",
+      "label": "Development of Natural Supports in the Community"
+     },
+     {
+      "id": "17.2",
+      "label": "Development or introduction to new skill"
+     },
+     {
+      "id": "17.3",
+      "label": "Sensory Stimulation (visual, auditory, tactile, etc.)"
+     },
+     {
+      "id": "17.4",
+      "label": "Recreation and/or leisure"
+     },
+     {
+      "id": "17.5",
+      "label": "Educational / Knowledge Building"
+     },
+     {
+      "id": "17.6",
+      "label": "Other (specify below)"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 18,
+    "label": "If 'Other', specify",
+    "size": "medium",
+    "formId": 9
+   },
+   {
+    "type": "textarea",
+    "id": 19,
+    "label": "Explain the individual’s level of participation and response to the activity",
+    "size": "large",
+    "formId": 9
+   },
+   {
+    "type": "textarea",
+    "id": 20,
+    "label": "Who did the individual connect with in the community? Were prompts needed?",
+    "size": "medium",
+    "formId": 9
+   },
+   {
+    "type": "checkbox",
+    "id": 21,
+    "label": "Prompts Used",
+    "formId": 9,
+    "choices": [
+     {
+      "text": "Verbal",
+      "value": "verbal"
+     },
+     {
+      "text": "Physical",
+      "value": "physical"
+     },
+     {
+      "text": "Independent",
+      "value": "independent"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "21.1",
+      "label": "Verbal"
+     },
+     {
+      "id": "21.2",
+      "label": "Physical"
+     },
+     {
+      "id": "21.3",
+      "label": "Independent"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 22,
+    "label": "Discuss successes and/or areas where additional support may be needed",
+    "size": "medium",
+    "formId": 9
+   },
+   {
+    "type": "textarea",
+    "id": 23,
+    "label": "Document how the goal was implemented today",
+    "size": "medium",
+    "formId": 9
+   },
+   {
+    "type": "section",
+    "id": 30,
+    "label": "Log Entry — Entry B",
+    "displayOnly": true,
+    "formId": 9
+   },
+   {
+    "type": "date",
+    "id": 31,
+    "label": "Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "formId": 9,
+    "inputs": [
+     {
+      "id": "31.1",
+      "label": "MM"
+     },
+     {
+      "id": "31.2",
+      "label": "DD"
+     },
+     {
+      "id": "31.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "time",
+    "id": 32,
+    "label": "Start Time",
+    "timeFormat": "12",
+    "formId": 9,
+    "inputs": [
+     {
+      "id": "32.1",
+      "label": "HH"
+     },
+     {
+      "id": "32.2",
+      "label": "MM"
+     },
+     {
+      "id": "32.3",
+      "label": "AM/PM"
+     }
+    ]
+   },
+   {
+    "type": "time",
+    "id": 33,
+    "label": "End Time",
+    "timeFormat": "12",
+    "formId": 9,
+    "inputs": [
+     {
+      "id": "33.1",
+      "label": "HH"
+     },
+     {
+      "id": "33.2",
+      "label": "MM"
+     },
+     {
+      "id": "33.3",
+      "label": "AM/PM"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 34,
+    "label": "Choices of Activities Offered",
+    "size": "medium",
+    "formId": 9
+   },
+   {
+    "type": "textarea",
+    "id": 35,
+    "label": "Specific Location and Activity Selected by Person Receiving Services",
+    "size": "medium",
+    "formId": 9
+   },
+   {
+    "type": "section",
+    "id": 36,
+    "label": "Purpose / Goal of Activity",
+    "displayOnly": true,
+    "formId": 9
+   },
+   {
+    "type": "checkbox",
+    "id": 37,
+    "label": "Check all opportunities the activity provided",
+    "formId": 9,
+    "choices": [
+     {
+      "text": "Development of Natural Supports in the Community",
+      "value": "natural_supports"
+     },
+     {
+      "text": "Development or introduction to new skill",
+      "value": "new_skill"
+     },
+     {
+      "text": "Sensory Stimulation (visual, auditory, tactile, etc.)",
+      "value": "sensory_stimulation"
+     },
+     {
+      "text": "Recreation and/or leisure",
+      "value": "recreation_leisure"
+     },
+     {
+      "text": "Educational / Knowledge Building",
+      "value": "education_knowledge"
+     },
+     {
+      "text": "Other (specify below)",
+      "value": "other"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "37.1",
+      "label": "Development of Natural Supports in the Community"
+     },
+     {
+      "id": "37.2",
+      "label": "Development or introduction to new skill"
+     },
+     {
+      "id": "37.3",
+      "label": "Sensory Stimulation (visual, auditory, tactile, etc.)"
+     },
+     {
+      "id": "37.4",
+      "label": "Recreation and/or leisure"
+     },
+     {
+      "id": "37.5",
+      "label": "Educational / Knowledge Building"
+     },
+     {
+      "id": "37.6",
+      "label": "Other (specify below)"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 38,
+    "label": "If 'Other', specify",
+    "size": "medium",
+    "formId": 9
+   },
+   {
+    "type": "textarea",
+    "id": 39,
+    "label": "Explain the individual’s level of participation and response to the activity",
+    "size": "large",
+    "formId": 9
+   },
+   {
+    "type": "textarea",
+    "id": 40,
+    "label": "Who did the individual connect with in the community? Were prompts needed?",
+    "size": "medium",
+    "formId": 9
+   },
+   {
+    "type": "checkbox",
+    "id": 41,
+    "label": "Prompts Used",
+    "formId": 9,
+    "choices": [
+     {
+      "text": "Verbal",
+      "value": "verbal"
+     },
+     {
+      "text": "Physical",
+      "value": "physical"
+     },
+     {
+      "text": "Independent",
+      "value": "independent"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "41.1",
+      "label": "Verbal"
+     },
+     {
+      "id": "41.2",
+      "label": "Physical"
+     },
+     {
+      "id": "41.3",
+      "label": "Independent"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 42,
+    "label": "Discuss successes and/or areas where additional support may be needed",
+    "size": "medium",
+    "formId": 9
+   },
+   {
+    "type": "textarea",
+    "id": 43,
+    "label": "Document how the goal was implemented today",
+    "size": "medium",
+    "formId": 9
+   }
+  ]
+ },
+ "version": "2.1.1.8"
+}

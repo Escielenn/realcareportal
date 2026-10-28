@@ -1,0 +1,911 @@
+{
+ "0": {
+  "title": "INCIDENT REPORT",
+  "description": "Real Care, Inc. Incident Report — two pages.",
+  "labelPlacement": "top_label",
+  "descriptionPlacement": "below",
+  "button": {
+   "type": "text",
+   "text": "Submit",
+   "imageUrl": ""
+  },
+  "version": "2.1.1.8",
+  "id": 6,
+  "pagination": {
+   "type": "percentage",
+   "style": "blue",
+   "pages": [
+    {
+     "text": "Incident Details"
+    },
+    {
+     "text": "Follow‑up & Signatures"
+    }
+   ]
+  },
+  "confirmations": [
+   {
+    "id": "e86ba0e79bca",
+    "name": "Default Confirmation",
+    "isDefault": true,
+    "type": "message",
+    "message": "Thank you. Your Incident Report has been submitted.",
+    "url": "",
+    "pageId": "",
+    "queryString": ""
+   }
+  ],
+  "notifications": [
+   {
+    "id": "21232f297a57",
+    "to": "{admin_email}",
+    "name": "Admin Notification",
+    "event": "form_submission",
+    "toType": "email",
+    "subject": "Incident Report submitted for {Name of Individual Receiving Services:1}",
+    "message": "{all_fields}"
+   }
+  ],
+  "fields": [
+   {
+    "type": "text",
+    "id": 1,
+    "label": "Name of Individual Receiving Services",
+    "isRequired": true,
+    "size": "medium"
+   },
+   {
+    "type": "text",
+    "id": 2,
+    "label": "Initiated By",
+    "isRequired": true,
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 3,
+    "label": "Date Incident Occurred",
+    "isRequired": true,
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "3.1",
+      "label": "MM"
+     },
+     {
+      "id": "3.2",
+      "label": "DD"
+     },
+     {
+      "id": "3.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "time",
+    "id": 4,
+    "label": "Time",
+    "timeFormat": "12",
+    "inputs": [
+     {
+      "id": "4.1",
+      "label": "HH"
+     },
+     {
+      "id": "4.2",
+      "label": "MM"
+     },
+     {
+      "id": "4.3",
+      "label": "AM/PM"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 5,
+    "label": "How Long Did Incident Last",
+    "size": "medium",
+    "placeholder": "e.g., 25 minutes"
+   },
+   {
+    "type": "text",
+    "id": 6,
+    "label": "Where Did the Incident Occur (Home, Community, Day Program, etc.)",
+    "size": "large"
+   },
+   {
+    "type": "text",
+    "id": 7,
+    "label": "Other People Involved (names)",
+    "size": "large"
+   },
+   {
+    "type": "text",
+    "id": 8,
+    "label": "Witness(es)",
+    "size": "large"
+   },
+   {
+    "type": "radio",
+    "id": 9,
+    "label": "Did you see the incident occur?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "id": 10,
+    "label": "Check the Type of Incident",
+    "displayOnly": true
+   },
+   {
+    "type": "checkbox",
+    "id": 11,
+    "label": "Type of Incident",
+    "choices": [
+     {
+      "text": "Injury to Client in service setting",
+      "value": "injury_client_service"
+     },
+     {
+      "text": "Lost or Missing Person",
+      "value": "lost_missing"
+     },
+     {
+      "text": "Injury to Client — unknown",
+      "value": "injury_client_unknown"
+     },
+     {
+      "text": "Aggression towards Others",
+      "value": "aggression_others"
+     },
+     {
+      "text": "Medical Emergency",
+      "value": "medical_emergency"
+     },
+     {
+      "text": "Self‑Injurious Behavior",
+      "value": "self_injurious"
+     },
+     {
+      "text": "Hospitalization",
+      "value": "hospitalization"
+     },
+     {
+      "text": "Property Damage",
+      "value": "property_damage"
+     },
+     {
+      "text": "Medication/Charting Error",
+      "value": "med_chart_error"
+     },
+     {
+      "text": "Death of Consumer",
+      "value": "death_consumer"
+     },
+     {
+      "text": "Theft or Vandalism",
+      "value": "theft_vandalism"
+     },
+     {
+      "text": "Seizure",
+      "value": "seizure"
+     },
+     {
+      "text": "Unusual Behavior",
+      "value": "unusual_behavior"
+     },
+     {
+      "text": "Alleged Mistreatment, Abuse, Neglect, Exploitation",
+      "value": "alleged_mistreatment"
+     },
+     {
+      "text": "Emergency Control Procedure",
+      "value": "emergency_control"
+     },
+     {
+      "text": "Safety Control Procedure",
+      "value": "safety_control"
+     },
+     {
+      "text": "Stolen Property of Client",
+      "value": "stolen_property"
+     },
+     {
+      "text": "Worker’s Compensation",
+      "value": "workers_comp"
+     },
+     {
+      "text": "Other (specify below)",
+      "value": "other"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "11.1",
+      "label": "Injury to Client in service setting"
+     },
+     {
+      "id": "11.2",
+      "label": "Lost or Missing Person"
+     },
+     {
+      "id": "11.3",
+      "label": "Injury to Client — unknown"
+     },
+     {
+      "id": "11.4",
+      "label": "Aggression towards Others"
+     },
+     {
+      "id": "11.5",
+      "label": "Medical Emergency"
+     },
+     {
+      "id": "11.6",
+      "label": "Self‑Injurious Behavior"
+     },
+     {
+      "id": "11.7",
+      "label": "Hospitalization"
+     },
+     {
+      "id": "11.8",
+      "label": "Property Damage"
+     },
+     {
+      "id": "11.9",
+      "label": "Medication/Charting Error"
+     },
+     {
+      "id": "11.10",
+      "label": "Death of Consumer"
+     },
+     {
+      "id": "11.11",
+      "label": "Theft or Vandalism"
+     },
+     {
+      "id": "11.12",
+      "label": "Seizure"
+     },
+     {
+      "id": "11.13",
+      "label": "Unusual Behavior"
+     },
+     {
+      "id": "11.14",
+      "label": "Alleged Mistreatment, Abuse, Neglect, Exploitation"
+     },
+     {
+      "id": "11.15",
+      "label": "Emergency Control Procedure"
+     },
+     {
+      "id": "11.16",
+      "label": "Safety Control Procedure"
+     },
+     {
+      "id": "11.17",
+      "label": "Stolen Property of Client"
+     },
+     {
+      "id": "11.18",
+      "label": "Worker’s Compensation"
+     },
+     {
+      "id": "11.19",
+      "label": "Other (specify below)"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 12,
+    "label": "If 'Other', specify",
+    "size": "large"
+   },
+   {
+    "type": "textarea",
+    "id": 13,
+    "label": "Describe Point of Injury and/or pain",
+    "size": "medium"
+   },
+   {
+    "type": "radio",
+    "id": 14,
+    "label": "First Aid Given",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 15,
+    "label": "Who Provided First Aid",
+    "size": "medium"
+   },
+   {
+    "type": "textarea",
+    "id": 16,
+    "label": "Description of Injury / pain",
+    "size": "medium"
+   },
+   {
+    "type": "section",
+    "id": 17,
+    "label": "Persons Notified",
+    "displayOnly": true
+   },
+   {
+    "type": "checkbox",
+    "id": 18,
+    "label": "Persons Notified — Select all that apply",
+    "choices": [
+     {
+      "text": "Guardian",
+      "value": "guardian"
+     },
+     {
+      "text": "HHP / FCG",
+      "value": "hhp_fcg"
+     },
+     {
+      "text": "PASA Rep",
+      "value": "pasa_rep"
+     },
+     {
+      "text": "Nurse",
+      "value": "nurse"
+     },
+     {
+      "text": "Other (specify below)",
+      "value": "other"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "18.1",
+      "label": "Guardian"
+     },
+     {
+      "id": "18.2",
+      "label": "HHP / FCG"
+     },
+     {
+      "id": "18.3",
+      "label": "PASA Rep"
+     },
+     {
+      "id": "18.4",
+      "label": "Nurse"
+     },
+     {
+      "id": "18.5",
+      "label": "Other (specify below)"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 19,
+    "label": "If Other person notified, specify",
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 20,
+    "label": "Guardian — Date Notified",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "20.1",
+      "label": "MM"
+     },
+     {
+      "id": "20.2",
+      "label": "DD"
+     },
+     {
+      "id": "20.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "checkbox",
+    "id": 21,
+    "label": "Guardian — Routed",
+    "choices": [
+     {
+      "text": "Routed",
+      "value": "guardian_routed"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "21.1",
+      "label": "Routed"
+     }
+    ]
+   },
+   {
+    "type": "date",
+    "id": 22,
+    "label": "HHP/FCG — Date Notified",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "22.1",
+      "label": "MM"
+     },
+     {
+      "id": "22.2",
+      "label": "DD"
+     },
+     {
+      "id": "22.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "checkbox",
+    "id": 23,
+    "label": "HHP/FCG — Routed",
+    "choices": [
+     {
+      "text": "Routed",
+      "value": "hhp_routed"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "23.1",
+      "label": "Routed"
+     }
+    ]
+   },
+   {
+    "type": "date",
+    "id": 24,
+    "label": "PASA Rep — Date Notified",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "24.1",
+      "label": "MM"
+     },
+     {
+      "id": "24.2",
+      "label": "DD"
+     },
+     {
+      "id": "24.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "checkbox",
+    "id": 25,
+    "label": "PASA Rep — Routed",
+    "choices": [
+     {
+      "text": "Routed",
+      "value": "pasa_routed"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "25.1",
+      "label": "Routed"
+     }
+    ]
+   },
+   {
+    "type": "date",
+    "id": 26,
+    "label": "Nurse — Date Notified",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "26.1",
+      "label": "MM"
+     },
+     {
+      "id": "26.2",
+      "label": "DD"
+     },
+     {
+      "id": "26.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "checkbox",
+    "id": 27,
+    "label": "Nurse — Routed",
+    "choices": [
+     {
+      "text": "Routed",
+      "value": "nurse_routed"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "27.1",
+      "label": "Routed"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 28,
+    "label": "Describe the Incident — factual information only",
+    "size": "large"
+   },
+   {
+    "type": "page",
+    "id": 29,
+    "paginationType": "percentage",
+    "displayOnly": true,
+    "nextButton": {
+     "type": "text",
+     "text": "Next"
+    },
+    "previousButton": {
+     "type": "text",
+     "text": "Previous"
+    },
+    "pageNumber": 1
+   },
+   {
+    "type": "textarea",
+    "id": 30,
+    "label": "Describe the events and environment leading up to the incident",
+    "size": "large"
+   },
+   {
+    "type": "textarea",
+    "id": 31,
+    "label": "How was the situation handled?",
+    "size": "large"
+   },
+   {
+    "type": "textarea",
+    "id": 32,
+    "label": "Measures to be taken or suggestions for preventing a re‑occurrence of this incident",
+    "size": "large"
+   },
+   {
+    "type": "section",
+    "id": 33,
+    "label": "For Behavioral Incidents Only",
+    "displayOnly": true
+   },
+   {
+    "type": "radio",
+    "id": 34,
+    "label": "Was an Emergency Control / Safety Procedure Used?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ]
+   },
+   {
+    "type": "time",
+    "id": 35,
+    "label": "Starting time of Procedure",
+    "timeFormat": "12",
+    "inputs": [
+     {
+      "id": "35.1",
+      "label": "HH"
+     },
+     {
+      "id": "35.2",
+      "label": "MM"
+     },
+     {
+      "id": "35.3",
+      "label": "AM/PM"
+     }
+    ]
+   },
+   {
+    "type": "time",
+    "id": 36,
+    "label": "Ending Time",
+    "timeFormat": "12",
+    "inputs": [
+     {
+      "id": "36.1",
+      "label": "HH"
+     },
+     {
+      "id": "36.2",
+      "label": "MM"
+     },
+     {
+      "id": "36.3",
+      "label": "AM/PM"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 37,
+    "label": "Describe the Procedure Used",
+    "size": "medium"
+   },
+   {
+    "type": "textarea",
+    "id": 38,
+    "label": "Why was the Procedure Used?",
+    "size": "medium"
+   },
+   {
+    "type": "radio",
+    "id": 39,
+    "label": "Has this type of behavior occurred before?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ]
+   },
+   {
+    "type": "radio",
+    "id": 40,
+    "label": "Is it likely that this behavior will reoccur?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ]
+   },
+   {
+    "type": "radio",
+    "id": 41,
+    "label": "Is there a Behavioral ISSP?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ]
+   },
+   {
+    "type": "radio",
+    "id": 42,
+    "label": "Was it implemented?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 43,
+    "label": "Comment",
+    "size": "medium"
+   },
+   {
+    "type": "text",
+    "id": 44,
+    "label": "Report Written By",
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 45,
+    "label": "Date Written",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "45.1",
+      "label": "MM"
+     },
+     {
+      "id": "45.2",
+      "label": "DD"
+     },
+     {
+      "id": "45.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "id": 46,
+    "label": "For Administration Only",
+    "displayOnly": true
+   },
+   {
+    "type": "textarea",
+    "id": 47,
+    "label": "Follow‑up Action",
+    "size": "large"
+   },
+   {
+    "type": "text",
+    "id": 48,
+    "label": "Person Responsible for Follow‑Up",
+    "size": "medium"
+   },
+   {
+    "type": "textarea",
+    "id": 49,
+    "label": "Follow‑up Action Completed",
+    "size": "large"
+   },
+   {
+    "type": "section",
+    "id": 50,
+    "label": "Signatures",
+    "displayOnly": true
+   },
+   {
+    "type": "text",
+    "id": 51,
+    "label": "Real Care Inc. Representative (name)",
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 52,
+    "label": "Representative — Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "52.1",
+      "label": "MM"
+     },
+     {
+      "id": "52.2",
+      "label": "DD"
+     },
+     {
+      "id": "52.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 53,
+    "label": "Client Relations Manager or Director (name)",
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 54,
+    "label": "Client Relations Manager/Director — Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "54.1",
+      "label": "MM"
+     },
+     {
+      "id": "54.2",
+      "label": "DD"
+     },
+     {
+      "id": "54.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 55,
+    "label": "Real Care, Inc. Nurse (if applicable) — name",
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 56,
+    "label": "Nurse — Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "56.1",
+      "label": "MM"
+     },
+     {
+      "id": "56.2",
+      "label": "DD"
+     },
+     {
+      "id": "56.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 57,
+    "label": "Case Management Representative (name)",
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 58,
+    "label": "Case Management Representative — Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "58.1",
+      "label": "MM"
+     },
+     {
+      "id": "58.2",
+      "label": "DD"
+     },
+     {
+      "id": "58.3",
+      "label": "YYYY"
+     }
+    ]
+   }
+  ]
+ },
+ "version": "2.1.1.8"
+}

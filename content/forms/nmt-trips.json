@@ -1,0 +1,129 @@
+{
+ "meta": {
+  "slug": "nmt-trips",
+  "title_en": "NMT Trips Tracking",
+  "title_es": "Registro de viajes NMT",
+  "category": "monthly",
+  "per_individual": true,
+  "self_start": false,
+  "source": "gravityforms-export-2025-12-04.json",
+  "gf_form_id": 20,
+  "fields": 4,
+  "gf_fields": 9,
+  "staff_only": [],
+  "dropped": [
+   "Trips by Day (auto-fills 31 rows) (replaced by a native grid)",
+   "Monthly Total Trips (auto) (the portal counts this itself)"
+  ]
+ },
+ "schema": {
+  "instructions_en": [
+   {
+    "title": "How to Complete This Form",
+    "steps": [
+     "This form tracks morning and evening transportation trips provided each day of the month. The form automatically calculates daily totals (maximum 2 per day) and the monthly total.",
+     "For each day of the month, check the boxes that apply:",
+     "Helpful Tip: The table covers dates 1-31 to accommodate all months. For months with fewer days, simply leave the extra dates unchecked.",
+     "Clear All Button: If you need to start over, use the \"Clear All\" button to uncheck all boxes at once.",
+     "Note: Your selections are saved automatically on this device as you work.",
+     "The form automatically calculates totals in two places:",
+     "Client Name: Enter the full name of the client receiving transportation services.",
+     "Month / Year: Select any day in the month you're reporting. This sets the month and year for all trip entries.",
+     "AM Trip Provided: Check this box if you provided a morning transportation trip on that date.",
+     "PM Trip Provided: Check this box if you provided an evening transportation trip on that date.",
+     "Total Trips Provided (0-2): This column automatically calculates based on your AM and PM selections. The maximum is 2 trips per day."
+    ]
+   },
+   {
+    "title": "Daily Totals",
+    "steps": [
+     "The Total Trips Provided column shows the sum of AM and PM trips for each day (displayed as 0, 1, or 2)."
+    ]
+   },
+   {
+    "title": "Trips by Day Section",
+    "steps": [
+     "This section automatically creates a 31-row summary of all trips. You can add or remove rows using the + and - buttons if needed, though 31 rows are provided by default."
+    ]
+   },
+   {
+    "title": "Monthly Total Trips",
+    "steps": [
+     "At the bottom of the form, the Monthly Total Trips field displays the auto-calculated sum of all trips provided during the month. This value is automatically computed and should be between 0 and 62 trips.",
+     "Important: The total should usually equal AM + PM for each day combined across the month.",
+     "Note: This form stores your entries automatically on your device, so you can return to complete it later if needed.",
+     "Review the daily entries to ensure all transportation trips are accurately recorded.",
+     "Verify that the monthly total makes sense based on the number of days you provided service.",
+     "Confirm that the client name and month/year are correct.",
+     "Click Submit to finalize the form."
+    ]
+   }
+  ],
+  "instructions_es": [
+   {
+    "title": "Cómo llenar este formulario",
+    "steps": [
+     "Conteste cada pregunta.",
+     "Revise sus respuestas.",
+     "Firme y envíe."
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "title_en": "Details",
+    "title_es": "Details",
+    "fields": [
+     {
+      "id": "f1",
+      "type": "prefill",
+      "source": "individual.full_name",
+      "label_en": "Client Name",
+      "label_es": "Persona"
+     },
+     {
+      "id": "f2",
+      "label_en": "Month / Year (pick any day in month)",
+      "label_es": "Month / Year (pick any day in month)",
+      "required": true,
+      "type": "date"
+     }
+    ]
+   },
+   {
+    "title_en": "Transportation Trips",
+    "title_es": "Transportation Trips",
+    "fields": [
+     {
+      "id": "f6",
+      "type": "info",
+      "label_en": "",
+      "label_es": "",
+      "body_en": "Check AM/PM for each day. The daily total auto-calculates (max 2). The monthly total updates below.",
+      "body_es": "Check AM/PM for each day. The daily total auto-calculates (max 2). The monthly total updates below."
+     },
+     {
+      "id": "trips",
+      "type": "daygrid",
+      "label_en": "Trips by day",
+      "label_es": "Viajes por día",
+      "cell": "check",
+      "required": true,
+      "rows": [
+       {
+        "id": "am",
+        "en": "AM trip provided",
+        "es": "Viaje de la mañana"
+       },
+       {
+        "id": "pm",
+        "en": "PM trip provided",
+        "es": "Viaje de la tarde"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

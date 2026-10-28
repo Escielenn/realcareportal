@@ -1,0 +1,484 @@
+{
+ "meta": {
+  "slug": "residential-tracking",
+  "title_en": "Residential Tracking Record",
+  "title_es": "Registro de seguimiento residencial",
+  "category": "monthly",
+  "per_individual": true,
+  "self_start": false,
+  "source": "RESIDENTIAL-TRACKING_Grid-List_autoadd_gravityforms-export.json",
+  "gf_form_id": 19,
+  "fields": 17,
+  "gf_fields": 21,
+  "staff_only": [],
+  "dropped": []
+ },
+ "schema": {
+  "instructions_en": [
+   {
+    "title": "How to fill out this form",
+    "steps": [
+     "Answer each question.",
+     "Check your answers.",
+     "Sign and submit."
+    ]
+   }
+  ],
+  "instructions_es": [
+   {
+    "title": "Cómo llenar este formulario",
+    "steps": [
+     "Conteste cada pregunta.",
+     "Revise sus respuestas.",
+     "Firme y envíe."
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "title_en": "Details",
+    "title_es": "Details",
+    "fields": [
+     {
+      "id": "f1",
+      "type": "prefill",
+      "source": "individual.full_name",
+      "label_en": "Client Name",
+      "label_es": "Persona"
+     },
+     {
+      "id": "f2",
+      "label_en": "Month of (pick any day in month)",
+      "label_es": "Month of (pick any day in month)",
+      "required": true,
+      "type": "date"
+     },
+     {
+      "id": "f3",
+      "type": "info",
+      "label_en": "",
+      "label_es": "",
+      "body_en": "Use Y = Yes, N = No, R = Refused. Add one row per day (1–31). 'Other (desc)' lets you label an extra task for that day.",
+      "body_es": "Use Y = Yes, N = No, R = Refused. Add one row per day (1–31). 'Other (desc)' lets you label an extra task for that day."
+     }
+    ]
+   },
+   {
+    "title_en": "Meal Preparation",
+    "title_es": "Meal Preparation",
+    "fields": [
+     {
+      "id": "f11",
+      "type": "daygrid",
+      "label_en": "Meal Preparation",
+      "label_es": "Meal Preparation",
+      "cell": "code",
+      "rows": [
+       {
+        "id": "breakfast",
+        "en": "Breakfast",
+        "es": "Breakfast"
+       },
+       {
+        "id": "lunch",
+        "en": "Lunch",
+        "es": "Lunch"
+       },
+       {
+        "id": "dinner",
+        "en": "Dinner",
+        "es": "Dinner"
+       },
+       {
+        "id": "snack",
+        "en": "Snack(s)",
+        "es": "Snack(s)"
+       }
+      ],
+      "codes": [
+       {
+        "value": "Y",
+        "en": "Yes, done",
+        "es": "Sí, hecho"
+       },
+       {
+        "value": "N",
+        "en": "No",
+        "es": "No"
+       },
+       {
+        "value": "R",
+        "en": "Refused",
+        "es": "Rechazó"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title_en": "Hygiene",
+    "title_es": "Hygiene",
+    "fields": [
+     {
+      "id": "f21",
+      "type": "daygrid",
+      "label_en": "Hygiene",
+      "label_es": "Hygiene",
+      "cell": "code",
+      "rows": [
+       {
+        "id": "shower_bath",
+        "en": "Shower/Bath",
+        "es": "Shower/Bath"
+       },
+       {
+        "id": "hair_washed",
+        "en": "Hair Washed",
+        "es": "Hair Washed"
+       },
+       {
+        "id": "nail_care",
+        "en": "Nail Care",
+        "es": "Nail Care"
+       },
+       {
+        "id": "clean_clothing_daytime",
+        "en": "Clean clothing – daytime",
+        "es": "Clean clothing – daytime"
+       },
+       {
+        "id": "clean_pajamas_night",
+        "en": "Clean pajamas – night",
+        "es": "Clean pajamas – night"
+       },
+       {
+        "id": "teeth_brushed_am",
+        "en": "Teeth Brushed AM",
+        "es": "Teeth Brushed AM"
+       },
+       {
+        "id": "teeth_brushed_pm",
+        "en": "Teeth Brushed PM",
+        "es": "Teeth Brushed PM"
+       },
+       {
+        "id": "other",
+        "en": "Other",
+        "es": "Other"
+       }
+      ],
+      "codes": [
+       {
+        "value": "Y",
+        "en": "Yes, done",
+        "es": "Sí, hecho"
+       },
+       {
+        "value": "N",
+        "en": "No",
+        "es": "No"
+       },
+       {
+        "value": "R",
+        "en": "Refused",
+        "es": "Rechazó"
+       }
+      ]
+     },
+     {
+      "id": "f21_other",
+      "type": "textarea",
+      "label_en": "Other (describe)",
+      "label_es": "Otro (describa)"
+     }
+    ]
+   },
+   {
+    "title_en": "Laundry",
+    "title_es": "Laundry",
+    "fields": [
+     {
+      "id": "f31",
+      "type": "daygrid",
+      "label_en": "Laundry",
+      "label_es": "Laundry",
+      "cell": "code",
+      "rows": [
+       {
+        "id": "clothing",
+        "en": "Clothing",
+        "es": "Clothing"
+       },
+       {
+        "id": "bedding",
+        "en": "Bedding",
+        "es": "Bedding"
+       },
+       {
+        "id": "towels",
+        "en": "Towels",
+        "es": "Towels"
+       }
+      ],
+      "codes": [
+       {
+        "value": "Y",
+        "en": "Yes, done",
+        "es": "Sí, hecho"
+       },
+       {
+        "value": "N",
+        "en": "No",
+        "es": "No"
+       },
+       {
+        "value": "R",
+        "en": "Refused",
+        "es": "Rechazó"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title_en": "Household Maintenance",
+    "title_es": "Household Maintenance",
+    "fields": [
+     {
+      "id": "f41",
+      "type": "daygrid",
+      "label_en": "Household Maintenance",
+      "label_es": "Household Maintenance",
+      "cell": "code",
+      "rows": [
+       {
+        "id": "dishes",
+        "en": "Dishes",
+        "es": "Dishes"
+       },
+       {
+        "id": "grocery_shopping",
+        "en": "Grocery Shopping",
+        "es": "Grocery Shopping"
+       },
+       {
+        "id": "household_repairs",
+        "en": "Household repairs",
+        "es": "Household repairs"
+       },
+       {
+        "id": "other",
+        "en": "Other",
+        "es": "Other"
+       }
+      ],
+      "codes": [
+       {
+        "value": "Y",
+        "en": "Yes, done",
+        "es": "Sí, hecho"
+       },
+       {
+        "value": "N",
+        "en": "No",
+        "es": "No"
+       },
+       {
+        "value": "R",
+        "en": "Refused",
+        "es": "Rechazó"
+       }
+      ]
+     },
+     {
+      "id": "f41_other",
+      "type": "textarea",
+      "label_en": "Other (describe)",
+      "label_es": "Otro (describa)"
+     }
+    ]
+   },
+   {
+    "title_en": "Cleaning",
+    "title_es": "Cleaning",
+    "fields": [
+     {
+      "id": "f51",
+      "type": "daygrid",
+      "label_en": "Cleaning",
+      "label_es": "Cleaning",
+      "cell": "code",
+      "rows": [
+       {
+        "id": "common_areas",
+        "en": "Common areas",
+        "es": "Common areas"
+       },
+       {
+        "id": "bedroom_bathroom",
+        "en": "Bedroom/Bathroom",
+        "es": "Bedroom/Bathroom"
+       },
+       {
+        "id": "other",
+        "en": "Other",
+        "es": "Other"
+       }
+      ],
+      "codes": [
+       {
+        "value": "Y",
+        "en": "Yes, done",
+        "es": "Sí, hecho"
+       },
+       {
+        "value": "N",
+        "en": "No",
+        "es": "No"
+       },
+       {
+        "value": "R",
+        "en": "Refused",
+        "es": "Rechazó"
+       }
+      ]
+     },
+     {
+      "id": "f51_other",
+      "type": "textarea",
+      "label_en": "Other (describe)",
+      "label_es": "Otro (describa)"
+     }
+    ]
+   },
+   {
+    "title_en": "Pet Care",
+    "title_es": "Pet Care",
+    "fields": [
+     {
+      "id": "f61",
+      "type": "daygrid",
+      "label_en": "Pet Care",
+      "label_es": "Pet Care",
+      "cell": "code",
+      "rows": [
+       {
+        "id": "fed_pet",
+        "en": "Fed pet(s)",
+        "es": "Fed pet(s)"
+       },
+       {
+        "id": "walk_pet",
+        "en": "Walk pet(s)",
+        "es": "Walk pet(s)"
+       },
+       {
+        "id": "other",
+        "en": "Other",
+        "es": "Other"
+       }
+      ],
+      "codes": [
+       {
+        "value": "Y",
+        "en": "Yes, done",
+        "es": "Sí, hecho"
+       },
+       {
+        "value": "N",
+        "en": "No",
+        "es": "No"
+       },
+       {
+        "value": "R",
+        "en": "Refused",
+        "es": "Rechazó"
+       }
+      ]
+     },
+     {
+      "id": "f61_other",
+      "type": "textarea",
+      "label_en": "Other (describe)",
+      "label_es": "Otro (describa)"
+     }
+    ]
+   },
+   {
+    "title_en": "Supervision / Communication / Activities",
+    "title_es": "Supervision / Communication / Activities",
+    "fields": [
+     {
+      "id": "f71",
+      "type": "daygrid",
+      "label_en": "Supervision / Communication / Activities",
+      "label_es": "Supervision / Communication / Activities",
+      "cell": "code",
+      "rows": [
+       {
+        "id": "met_exceeded_supervision",
+        "en": "Met/Exceeded Supervision",
+        "es": "Met/Exceeded Supervision"
+       },
+       {
+        "id": "communication_with_dr",
+        "en": "Communication with Dr",
+        "es": "Communication with Dr"
+       },
+       {
+        "id": "appointments_scheduled",
+        "en": "Appointments Scheduled",
+        "es": "Appointments Scheduled"
+       },
+       {
+        "id": "appointments_attended",
+        "en": "Appointments Attended",
+        "es": "Appointments Attended"
+       },
+       {
+        "id": "community_activity",
+        "en": "Community Activity",
+        "es": "Community Activity"
+       }
+      ],
+      "codes": [
+       {
+        "value": "Y",
+        "en": "Yes, done",
+        "es": "Sí, hecho"
+       },
+       {
+        "value": "N",
+        "en": "No",
+        "es": "No"
+       },
+       {
+        "value": "R",
+        "en": "Refused",
+        "es": "Rechazó"
+       }
+      ]
+     },
+     {
+      "id": "f900",
+      "label_en": "Notes / Additional Information (general)",
+      "label_es": "Notes / Additional Information (general)",
+      "type": "textarea"
+     },
+     {
+      "id": "f901",
+      "label_en": "Provider Name",
+      "label_es": "Provider Name",
+      "type": "text"
+     },
+     {
+      "id": "f902",
+      "label_en": "Date",
+      "label_es": "Date",
+      "type": "date"
+     }
+    ]
+   }
+  ]
+ }
+}

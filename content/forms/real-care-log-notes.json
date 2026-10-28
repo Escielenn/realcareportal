@@ -1,0 +1,533 @@
+{
+ "meta": {
+  "slug": "real-care-log-notes",
+  "title_en": "Real Care Log Notes",
+  "title_es": "Notas de registro de Real Care",
+  "category": "daily",
+  "per_individual": true,
+  "self_start": true,
+  "source": "REAL-CARE-INC-LOG-NOTES_gravityforms-export.json",
+  "gf_form_id": 13,
+  "fields": 49,
+  "gf_fields": 58,
+  "staff_only": [],
+  "dropped": []
+ },
+ "schema": {
+  "instructions_en": [
+   {
+    "title": "How to fill out this form",
+    "steps": [
+     "Answer each question.",
+     "Check your answers.",
+     "Sign and submit."
+    ]
+   }
+  ],
+  "instructions_es": [
+   {
+    "title": "Cómo llenar este formulario",
+    "steps": [
+     "Conteste cada pregunta.",
+     "Revise sus respuestas.",
+     "Firme y envíe."
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "title_en": "Details",
+    "title_es": "Details",
+    "fields": [
+     {
+      "id": "f1",
+      "label_en": "Client’s Name",
+      "label_es": "Client’s Name",
+      "required": true,
+      "type": "text"
+     },
+     {
+      "id": "f2",
+      "label_en": "Provider Name",
+      "label_es": "Provider Name",
+      "required": true,
+      "type": "text"
+     },
+     {
+      "id": "f3",
+      "label_en": "Month / Year (pick any day in month)",
+      "label_es": "Month / Year (pick any day in month)",
+      "required": true,
+      "type": "date"
+     }
+    ]
+   },
+   {
+    "title_en": "Log Notes — 1st through 7th",
+    "title_es": "Log Notes — 1st through 7th",
+    "fields": [
+     {
+      "id": "f11",
+      "label_en": "Changes This Week",
+      "label_es": "Changes This Week",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "change_med_status",
+        "en": "Change to medical Status",
+        "es": "Change to medical Status"
+       },
+       {
+        "value": "change_med_routine",
+        "en": "Change to medication or medical routine / procedure",
+        "es": "Change to medication or medical routine / procedure"
+       }
+      ]
+     },
+     {
+      "id": "f12",
+      "label_en": "Discuss any Dr. appointments or health concerns from this week:",
+      "label_es": "Discuss any Dr. appointments or health concerns from this week:",
+      "type": "textarea"
+     },
+     {
+      "id": "f13",
+      "label_en": "Discuss any community activities within the week:",
+      "label_es": "Discuss any community activities within the week:",
+      "type": "textarea"
+     },
+     {
+      "id": "f14",
+      "label_en": "Discuss Successes and/or areas where additional support may be needed:",
+      "label_es": "Discuss Successes and/or areas where additional support may be needed:",
+      "type": "textarea"
+     },
+     {
+      "id": "f15",
+      "label_en": "Requests",
+      "label_es": "Requests",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "additional_services",
+        "en": "Additional Services Requested",
+        "es": "Additional Services Requested"
+       }
+      ]
+     },
+     {
+      "id": "f16",
+      "type": "info",
+      "label_en": "",
+      "label_es": "",
+      "body_en": "Medication Administration Verification\n\nBy checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed.",
+      "body_es": "Medication Administration Verification\n\nBy checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed."
+     },
+     {
+      "id": "f17",
+      "label_en": "Verification Acknowledgment",
+      "label_es": "Verification Acknowledgment",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "verify",
+        "en": "I verify the statement above for this period.",
+        "es": "I verify the statement above for this period."
+       }
+      ]
+     },
+     {
+      "id": "f18",
+      "label_en": "Family Caregiver Signature (typed name)",
+      "label_es": "Family Caregiver Signature (typed name)",
+      "type": "signature"
+     }
+    ]
+   },
+   {
+    "title_en": "Log Notes — 8th through 14th",
+    "title_es": "Log Notes — 8th through 14th",
+    "fields": [
+     {
+      "id": "f41",
+      "label_en": "Changes This Week",
+      "label_es": "Changes This Week",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "change_med_status",
+        "en": "Change to medical Status",
+        "es": "Change to medical Status"
+       },
+       {
+        "value": "change_med_routine",
+        "en": "Change to medication or medical routine / procedure",
+        "es": "Change to medication or medical routine / procedure"
+       }
+      ]
+     },
+     {
+      "id": "f42",
+      "label_en": "Discuss any Dr. appointments or health concerns from this week:",
+      "label_es": "Discuss any Dr. appointments or health concerns from this week:",
+      "type": "textarea"
+     },
+     {
+      "id": "f43",
+      "label_en": "Discuss any community activities within the week:",
+      "label_es": "Discuss any community activities within the week:",
+      "type": "textarea"
+     },
+     {
+      "id": "f44",
+      "label_en": "Discuss Successes and/or areas where additional support may be needed:",
+      "label_es": "Discuss Successes and/or areas where additional support may be needed:",
+      "type": "textarea"
+     },
+     {
+      "id": "f45",
+      "label_en": "Requests",
+      "label_es": "Requests",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "additional_services",
+        "en": "Additional Services Requested",
+        "es": "Additional Services Requested"
+       }
+      ]
+     },
+     {
+      "id": "f46",
+      "type": "info",
+      "label_en": "",
+      "label_es": "",
+      "body_en": "Medication Administration Verification\n\nBy checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed.",
+      "body_es": "Medication Administration Verification\n\nBy checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed."
+     },
+     {
+      "id": "f47",
+      "label_en": "Verification Acknowledgment",
+      "label_es": "Verification Acknowledgment",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "verify",
+        "en": "I verify the statement above for this period.",
+        "es": "I verify the statement above for this period."
+       }
+      ]
+     },
+     {
+      "id": "f48",
+      "label_en": "Family Caregiver Signature (typed name)",
+      "label_es": "Family Caregiver Signature (typed name)",
+      "type": "signature"
+     }
+    ]
+   },
+   {
+    "title_en": "Log Notes — 15th through 21st",
+    "title_es": "Log Notes — 15th through 21st",
+    "fields": [
+     {
+      "id": "f111",
+      "label_en": "Changes This Week",
+      "label_es": "Changes This Week",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "change_med_status",
+        "en": "Change to medical Status",
+        "es": "Change to medical Status"
+       },
+       {
+        "value": "change_med_routine",
+        "en": "Change to medication or medical routine / procedure",
+        "es": "Change to medication or medical routine / procedure"
+       }
+      ]
+     },
+     {
+      "id": "f112",
+      "label_en": "Discuss any Dr. appointments or health concerns from this week:",
+      "label_es": "Discuss any Dr. appointments or health concerns from this week:",
+      "type": "textarea"
+     },
+     {
+      "id": "f113",
+      "label_en": "Discuss any community activities within the week:",
+      "label_es": "Discuss any community activities within the week:",
+      "type": "textarea"
+     },
+     {
+      "id": "f114",
+      "label_en": "Discuss Successes and/or areas where additional support may be needed:",
+      "label_es": "Discuss Successes and/or areas where additional support may be needed:",
+      "type": "textarea"
+     },
+     {
+      "id": "f115",
+      "label_en": "Requests",
+      "label_es": "Requests",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "additional_services",
+        "en": "Additional Services Requested",
+        "es": "Additional Services Requested"
+       }
+      ]
+     },
+     {
+      "id": "f116",
+      "type": "info",
+      "label_en": "",
+      "label_es": "",
+      "body_en": "Medication Administration Verification\n\nBy checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed.",
+      "body_es": "Medication Administration Verification\n\nBy checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed."
+     },
+     {
+      "id": "f117",
+      "label_en": "Verification Acknowledgment",
+      "label_es": "Verification Acknowledgment",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "verify",
+        "en": "I verify the statement above for this period.",
+        "es": "I verify the statement above for this period."
+       }
+      ]
+     },
+     {
+      "id": "f118",
+      "label_en": "Family Caregiver Signature (typed name)",
+      "label_es": "Family Caregiver Signature (typed name)",
+      "type": "signature"
+     }
+    ]
+   },
+   {
+    "title_en": "Log Notes — 22nd through 28th",
+    "title_es": "Log Notes — 22nd through 28th",
+    "fields": [
+     {
+      "id": "f141",
+      "label_en": "Changes This Week",
+      "label_es": "Changes This Week",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "change_med_status",
+        "en": "Change to medical Status",
+        "es": "Change to medical Status"
+       },
+       {
+        "value": "change_med_routine",
+        "en": "Change to medication or medical routine / procedure",
+        "es": "Change to medication or medical routine / procedure"
+       }
+      ]
+     },
+     {
+      "id": "f142",
+      "label_en": "Discuss any Dr. appointments or health concerns from this week:",
+      "label_es": "Discuss any Dr. appointments or health concerns from this week:",
+      "type": "textarea"
+     },
+     {
+      "id": "f143",
+      "label_en": "Discuss any community activities within the week:",
+      "label_es": "Discuss any community activities within the week:",
+      "type": "textarea"
+     },
+     {
+      "id": "f144",
+      "label_en": "Discuss Successes and/or areas where additional support may be needed:",
+      "label_es": "Discuss Successes and/or areas where additional support may be needed:",
+      "type": "textarea"
+     },
+     {
+      "id": "f145",
+      "label_en": "Requests",
+      "label_es": "Requests",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "additional_services",
+        "en": "Additional Services Requested",
+        "es": "Additional Services Requested"
+       }
+      ]
+     },
+     {
+      "id": "f146",
+      "type": "info",
+      "label_en": "",
+      "label_es": "",
+      "body_en": "Medication Administration Verification\n\nBy checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed.",
+      "body_es": "Medication Administration Verification\n\nBy checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed."
+     },
+     {
+      "id": "f147",
+      "label_en": "Verification Acknowledgment",
+      "label_es": "Verification Acknowledgment",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "verify",
+        "en": "I verify the statement above for this period.",
+        "es": "I verify the statement above for this period."
+       }
+      ]
+     },
+     {
+      "id": "f148",
+      "label_en": "Family Caregiver Signature (typed name)",
+      "label_es": "Family Caregiver Signature (typed name)",
+      "type": "signature"
+     }
+    ]
+   },
+   {
+    "title_en": "Log Notes — 29th through 31st (or end of month)",
+    "title_es": "Log Notes — 29th through 31st (or end of month)",
+    "fields": [
+     {
+      "id": "f211",
+      "label_en": "Changes This Week",
+      "label_es": "Changes This Week",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "change_med_status",
+        "en": "Change to medical Status",
+        "es": "Change to medical Status"
+       },
+       {
+        "value": "change_med_routine",
+        "en": "Change to medication or medical routine / procedure",
+        "es": "Change to medication or medical routine / procedure"
+       }
+      ]
+     },
+     {
+      "id": "f212",
+      "label_en": "Discuss any Dr. appointments or health concerns from this week:",
+      "label_es": "Discuss any Dr. appointments or health concerns from this week:",
+      "type": "textarea"
+     },
+     {
+      "id": "f213",
+      "label_en": "Discuss any community activities within the week:",
+      "label_es": "Discuss any community activities within the week:",
+      "type": "textarea"
+     },
+     {
+      "id": "f214",
+      "label_en": "Discuss Successes and/or areas where additional support may be needed:",
+      "label_es": "Discuss Successes and/or areas where additional support may be needed:",
+      "type": "textarea"
+     },
+     {
+      "id": "f215",
+      "label_en": "Requests",
+      "label_es": "Requests",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "additional_services",
+        "en": "Additional Services Requested",
+        "es": "Additional Services Requested"
+       }
+      ]
+     },
+     {
+      "id": "f216",
+      "type": "info",
+      "label_en": "",
+      "label_es": "",
+      "body_en": "Medication Administration Verification\n\nBy checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed.",
+      "body_es": "Medication Administration Verification\n\nBy checking the box below, I acknowledge that I have verified all aspects of medication management for this period.\nI have verified that all medications have an active prescription on file; all medications on site are accurate to the prescription;\nand that the Natural Support has given the prescribed medications and as‑needed medications for the correct purpose and in accordance\nwith instructions from the prescriber (Right Person, Medication, Dose, Purpose, Time, Route, Frequency). The person receiving the medication\nwas monitored for side effects and documentation completed as needed. All medical personnel were notified as needed."
+     },
+     {
+      "id": "f217",
+      "label_en": "Verification Acknowledgment",
+      "label_es": "Verification Acknowledgment",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "verify",
+        "en": "I verify the statement above for this period.",
+        "es": "I verify the statement above for this period."
+       }
+      ]
+     },
+     {
+      "id": "f218",
+      "label_en": "Family Caregiver Signature (typed name)",
+      "label_es": "Family Caregiver Signature (typed name)",
+      "type": "signature"
+     }
+    ]
+   },
+   {
+    "title_en": "Monthly Summary",
+    "title_es": "Monthly Summary",
+    "fields": [
+     {
+      "id": "f241",
+      "label_en": "During this month, the following occurred:",
+      "label_es": "During this month, the following occurred:",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "hospital_stay",
+        "en": "Hospital Stay",
+        "es": "Hospital Stay"
+       },
+       {
+        "value": "overnight_trip",
+        "en": "Over Night Trip",
+        "es": "Over Night Trip"
+       }
+      ]
+     },
+     {
+      "id": "f242",
+      "label_en": "Date(s)",
+      "label_es": "Date(s)",
+      "type": "text"
+     },
+     {
+      "id": "f243",
+      "label_en": "I submitted billing for # of days",
+      "label_es": "I submitted billing for # of days",
+      "type": "number"
+     },
+     {
+      "id": "f244",
+      "type": "info",
+      "label_en": "",
+      "label_es": "",
+      "body_en": "I have submitted log notes that support the billing of services on each of these days.",
+      "body_es": "I have submitted log notes that support the billing of services on each of these days."
+     },
+     {
+      "id": "f245",
+      "label_en": "Provider / Caregiver Signature (typed)",
+      "label_es": "Provider / Caregiver Signature (typed)",
+      "type": "signature"
+     },
+     {
+      "id": "f246",
+      "label_en": "Signature Date",
+      "label_es": "Signature Date",
+      "type": "date"
+     }
+    ]
+   }
+  ]
+ }
+}

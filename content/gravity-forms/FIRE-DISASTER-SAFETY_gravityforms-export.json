@@ -1,0 +1,466 @@
+{
+ "0": {
+  "title": "FIRE / DISASTER DRILL / SAFETY PLAN",
+  "description": "Form without Menu section.",
+  "labelPlacement": "top_label",
+  "descriptionPlacement": "below",
+  "button": {
+   "type": "text",
+   "text": "Submit",
+   "imageUrl": ""
+  },
+  "version": "2.1.1.8",
+  "id": 16,
+  "confirmations": [
+   {
+    "id": "1cb1c592fa37",
+    "name": "Default Confirmation",
+    "isDefault": true,
+    "type": "message",
+    "message": "Thanks—your Fire/Disaster Drill & Safety Plan was submitted.",
+    "url": "",
+    "pageId": "",
+    "queryString": ""
+   }
+  ],
+  "notifications": [
+   {
+    "id": "693790db7617",
+    "to": "{admin_email}",
+    "name": "Admin Notification",
+    "event": "form_submission",
+    "toType": "email",
+    "subject": "Fire/Disaster/Safety submitted for {Client Name:1}",
+    "message": "{all_fields}"
+   }
+  ],
+  "fields": [
+   {
+    "type": "text",
+    "id": 1,
+    "label": "Client Name",
+    "isRequired": true,
+    "size": "medium"
+   },
+   {
+    "type": "text",
+    "id": 2,
+    "label": "Provider Name",
+    "isRequired": true,
+    "size": "medium"
+   },
+   {
+    "type": "section",
+    "id": 10,
+    "label": "FIRE DRILL",
+    "displayOnly": true,
+    "formId": 16
+   },
+   {
+    "type": "text",
+    "id": 11,
+    "label": "Location of Mock Fire",
+    "size": "large",
+    "formId": 16
+   },
+   {
+    "type": "time",
+    "id": 12,
+    "label": "Time of Fire Drill",
+    "timeFormat": "12",
+    "formId": 16,
+    "inputs": [
+     {
+      "id": "12.1",
+      "label": "HH"
+     },
+     {
+      "id": "12.2",
+      "label": "MM"
+     },
+     {
+      "id": "12.3",
+      "label": "AM/PM"
+     }
+    ]
+   },
+   {
+    "type": "date",
+    "id": 13,
+    "label": "Date of Fire Drill",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "formId": 16,
+    "inputs": [
+     {
+      "id": "13.1",
+      "label": "MM"
+     },
+     {
+      "id": "13.2",
+      "label": "DD"
+     },
+     {
+      "id": "13.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "number",
+    "id": 14,
+    "label": "How long did evacuation take? (minutes)",
+    "size": "small",
+    "rangeMin": "0",
+    "formId": 16
+   },
+   {
+    "type": "radio",
+    "id": 15,
+    "label": "Did everyone leave the house?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ],
+    "formId": 16
+   },
+   {
+    "type": "text",
+    "id": 16,
+    "label": "If no, why not? (everyone leave)",
+    "size": "large",
+    "formId": 16
+   },
+   {
+    "type": "radio",
+    "id": 17,
+    "label": "Were all rooms checked?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ],
+    "formId": 16
+   },
+   {
+    "type": "text",
+    "id": 18,
+    "label": "If no, why not? (rooms checked)",
+    "size": "large",
+    "formId": 16
+   },
+   {
+    "type": "radio",
+    "id": 19,
+    "label": "Were doors and windows closed?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ],
+    "formId": 16
+   },
+   {
+    "type": "text",
+    "id": 20,
+    "label": "If no, why not? (doors/windows)",
+    "size": "large",
+    "formId": 16
+   },
+   {
+    "type": "section",
+    "id": 30,
+    "label": "DISASTER DRILL",
+    "displayOnly": true,
+    "formId": 16
+   },
+   {
+    "type": "time",
+    "id": 31,
+    "label": "Time of Disaster Drill",
+    "timeFormat": "12",
+    "formId": 16,
+    "inputs": [
+     {
+      "id": "31.1",
+      "label": "HH"
+     },
+     {
+      "id": "31.2",
+      "label": "MM"
+     },
+     {
+      "id": "31.3",
+      "label": "AM/PM"
+     }
+    ]
+   },
+   {
+    "type": "date",
+    "id": 32,
+    "label": "Date of Disaster Drill",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "formId": 16,
+    "inputs": [
+     {
+      "id": "32.1",
+      "label": "MM"
+     },
+     {
+      "id": "32.2",
+      "label": "DD"
+     },
+     {
+      "id": "32.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 33,
+    "label": "Type of Disaster Drill",
+    "size": "medium",
+    "formId": 16
+   },
+   {
+    "type": "radio",
+    "id": 34,
+    "label": "Procedure in Safety Plan Followed?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ],
+    "formId": 16
+   },
+   {
+    "type": "checkbox",
+    "id": 35,
+    "label": "CO2 Detector",
+    "choices": [
+     {
+      "text": "Carbon Monoxide (CO2) detector was tested and functioning well",
+      "value": "co2_ok"
+     }
+    ],
+    "formId": 16,
+    "inputs": [
+     {
+      "id": "35.1",
+      "label": "CO2 detector tested and functioning well"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "id": 40,
+    "label": "SAFETY PLAN REVIEW",
+    "displayOnly": true,
+    "formId": 16
+   },
+   {
+    "type": "text",
+    "id": 41,
+    "label": "I have reviewed the Safety Plan with (Individual’s Name)",
+    "size": "medium",
+    "formId": 16
+   },
+   {
+    "type": "date",
+    "id": 42,
+    "label": "Date Reviewed (with individual)",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "formId": 16,
+    "inputs": [
+     {
+      "id": "42.1",
+      "label": "MM"
+     },
+     {
+      "id": "42.2",
+      "label": "DD"
+     },
+     {
+      "id": "42.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 43,
+    "label": "Safety Plan Reviewed By (Provider’s Name)",
+    "size": "medium",
+    "formId": 16
+   },
+   {
+    "type": "date",
+    "id": 44,
+    "label": "Date Reviewed (by provider)",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "formId": 16,
+    "inputs": [
+     {
+      "id": "44.1",
+      "label": "MM"
+     },
+     {
+      "id": "44.2",
+      "label": "DD"
+     },
+     {
+      "id": "44.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 45,
+    "label": "Area of Safety Plan Reviewed",
+    "size": "large",
+    "formId": 16
+   },
+   {
+    "type": "radio",
+    "id": 46,
+    "label": "Does Safety Plan reflect the needs of the Individual?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No, see comments",
+      "value": "No"
+     }
+    ],
+    "formId": 16
+   },
+   {
+    "type": "checkbox",
+    "id": 47,
+    "label": "CO2 Detector Confirmation",
+    "choices": [
+     {
+      "text": "Carbon Monoxide (CO2) detector was tested and functioning well",
+      "value": "co2_confirm"
+     }
+    ],
+    "formId": 16,
+    "inputs": [
+     {
+      "id": "47.1",
+      "label": "CO2 detector tested and functioning well"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "id": 50,
+    "label": "REVIEW",
+    "displayOnly": true,
+    "formId": 16
+   },
+   {
+    "type": "textarea",
+    "id": 51,
+    "label": "Recommendations / Comments",
+    "size": "large",
+    "formId": 16
+   },
+   {
+    "type": "text",
+    "id": 60,
+    "label": "Completed By: Provider Signature (typed)",
+    "size": "medium",
+    "formId": 16
+   },
+   {
+    "type": "date",
+    "id": 61,
+    "label": "Completion Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "formId": 16,
+    "inputs": [
+     {
+      "id": "61.1",
+      "label": "MM"
+     },
+     {
+      "id": "61.2",
+      "label": "DD"
+     },
+     {
+      "id": "61.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 62,
+    "label": "Reviewed By: Real Care, Inc. Representative (typed)",
+    "size": "medium",
+    "formId": 16
+   },
+   {
+    "type": "date",
+    "id": 63,
+    "label": "Review Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "formId": 16,
+    "inputs": [
+     {
+      "id": "63.1",
+      "label": "MM"
+     },
+     {
+      "id": "63.2",
+      "label": "DD"
+     },
+     {
+      "id": "63.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "html",
+    "id": 70,
+    "label": "Submission Note",
+    "displayOnly": true,
+    "formId": 16,
+    "content": "<p><em>Submit documentation no later than the 3rd of the following month. Email: documentation@realcarecolorado.com</em></p>"
+   }
+  ]
+ },
+ "version": "2.1.1.8"
+}

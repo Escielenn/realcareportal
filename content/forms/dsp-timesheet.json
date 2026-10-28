@@ -1,0 +1,190 @@
+{
+ "meta": {
+  "slug": "dsp-timesheet",
+  "title_en": "DSP/SCC Provider Timesheet",
+  "title_es": "Hoja de horas DSP/SCC",
+  "category": "timesheet",
+  "per_individual": false,
+  "self_start": false,
+  "source": "dsp_timesheet_json.json",
+  "gf_form_id": 3,
+  "fields": 5,
+  "gf_fields": 11,
+  "staff_only": [],
+  "dropped": [
+   "Form Header (decoration)",
+   "Total Direct Care Hours (Auto-Calculated) (replaced by a native grid)",
+   "Timesheet Data (Hidden - Auto-Populated) (replaced by a native grid)",
+   "Submission Info (decoration)"
+  ]
+ },
+ "schema": {
+  "instructions_en": [
+   {
+    "title": "How to Complete This Timesheet",
+    "steps": [
+     "This timesheet tracks all direct care services you provide throughout the month. Each row represents one service entry (a visit or shift with a client).",
+     "Use the interactive timesheet grid below to record each service entry. For each row, enter:",
+     "Tips:",
+     "Before submitting:",
+     "⚠️ Important: This timesheet is DUE TO REAL CARE, INC. BY THE 22nd OF EACH MONTH",
+     "DSP Name: Enter your full name as the Direct Support Professional or provider.",
+     "Month of: Enter the month and year you are reporting (e.g., \"December 2025\").",
+     "Date: The date of service (day of month, 1-31)",
+     "Client Initials: The initials of the client you served",
+     "Service Type: Type of service provided (e.g., \"PRS\", \"DSP\", \"SCC\", \"MSP\")",
+     "Time In: When you started service (e.g., \"9:00 AM\")",
+     "Time Out: When you ended service (e.g., \"2:00 PM\")",
+     "Total Hours: This will auto-calculate based on Time In and Time Out",
+     "# of Trips: Number of transportation trips provided (if applicable)"
+    ]
+   }
+  ],
+  "instructions_es": [
+   {
+    "title": "Cómo llenar este formulario",
+    "steps": [
+     "Conteste cada pregunta.",
+     "Revise sus respuestas.",
+     "Firme y envíe."
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "title_en": "Details",
+    "title_es": "Details",
+    "fields": [
+     {
+      "id": "f3",
+      "label_en": "DSP Name",
+      "label_es": "DSP Name",
+      "required": true,
+      "help_en": "Your full name as provider",
+      "help_es": "Your full name as provider",
+      "type": "text"
+     },
+     {
+      "id": "f4",
+      "label_en": "Month of",
+      "label_es": "Month of",
+      "required": true,
+      "help_en": "Enter month and year (e.g., December 2025)",
+      "help_es": "Enter month and year (e.g., December 2025)",
+      "type": "text"
+     },
+     {
+      "id": "entries",
+      "type": "repeater",
+      "label_en": "Direct care service entries",
+      "label_es": "Servicios de atención directa",
+      "required": true,
+      "help_en": "One row per visit or shift. Hours calculate from Time In and Time Out.",
+      "help_es": "Una fila por visita o turno. Las horas se calculan con la hora de entrada y salida.",
+      "columns": [
+       {
+        "id": "date",
+        "type": "date",
+        "label_en": "Date",
+        "label_es": "Fecha"
+       },
+       {
+        "id": "initials",
+        "type": "text",
+        "label_en": "Client initials",
+        "label_es": "Iniciales del cliente"
+       },
+       {
+        "id": "service",
+        "type": "select",
+        "label_en": "Service type",
+        "label_es": "Tipo de servicio",
+        "options": [
+         {
+          "value": "PRS",
+          "en": "PRS",
+          "es": "PRS"
+         },
+         {
+          "value": "DSP",
+          "en": "DSP",
+          "es": "DSP"
+         },
+         {
+          "value": "SCC",
+          "en": "SCC",
+          "es": "SCC"
+         },
+         {
+          "value": "MSP",
+          "en": "MSP",
+          "es": "MSP"
+         },
+         {
+          "value": "Other",
+          "en": "Other",
+          "es": "Other"
+         }
+        ]
+       },
+       {
+        "id": "in",
+        "type": "time",
+        "label_en": "Time in",
+        "label_es": "Entrada"
+       },
+       {
+        "id": "out",
+        "type": "time",
+        "label_en": "Time out",
+        "label_es": "Salida"
+       },
+       {
+        "id": "hours",
+        "type": "hours",
+        "label_en": "Total hours",
+        "label_es": "Horas",
+        "from": [
+         "in",
+         "out"
+        ]
+       },
+       {
+        "id": "trips",
+        "type": "number",
+        "label_en": "# of trips",
+        "label_es": "Viajes"
+       }
+      ],
+      "totals": [
+       "hours",
+       "trips"
+      ]
+     }
+    ]
+   },
+   {
+    "title_en": "Certification",
+    "title_es": "Certification",
+    "fields": [
+     {
+      "id": "f9",
+      "label_en": "DSP Signature",
+      "label_es": "DSP Signature",
+      "required": true,
+      "help_en": "Enter your name to certify this timesheet",
+      "help_es": "Enter your name to certify this timesheet",
+      "type": "signature"
+     },
+     {
+      "id": "f10",
+      "label_en": "Date",
+      "label_es": "Date",
+      "required": true,
+      "type": "date"
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,328 @@
+{
+ "meta": {
+  "slug": "fire-disaster-drill",
+  "title_en": "Fire / Disaster Drill / Safety Plan",
+  "title_es": "Simulacro de incendio y desastre / Plan de seguridad",
+  "category": "safety",
+  "per_individual": false,
+  "self_start": false,
+  "source": "FIRE-DISASTER-SAFETY_gravityforms-export.json",
+  "gf_form_id": 16,
+  "fields": 30,
+  "gf_fields": 34,
+  "staff_only": [],
+  "dropped": []
+ },
+ "schema": {
+  "instructions_en": [
+   {
+    "title": "How to fill out this form",
+    "steps": [
+     "Answer each question.",
+     "Check your answers.",
+     "Sign and submit."
+    ]
+   }
+  ],
+  "instructions_es": [
+   {
+    "title": "Cómo llenar este formulario",
+    "steps": [
+     "Conteste cada pregunta.",
+     "Revise sus respuestas.",
+     "Firme y envíe."
+    ]
+   }
+  ],
+  "sections": [
+   {
+    "title_en": "Details",
+    "title_es": "Details",
+    "fields": [
+     {
+      "id": "f1",
+      "label_en": "Client Name",
+      "label_es": "Client Name",
+      "required": true,
+      "type": "text"
+     },
+     {
+      "id": "f2",
+      "label_en": "Provider Name",
+      "label_es": "Provider Name",
+      "required": true,
+      "type": "text"
+     }
+    ]
+   },
+   {
+    "title_en": "FIRE DRILL",
+    "title_es": "FIRE DRILL",
+    "fields": [
+     {
+      "id": "f11",
+      "label_en": "Location of Mock Fire",
+      "label_es": "Location of Mock Fire",
+      "type": "text"
+     },
+     {
+      "id": "f12",
+      "label_en": "Time of Fire Drill",
+      "label_es": "Time of Fire Drill",
+      "type": "time"
+     },
+     {
+      "id": "f13",
+      "label_en": "Date of Fire Drill",
+      "label_es": "Date of Fire Drill",
+      "type": "date"
+     },
+     {
+      "id": "f14",
+      "label_en": "How long did evacuation take? (minutes)",
+      "label_es": "How long did evacuation take? (minutes)",
+      "type": "number"
+     },
+     {
+      "id": "f15",
+      "label_en": "Did everyone leave the house?",
+      "label_es": "Did everyone leave the house?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f16",
+      "label_en": "If no, why not? (everyone leave)",
+      "label_es": "If no, why not? (everyone leave)",
+      "type": "text"
+     },
+     {
+      "id": "f17",
+      "label_en": "Were all rooms checked?",
+      "label_es": "Were all rooms checked?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f18",
+      "label_en": "If no, why not? (rooms checked)",
+      "label_es": "If no, why not? (rooms checked)",
+      "type": "text"
+     },
+     {
+      "id": "f19",
+      "label_en": "Were doors and windows closed?",
+      "label_es": "Were doors and windows closed?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f20",
+      "label_en": "If no, why not? (doors/windows)",
+      "label_es": "If no, why not? (doors/windows)",
+      "type": "text"
+     }
+    ]
+   },
+   {
+    "title_en": "DISASTER DRILL",
+    "title_es": "DISASTER DRILL",
+    "fields": [
+     {
+      "id": "f31",
+      "label_en": "Time of Disaster Drill",
+      "label_es": "Time of Disaster Drill",
+      "type": "time"
+     },
+     {
+      "id": "f32",
+      "label_en": "Date of Disaster Drill",
+      "label_es": "Date of Disaster Drill",
+      "type": "date"
+     },
+     {
+      "id": "f33",
+      "label_en": "Type of Disaster Drill",
+      "label_es": "Type of Disaster Drill",
+      "type": "text"
+     },
+     {
+      "id": "f34",
+      "label_en": "Procedure in Safety Plan Followed?",
+      "label_es": "Procedure in Safety Plan Followed?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No",
+        "es": "No"
+       }
+      ]
+     },
+     {
+      "id": "f35",
+      "label_en": "CO2 Detector",
+      "label_es": "CO2 Detector",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "co2_ok",
+        "en": "Carbon Monoxide (CO2) detector was tested and functioning well",
+        "es": "Carbon Monoxide (CO2) detector was tested and functioning well"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title_en": "SAFETY PLAN REVIEW",
+    "title_es": "SAFETY PLAN REVIEW",
+    "fields": [
+     {
+      "id": "f41",
+      "label_en": "I have reviewed the Safety Plan with (Individual’s Name)",
+      "label_es": "I have reviewed the Safety Plan with (Individual’s Name)",
+      "type": "text"
+     },
+     {
+      "id": "f42",
+      "label_en": "Date Reviewed (with individual)",
+      "label_es": "Date Reviewed (with individual)",
+      "type": "date"
+     },
+     {
+      "id": "f43",
+      "label_en": "Safety Plan Reviewed By (Provider’s Name)",
+      "label_es": "Safety Plan Reviewed By (Provider’s Name)",
+      "type": "text"
+     },
+     {
+      "id": "f44",
+      "label_en": "Date Reviewed (by provider)",
+      "label_es": "Date Reviewed (by provider)",
+      "type": "date"
+     },
+     {
+      "id": "f45",
+      "label_en": "Area of Safety Plan Reviewed",
+      "label_es": "Area of Safety Plan Reviewed",
+      "type": "text"
+     },
+     {
+      "id": "f46",
+      "label_en": "Does Safety Plan reflect the needs of the Individual?",
+      "label_es": "Does Safety Plan reflect the needs of the Individual?",
+      "type": "radio",
+      "options": [
+       {
+        "value": "Yes",
+        "en": "Yes",
+        "es": "Yes"
+       },
+       {
+        "value": "No",
+        "en": "No, see comments",
+        "es": "No, see comments"
+       }
+      ]
+     },
+     {
+      "id": "f47",
+      "label_en": "CO2 Detector Confirmation",
+      "label_es": "CO2 Detector Confirmation",
+      "type": "checkboxes",
+      "options": [
+       {
+        "value": "co2_confirm",
+        "en": "Carbon Monoxide (CO2) detector was tested and functioning well",
+        "es": "Carbon Monoxide (CO2) detector was tested and functioning well"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title_en": "REVIEW",
+    "title_es": "REVIEW",
+    "fields": [
+     {
+      "id": "f51",
+      "label_en": "Recommendations / Comments",
+      "label_es": "Recommendations / Comments",
+      "type": "textarea"
+     },
+     {
+      "id": "f60",
+      "label_en": "Completed By: Provider Signature (typed)",
+      "label_es": "Completed By: Provider Signature (typed)",
+      "type": "signature"
+     },
+     {
+      "id": "f61",
+      "label_en": "Completion Date",
+      "label_es": "Completion Date",
+      "type": "date"
+     },
+     {
+      "id": "f62",
+      "label_en": "Reviewed By: Real Care, Inc. Representative (typed)",
+      "label_es": "Reviewed By: Real Care, Inc. Representative (typed)",
+      "type": "text"
+     },
+     {
+      "id": "f63",
+      "label_en": "Review Date",
+      "label_es": "Review Date",
+      "type": "date"
+     },
+     {
+      "id": "f70",
+      "type": "info",
+      "label_en": "",
+      "label_es": "",
+      "body_en": "Submit documentation no later than the 3rd of the following month. Email: documentation@realcarecolorado.com",
+      "body_es": "Submit documentation no later than the 3rd of the following month. Email: documentation@realcarecolorado.com"
+     }
+    ]
+   }
+  ]
+ }
+}

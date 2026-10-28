@@ -1,0 +1,162 @@
+{
+ "0": {
+  "title": "ATTENDANCE RECORD",
+  "description": "Medicaid Residential Attendance Record — Family Caregiver and Host Home",
+  "labelPlacement": "top_label",
+  "descriptionPlacement": "below",
+  "button": {
+   "type": "text",
+   "text": "Submit",
+   "imageUrl": ""
+  },
+  "version": "2.1.1.8",
+  "id": 10,
+  "confirmations": [
+   {
+    "id": "760708aeb56a",
+    "name": "Default Confirmation",
+    "isDefault": true,
+    "type": "message",
+    "message": "Thank you — your Attendance Record has been submitted.",
+    "url": "",
+    "pageId": "",
+    "queryString": ""
+   }
+  ],
+  "notifications": [
+   {
+    "id": "21232f297a57",
+    "to": "{admin_email}",
+    "name": "Admin Notification",
+    "event": "form_submission",
+    "toType": "email",
+    "subject": "Attendance Record submitted for {Person Receiving Services:2}",
+    "message": "{all_fields}"
+   }
+  ],
+  "fields": [
+   {
+    "type": "text",
+    "id": 1,
+    "label": "Provider’s Name",
+    "isRequired": true,
+    "size": "medium"
+   },
+   {
+    "type": "text",
+    "id": 2,
+    "label": "Person Receiving Services",
+    "isRequired": true,
+    "size": "medium"
+   },
+   {
+    "type": "text",
+    "id": 3,
+    "label": "Month",
+    "size": "small"
+   },
+   {
+    "type": "text",
+    "id": 4,
+    "label": "Year",
+    "size": "small"
+   },
+   {
+    "type": "list",
+    "id": 5,
+    "label": "Residential Attendance (mark codes for each day 1–31)",
+    "enableColumns": true,
+    "inputs": [
+     {
+      "id": "5.1",
+      "name": "Day #"
+     },
+     {
+      "id": "5.2",
+      "name": "Code (E, X, H, R, V, I, T, VT, J)"
+     }
+    ]
+   },
+   {
+    "type": "list",
+    "id": 6,
+    "label": "Transportation Attendance (mark AM/PM for each day)",
+    "enableColumns": true,
+    "inputs": [
+     {
+      "id": "6.1",
+      "name": "Day #"
+     },
+     {
+      "id": "6.2",
+      "name": "AM Code (if any)"
+     },
+     {
+      "id": "6.3",
+      "name": "PM Code (if any)"
+     }
+    ]
+   },
+   {
+    "type": "number",
+    "id": 7,
+    "label": "Total # of days residential services were provided",
+    "size": "medium"
+   },
+   {
+    "type": "html",
+    "id": 8,
+    "label": "Special Codes",
+    "displayOnly": true,
+    "content": "<p><strong>Special Codes:</strong> E=Enrollment, X=Client in Residence, H=Hospital Day/Nursing Home, R=Respite, V=Visit to Family/Friends, I=Ineligible, T=Termination, VT=Vacant Days due to Termination, J=Incarceration.</p>"
+   },
+   {
+    "type": "text",
+    "id": 9,
+    "label": "Participation Certified — Name",
+    "size": "medium"
+   },
+   {
+    "type": "text",
+    "id": 10,
+    "label": "Title",
+    "size": "medium"
+   },
+   {
+    "type": "phone",
+    "id": 11,
+    "label": "Phone No.",
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 12,
+    "label": "Certification Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "12.1",
+      "label": "MM"
+     },
+     {
+      "id": "12.2",
+      "label": "DD"
+     },
+     {
+      "id": "12.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "html",
+    "id": 13,
+    "label": "Submission Note",
+    "displayOnly": true,
+    "content": "<p><strong>Due to Real Care, Inc. by the 22nd of each month.</strong> Email: <a href='mailto:timesheets@realcarecolorado.com'>timesheets@realcarecolorado.com</a></p>"
+   }
+  ]
+ },
+ "version": "2.1.1.8"
+}
