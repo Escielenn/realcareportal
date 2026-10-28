@@ -1,0 +1,49 @@
+QMAP Part 3 - Syllabus Units 6, 7 & 8
+/
+QMAP_Training_Part_3_Voiceover_Script
+MD
+File
+Edit
+View
+Help
+JB
+4 of 40
+Share
+Edit content
+View as plain text
+UTF-8
+QMAP Training Part 3 — Voiceover Script
+
+Covers Units 6, 7, and 8
+Real Care, Inc.
+
+﻿
+
+
+Welcome to Real Care! This is Part 3 of your QMAP training, covering Units 6, 7, and 8. In this training, you'll review the procedures for safely administering medications, what to do when medication errors happen, and how to properly store medications. Let's get started.
+
+We'll begin with Unit 6, the medication administration procedure.
+
+Before you do anything else, recall the Seven Rights of medication administration: the right client, the right time, the right medicine, the right dose, the right route, documentation, and the right to refuse. The right time means within thirty minutes before or thirty minutes after the scheduled dose if a specific time is listed on the doctor's order. For non-time-specific medications, your facility may use "am" or "pm" time slots on the MAR, as long as that's spelled out in the policies and procedures.
+
+Standard precautions, originally called universal precautions, apply to every client at every contact. You assume every client could be infected, and you protect yourself and the client through proper hygiene. Hand washing is the single most important measure to prevent contamination and the spread of infection. Wash your hands or use sanitizer before any physical contact with a client or with their medications. Wear gloves whenever you're in direct contact with body fluids, broken skin, mucous membranes, or with medications that touch the skin. When you remove your gloves, turn them inside out as you take them off, and dispose of contaminated gloves in knotted plastic bags to protect janitorial staff.
+
+Before administering, gather the client's medication and make sure it hasn't expired, and that every container is labeled with the recipient's full name. Pull the MAR and the physician's order. Cross-check the label against the MAR and physician's order three times — once when you take the medication off the shelf, once when you pour it, and once when you return it to storage. Gather the equipment you'll need depending on the route: medicine cups, tweezers, and a pill cutter for oral pills; gloves and cotton balls or tissues for drops and ointments; gloves, a medicine cup, and lubricant for suppositories. Take everything to the client or have them come to your administration area, and make sure the space is clean and private.
+
+Always identify the client. You can ask their name and verify with a photograph, or ask a staff member to confirm. Never use another client to identify someone. Then explain the procedure to gain their cooperation, especially with individuals who have cognitive impairments, dementia, or behavioral needs. Use person-centered skills.
+
+Different routes have different procedures. For oral tablets and capsules, the client should be sitting up or standing, not lying down. Offer one tablet at a time with a drink before and after. You may not crush or open any medication, or hide it in food, without a physician's order. Stay with the client until you've confirmed the medication is swallowed. For sublingual tablets, instruct the client to place the tablet under the tongue and not swallow until it's fully dissolved. With nitroglycerin SL, sit the client down — do not have them lie down — at the first sign of chest pain, administer the tablet, and notify your supervisor immediately. Record the exact minute on the MAR. If chest pain isn't relieved after one dose, call 911. Tightly recap the nitro bottle, and replace the supply every six months.
+
+For oral liquids, shake suspensions if directed, pour at eye level on a flat surface, and clean the lip of the bottle before recapping. For ointments, lotions, liniments, and aerosols, always wear gloves — never apply with bare fingers. Use a tongue blade as an applicator if helpful. For transdermal patches, remove the old patch, wash both the old and new sites with soap and water, rotate sites to avoid irritation, and write your initials, date, and time on the patch after applying.
+
+For eye drops, cleanse the eye from the inside corner to the outside, retract the lower lid to make a pocket, and instill the drop without touching the eye. Wait three to five minutes between drops if multiple eye medications are ordered. For ear drops, position the client with the affected ear up, instill the drops without touching the dropper to the ear, and place a small wad of cotton in the canal — but return within ten minutes to remove it. For nose drops and nasal spray, avoid touching the applicator to the nose. For inhalers, have the client exhale, then breathe in deeply as you administer the medication, and have them hold their breath as long as possible. Have them rinse their mouth afterward to prevent thrush.
+
+For rectal suppositories, have the client lie on their left side, lubricate the suppository, and insert it about three inches — past the internal sphincter so it isn't expelled. For vaginal suppositories or creams, position the client on her back in a frog-leg position or on her side, and instruct her to remain lying down for fifteen to thirty minutes for absorption. These are best given at bedtime.
+
+After administration, dispose of used cups and gloves, wash your hands or sanitize before moving to the next client, and document immediately on the MAR. For PRN medications, document the client's request, the reason, and the follow-up results. Return medication containers to storage. If medication has been removed from its original container, don't return it — destroy it according to Real Care policy.
+
+That brings us to Unit 7, Medication Errors. A medication error is any administration that goes against a physician's order and either causes or has the potential to cause harm. Examples include failing to follow the Seven Rights, improper documentation, running out of medication, or giving the wrong medication to the wrong client. If an error happens, immediately document the details on the MAR, notify Real Care and the physician, and follow Real Care's policy for medication errors. If you give the wrong client the wrong medication, initial the appropriate date box, circle your initials, document the exact reason on the reverse side of the MAR, and contact Real Care.
+
+Finally, Unit 8 covers medication storage. Medications must be stored in a way that ensures the client's safety, typically in a locked central location that clients cannot access. Refrigerated medications must be stored separately to prevent intermingling. Controlled substances require a double-lock and a two-person count, signed by both staff at the end of each day, or any time the medication leaves and returns to the facility. Any discrepancy must be reported immediately to your supervisor for investigation of possible drug diversion. Medications should never be stored with disinfectants, insecticides, bleaches, household cleaners, or poisons. And remember the difference between the expiration date — printed on the container, or one year after fill if there's no date — and the refill through date, which is variable and determined by the prescribing authority.
+
+That completes Part 3 of your QMAP training. Please proceed to your test.
