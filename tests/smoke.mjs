@@ -57,7 +57,9 @@ await step(p, "course video plays from portal storage", async () => {
   await p.page.goto(BASE + "/training/documentation");
   await p.page.click("a:has-text('Watch the training')");
   const v = await p.page.waitForSelector("video", { timeout: 15000 });
-  await p.page.waitForFunction((el) => el.readyState >= 1 && el.duration > 600, v, { timeout: 30000 });
+  // Playwright's Chromium has no H.264 decoder, so check the signed stream answers instead of playing it.
+  const ok = await v.evaluate(async (el) => { const r = await fetch(el.currentSrc || el.src, { headers: { Range: "bytes=0-1023" } }); return r.status === 206 && /video\/mp4/.test(r.headers.get("content-type") || ""); });
+  if (!ok) throw new Error("signed video URL did not stream");
   await p.page.click("summary:has-text('Read the transcript')");
   await p.page.waitForSelector("text=Welcome to Real Care", { timeout: 5000 });
 });
