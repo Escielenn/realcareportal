@@ -26,7 +26,7 @@ async function visit(s, path, expectText) {
     const res = await s.page.goto(BASE + path, { waitUntil: "networkidle", timeout: 30000 });
     status = res?.status() ?? 0;
   } catch (e) { s.errors.push("nav: " + e.message); }
-  const body = (await s.page.textContent("body").catch(() => "")) || "";
+  const body = (await s.page.innerText("body").catch(() => "")) || "";
   const crashed = /Application error|could not be found|Internal Server Error|This page couldn.t load/i.test(body);
   const missing = expectText && !body.includes(expectText) ? `missing "${expectText}"` : "";
   const ok = status < 400 && !crashed && !missing && s.errors.filter((e) => !/favicon|Failed to load resource.*404/.test(e)).length === 0;
@@ -133,8 +133,7 @@ await step(s, "bulk reminder", async () => {
 });
 await step(s, "wix import", async () => {
   await s.page.goto(BASE + "/admin/import");
-  const res = await s.page.request.get(BASE + "/samples/wix-communication-participants.csv");
-  const csv = await res.body();
+  const csv = (await import("node:fs")).readFileSync(new URL("../public/samples/wix-communication-participants.csv", import.meta.url));
   await s.page.selectOption("#imp-course", { label: "Communication" });
   await s.page.setInputFiles("#imp-file", { name: "wix-communication-participants.csv", mimeType: "text/csv", buffer: csv });
   await s.page.click("button:has-text('Match rows to providers')");
@@ -155,7 +154,7 @@ await s.ctx.close();
 const anon = await browser.newContext();
 const ap = await anon.newPage();
 await ap.goto(BASE + "/join/83265b49-d84b-53ff-9e13-45fd3e167c5b");
-const jt = await ap.textContent("body");
+const jt = await ap.innerText("body");
 results.push({ who: "anon", path: "/join/<riley>", status: 200, ok: /Activate my account/.test(jt), note: /Activate my account/.test(jt) ? "" : jt.slice(0, 200) });
 await anon.close();
 
