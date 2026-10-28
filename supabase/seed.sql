@@ -136,9 +136,10 @@ Todos los cursos requeridos están en este portal. Su panel muestra lo que debe 
 - Sus cursos completados anteriormente se quedan en su historial y en su certificado de estudios.
 ## Cómo obtener ayuda
 Si tiene dudas, envíe un mensaje al personal de Real Care desde la pestaña Mensajes.');
-insert into public.lessons (id, course_id, sort, kind, title_en, title_es) values ('2ee4d7f3-81c2-541c-971a-530235f13630', '25ce5b98-1483-570a-bfdb-ef5341e52d9f', 1, 'quiz', 'Check your understanding', 'Compruebe lo que aprendió');
-insert into public.quiz_questions (lesson_id, sort, prompt_en, prompt_es, options_en, options_es, correct, explanation_en, explanation_es) values ('2ee4d7f3-81c2-541c-971a-530235f13630', 0, 'When do your required courses renew?', '¿Cuándo se renuevan sus cursos requeridos?', '["Every month", "Once a year on your due date", "Only when staff email you"]'::jsonb, '["Cada mes", "Una vez al año en su fecha límite", "Solo cuando el personal le envía un correo"]'::jsonb, 2, 'Required training renews once a year on your own due date.', 'La capacitación requerida se renueva una vez al año en su propia fecha límite.');
-insert into public.quiz_questions (lesson_id, sort, prompt_en, prompt_es, options_en, options_es, correct, explanation_en, explanation_es) values ('2ee4d7f3-81c2-541c-971a-530235f13630', 1, 'What happens to last year''s completions?', '¿Qué pasa con los cursos que completó el año pasado?', '["They are deleted", "They stay on your record and transcript", "You must print them"]'::jsonb, '["Se borran", "Se quedan en su historial y certificado de estudios", "Debe imprimirlos"]'::jsonb, 2, 'History is never deleted. Each year is kept as its own cycle.', 'El historial nunca se borra. Cada año se guarda como su propio ciclo.');
+insert into public.lessons (id, course_id, sort, kind, title_en, title_es, body_en, body_es, video_url, video_seconds) values ('2ee4d7f3-81c2-541c-971a-530235f13630', '25ce5b98-1483-570a-bfdb-ef5341e52d9f', 1, 'video', 'A quick tour of your portal', 'Un recorrido rápido por su portal', 'A short tour of the portal: your dashboard, training, forms and messages. Watch to the end to complete this lesson.', 'Un recorrido corto por el portal: su panel, capacitación, formularios y mensajes. Véalo hasta el final para completar esta lección.', '/media/portal-tour.mp4', 40);
+insert into public.lessons (id, course_id, sort, kind, title_en, title_es) values ('bc7f7817-6718-5be3-8a37-bd9ff34bd29f', '25ce5b98-1483-570a-bfdb-ef5341e52d9f', 2, 'quiz', 'Check your understanding', 'Compruebe lo que aprendió');
+insert into public.quiz_questions (lesson_id, sort, prompt_en, prompt_es, options_en, options_es, correct, explanation_en, explanation_es) values ('bc7f7817-6718-5be3-8a37-bd9ff34bd29f', 0, 'When do your required courses renew?', '¿Cuándo se renuevan sus cursos requeridos?', '["Every month", "Once a year on your due date", "Only when staff email you"]'::jsonb, '["Cada mes", "Una vez al año en su fecha límite", "Solo cuando el personal le envía un correo"]'::jsonb, 2, 'Required training renews once a year on your own due date.', 'La capacitación requerida se renueva una vez al año en su propia fecha límite.');
+insert into public.quiz_questions (lesson_id, sort, prompt_en, prompt_es, options_en, options_es, correct, explanation_en, explanation_es) values ('bc7f7817-6718-5be3-8a37-bd9ff34bd29f', 1, 'What happens to last year''s completions?', '¿Qué pasa con los cursos que completó el año pasado?', '["They are deleted", "They stay on your record and transcript", "You must print them"]'::jsonb, '["Se borran", "Se quedan en su historial y certificado de estudios", "Debe imprimirlos"]'::jsonb, 2, 'History is never deleted. Each year is kept as its own cycle.', 'El historial nunca se borra. Cada año se guarda como su propio ciclo.');
 insert into public.courses (id, slug, title_en, title_es, description_en, description_es, sort, is_specialty, price_cents) values ('dafdcd7a-ba64-50be-b901-59f49c2a1e2f', 'system-values', 'System Values & General Principles', 'Valores del sistema y principios generales', 'The values that guide services in Colorado: choice, inclusion, dignity and person-centered support.', 'Los valores que guían los servicios en Colorado: elección, inclusión, dignidad y apoyo centrado en la persona.', 1, false, 1000);
 insert into public.lessons (id, course_id, sort, kind, title_en, title_es, body_en, body_es) values ('befba78d-1184-56a3-b6bf-fdd27ef5ec9c', 'dafdcd7a-ba64-50be-b901-59f49c2a1e2f', 0, 'reading', 'Course overview', 'Resumen del curso', '## About this course
 The values that guide services in Colorado: choice, inclusion, dignity and person-centered support.
@@ -527,5 +528,26 @@ insert into public.announcements (title_en, title_es, body_en, body_es, audience
 ('Host Homes: quarterly fire drills due November 6', 'Hogares anfitriones: simulacros trimestrales para el 6 de noviembre',
  'Please complete your Fire Disaster Drill form in the portal by November 6.',
  'Por favor complete su formulario de simulacro de incendio en el portal antes del 6 de noviembre.', '{host_home}', '2026-10-22 08:00:00-06');
+update public.courses set in_all_access = false, access_days = 60 where slug = 'qmap';
+update public.courses set in_all_access = false where slug = 'respite';
+insert into public.orders (provider_id, description, amount_cents, method, created_at)
+select tc.provider_id, 'All-Access Package (12 months)', 7500, 'wix', tc.starts_on + interval '9 hours' from public.training_cycles tc where tc.cycle_number = 2;
+insert into public.entitlements (provider_id, course_id, order_id, starts_on, ends_on)
+select o.provider_id, null, o.id, o.created_at::date, (o.created_at::date + 365) from public.orders o where o.method = 'wix';
+insert into public.orders (provider_id, course_id, description, amount_cents, method, created_at)
+select p.id, c.id, 'QMAP', 3000, 'wix', now() - interval '20 days' from public.profiles p, public.courses c
+where c.slug = 'qmap' and p.email in ('brianna.cole@example.com', 'evan.ruiz@example.com', 'hector.salinas@example.com', 'fatima.noor@example.com', 'jordan.lee@example.com');
+insert into public.entitlements (provider_id, course_id, order_id, starts_on, ends_on)
+select o.provider_id, o.course_id, o.id, o.created_at::date, (o.created_at::date + 60) from public.orders o where o.description = 'QMAP';
+insert into public.invites (token, email, full_name, provider_types, locale, created_by, created_at)
+values ('83265b49-d84b-53ff-9e13-45fd3e167c5b', 'riley.morgan@example.com', 'Riley Morgan', array['host_home'], 'en', 'eed26bf3-960d-536c-b609-aa71df39f52c', now() - interval '1 day');
+update public.notifications set read_at = created_at;
+insert into public.notifications (profile_id, kind, title_en, title_es, link, created_at)
+select a.provider_id, 'form_returned', 'A form was returned for a correction', 'Se devolvió un formulario para corregir', '/forms/' || a.id, '2026-10-21 10:00:00-06'
+from public.assignments a join public.submissions s on s.assignment_id = a.id where s.status = 'returned';
+insert into public.notifications (profile_id, kind, title_en, title_es, link, created_at)
+select p.id, 'reminder', 'Training due in 3 days', 'Su capacitación vence en 3 días', '/training', now() - interval '2 hours'
+from public.profiles p where p.email = 'demo.provider@example.com';
+delete from public.email_outbox;
 delete from public.audit_log;
 commit;
