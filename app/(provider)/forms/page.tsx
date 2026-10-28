@@ -20,6 +20,8 @@ export default async function FormsPage({ searchParams }: { searchParams: Promis
     .filter((r) => !r.individual_id || r.individuals)
     .map((r) => ({ ...r, sub: Array.isArray(r.submissions) ? r.submissions[0] : r.submissions }));
 
+  const { data: selfStart } = await supabase.from("form_templates").select("id, title_en, title_es").eq("active", true).eq("self_start", true).order("title_en");
+
   const groups = [
     { key: "returned", label: t(lang, "returnedForm"), rows: rows.filter((r) => r.sub?.status === "returned") },
     { key: "todo", label: t(lang, "toDo"), rows: rows.filter((r) => !r.sub) },
@@ -29,7 +31,17 @@ export default async function FormsPage({ searchParams }: { searchParams: Promis
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">{t(lang, "forms")}</h1>
+      <h1 className="text-3xl font-semibold text-navy">{t(lang, "forms")}</h1>
+      {(selfStart ?? []).length > 0 && (
+        <section className="card p-4">
+          <h2 className="mb-2 font-semibold">{lang === "es" ? "Empezar un formulario" : "Start a form"}</h2>
+          <div className="flex flex-wrap gap-2">
+            {(selfStart ?? []).map((f) => (
+              <Link key={f.id} href={`/forms/start/${f.id}`} className="btn-ghost py-1.5 text-sm">+ {lang === "es" ? f.title_es : f.title_en}</Link>
+            ))}
+          </div>
+        </section>
+      )}
       {done && <p role="status" className="rounded-xl bg-green-soft px-4 py-3 font-semibold text-green">✓ {t(lang, "thanksSubmitted")}</p>}
       {groups.map((g) =>
         g.rows.length === 0 && g.key !== "todo" ? null : (

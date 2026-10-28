@@ -6,9 +6,12 @@ import { AdminNav } from "@/components/nav";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const { supabase, profile } = await requireStaff();
-  const [{ count: queue }, { count: pendingImports }] = await Promise.all([
+  const [{ count: queue }, { count: pendingImports }, { count: docs }, { count: apps }, { count: unread }] = await Promise.all([
     supabase.from("submissions").select("id", { count: "exact", head: true }).eq("status", "submitted"),
     supabase.from("import_batches").select("id", { count: "exact", head: true }).eq("status", "staged"),
+    supabase.from("documents").select("id", { count: "exact", head: true }).eq("status", "submitted"),
+    supabase.from("applications").select("id", { count: "exact", head: true }).eq("status", "new"),
+    supabase.from("notifications").select("id", { count: "exact", head: true }).eq("profile_id", profile.id).is("read_at", null),
   ]);
   return (
     <div className="min-h-dvh md:flex">
@@ -27,7 +30,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             items={[
               { href: "/admin", label: "Overview" },
               { href: "/admin/providers", label: "Providers & training" },
+              { href: "/admin/notifications", label: "Alerts", badge: unread ?? 0 },
               { href: "/admin/review", label: "Review queue", badge: queue ?? 0 },
+              { href: "/admin/documents", label: "Documents", badge: docs ?? 0 },
+              { href: "/admin/forms", label: "Forms & assignments" },
+              { href: "/admin/individuals", label: "People supported" },
+              { href: "/admin/applications", label: "Applications", badge: apps ?? 0 },
               { href: "/admin/transcripts", label: "Transcripts" },
               { href: "/admin/messages", label: "Messages" },
               { href: "/admin/courses", label: "Courses" },

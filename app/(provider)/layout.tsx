@@ -28,6 +28,7 @@ export default async function ProviderLayout({ children }: { children: React.Rea
               { href: "/dashboard", label: t(lang, "home"), icon: "home" as const },
               { href: "/training", label: t(lang, "training"), icon: "training" as const },
               { href: "/forms", label: t(lang, "forms"), icon: "forms" as const, badge: returned ?? 0 },
+              { href: "/documents", label: lang === "es" ? "Documentos" : "Documents", icon: "documents" as const },
               { href: "/messages", label: t(lang, "messages"), icon: "messages" as const },
             ]}
           />

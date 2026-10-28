@@ -27,6 +27,9 @@ export async function signIn(_prev: { error?: string } | undefined, formData: Fo
   await supabase.rpc("log_event", { p_action: "sign_in", p_table: "auth", p_record: data.user.id });
   const c = await cookies();
   c.set("rc_lang", profile.locale === "es" ? "es" : "en", { path: "/", sameSite: "lax", maxAge: 60 * 60 * 24 * 365 });
+  // Return to the page that sent them to sign in (e.g. a QR code), but only within the portal.
+  const next = String(formData.get("next") ?? "");
+  if (profile.role === "provider" && /^\/forms\/start\/[0-9a-f-]{36}$/i.test(next)) redirect(next);
   redirect(profile.role === "provider" ? "/dashboard" : "/admin");
 }
 
@@ -190,4 +193,31 @@ export async function acceptInvite(_prev: { error?: string } | undefined, formDa
   const c = await cookies();
   c.set("rc_lang", profile?.locale === "es" ? "es" : "en", { path: "/", sameSite: "lax", maxAge: 60 * 60 * 24 * 365 });
   redirect("/dashboard?welcome=1");
+}
+
+// ---------- Phase 2: self-started forms (QR codes) and public applications
+export async function startForm(templateId: string, individualId: string | null) {
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("start_form", { p_template: assertUuid(templateId), p_individual: individualId ? assertUuid(individualId) : null });
+  if (error) return { error: error.message };
+  redirect(`/forms/${data}`);
+}
+
+export async function submitApplication(_prev: { ok?: boolean; error?: string } | undefined, fd: FormData) {
+  const s = (k: string, max = 200) => String(fd.get(k) ?? "").trim().slice(0, max);
+  const full_name = s("full_name", 120);
+  const email = s("email", 200).toLowerCase();
+  const locale = s("locale") === "es" ? "es" : "en";
+  const es = locale === "es";
+  if (fd.get("website")) return { ok: true }; // honeypot: bots fill hidden fields
+  if (full_name.length < 2) return { error: es ? "Escriba su nombre." : "Please enter your name." };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: es ? "Escriba un correo válido." : "Please enter a valid email." };
+  const types = fd.getAll("types").map(String).filter((t) => ["host_home", "family_caregiver", "scc_dsp", "nmt"].includes(t));
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("submit_application", {
+    p_full_name: full_name, p_email: email, p_phone: s("phone", 40) || null, p_locale: locale, p_types: types,
+    p_data: { city: s("city", 80), experience: s("experience", 1000) },
+  });
+  if (error) return { error: es ? "No pudimos enviar su solicitud. Intente más tarde." : "We couldn't send your application. Please try again later." };
+  return { ok: true };
 }

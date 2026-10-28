@@ -37,7 +37,10 @@ async function visit(s, path, expectText) {
 async function step(s, name, fn) {
   s.errors.length = 0;
   try { await fn(); results.push({ who: s.label, path: "FLOW " + name, status: 200, ok: s.errors.length === 0, note: s.errors.join(" | ").slice(0, 300) }); }
-  catch (e) { results.push({ who: s.label, path: "FLOW " + name, status: 0, ok: false, note: e.message.slice(0, 300) }); }
+  catch (e) {
+    results.push({ who: s.label, path: "FLOW " + name, status: 0, ok: false, note: e.message.replace(/\s+/g, " ").slice(0, 900) });
+    if (process.env.SHOTS) await s.page.screenshot({ path: `${process.env.SHOTS}/fail-${name.replace(/[^a-z0-9]+/gi, "-")}.png` }).catch(() => {});
+  }
 }
 
 // ---------------- provider
@@ -46,6 +49,7 @@ for (const [path, text] of [
   ["/dashboard", "Hello, Maria"], ["/training", "My training"], ["/training/confidentiality", "Confidentiality"],
   ["/training/qmap", "This course needs to be purchased"], ["/training/welcome", "A quick tour"], ["/forms", "Returned for a correction"],
   ["/messages", "Messages"], ["/notifications", "Notifications"], ["/profile", "My profile"],
+  ["/documents", "Send a document"],
   ["/training/documentation", "Documentation Submissions"], ["/training/injection-admin", "RCI Injection Administration"],
 ]) await visit(p, path, text);
 
@@ -124,13 +128,27 @@ for (const [path, text] of [
   ["/admin/review", "Review queue"], ["/admin/review?show=all", "All submissions"], ["/admin/transcripts", "Transcripts"],
   ["/admin/transcripts?type=host_home&from=2026-01-01&to=2026-12-31", "Reporting period"], ["/admin/messages", "Messages"],
   ["/admin/courses", "Courses"], ["/admin/requirements", "Training requirements"], ["/admin/payments", "Payments"],
-  ["/admin/invites", "Invite providers"], ["/admin/import", "Import training history"], ["/admin/outbox", "Email outbox"], ["/admin/audit", "Audit log"],
+  ["/admin/invites", "Invite providers"], ["/admin/documents", "Documents"], ["/admin/forms", "Form library"],
+  ["/admin/individuals", "People supported"], ["/admin/applications", "Jamie Fontaine"], ["/admin/notifications", "Alerts"], ["/admin/import", "Import training history"], ["/admin/outbox", "Email outbox"], ["/admin/audit", "Audit log"],
 ]) await visit(s, path, text);
 
 if (process.env.SHOTS) {
   await s.page.goto(BASE + "/admin", { waitUntil: "networkidle" });
   await s.page.screenshot({ path: `${process.env.SHOTS}/admin.png` });
 }
+await step(s, "form editor + QR", async () => {
+  await s.page.goto(BASE + "/admin/forms");
+  await s.page.click("a:has-text('Incident Report')");
+  await s.page.waitForSelector("text=QR code", { timeout: 15000 });
+  await s.page.waitForSelector("text=Live preview", { timeout: 15000 });
+});
+await step(s, "assign a form", async () => {
+  await s.page.goto(BASE + "/admin/forms");
+  await s.page.selectOption("#af-t", { label: "Fire Disaster Drill" });
+  await s.page.locator("input[name=providers]").first().check();
+  await s.page.click("button:has-text('Assign to')");
+  await s.page.waitForSelector("text=Assigned to 1 provider", { timeout: 15000 });
+});
 await step(s, "provider detail", async () => {
   await s.page.goto(BASE + "/admin/providers");
   await s.page.click("a:has-text('Maria Delgado')");
@@ -180,6 +198,10 @@ const ap = await anon.newPage();
 await ap.goto(BASE + "/join/83265b49-d84b-53ff-9e13-45fd3e167c5b");
 const jt = await ap.innerText("body");
 results.push({ who: "anon", path: "/join/<riley>", status: 200, ok: /Activate my account/.test(jt), note: /Activate my account/.test(jt) ? "" : jt.slice(0, 200) });
+const ap2 = await anon.newPage();
+await ap2.goto(BASE + "/apply");
+const at = await ap2.innerText("body");
+results.push({ who: "anon", path: "/apply", status: 200, ok: /Become a provider/.test(at), note: /Become a provider/.test(at) ? "" : at.slice(0, 200) });
 await anon.close();
 
 await browser.close();

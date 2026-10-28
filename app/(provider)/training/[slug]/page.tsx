@@ -21,7 +21,8 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
     supabase.from("lesson_progress").select("lesson_id").eq("provider_id", profile.id).eq("cycle_id", cycleId),
     supabase.from("completions").select("id, completed_at, score").eq("provider_id", profile.id).eq("course_id", course.id).eq("cycle_id", cycleId).maybeSingle(),
   ]);
-  const done = new Set((progress ?? []).map((p) => p.lesson_id));
+  const courseLessons = new Set((lessons ?? []).map((l) => l.id));
+  const done = new Set((progress ?? []).map((p) => p.lesson_id).filter((id) => courseLessons.has(id)));
   const next = (lessons ?? []).find((l) => !done.has(l.id)) ?? (lessons ?? [])[0];
 
   return (

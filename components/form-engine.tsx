@@ -38,10 +38,10 @@ export function Instructions({ schema, lang }: { schema: FormSchema; lang: "en" 
 }
 
 export function FormEngine({
-  assignmentId, schema, lang, individual, initial = {}, mode, flags = {}, doneHref,
+  assignmentId, schema, lang, individual, initial = {}, mode, flags = {}, doneHref, preview = false,
 }: {
   assignmentId: string; schema: FormSchema; lang: "en" | "es"; individual: Individual;
-  initial?: Values; mode: "new" | "returned"; flags?: Record<string, string>; doneHref: string;
+  initial?: Values; mode: "new" | "returned"; flags?: Record<string, string>; doneHref: string; preview?: boolean;
 }) {
   const [values, setValues] = useState<Values>(initial);
   const [touched, setTouched] = useState(false);
@@ -62,6 +62,7 @@ export function FormEngine({
     e.preventDefault();
     setTouched(true);
     if (allFields.some(missing)) { setError(L.missing[lang]); return; }
+    if (preview) { setError(lang === "es" ? "Vista previa: todo está completo. No se envió nada." : "Preview: everything required is filled in. Nothing was sent."); return; }
     // Send only visible, editable answers.
     const data: Values = {};
     for (const f of allFields) if (vis.has(f.id) && f.type !== "prefill" && (mode === "new" || f.id in flags)) data[f.id] = values[f.id] ?? null;

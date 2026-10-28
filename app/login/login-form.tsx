@@ -10,7 +10,7 @@ const DEMO_ACCOUNTS = [
 ];
 const DEMO_PASSWORD = "RealCare-Demo-2026";
 
-export function LoginForm({ demo }: { demo: boolean }) {
+export function LoginForm({ demo, next }: { demo: boolean; next?: string }) {
   const [state, action, pending] = useActionState(signIn, undefined);
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
@@ -19,6 +19,7 @@ export function LoginForm({ demo }: { demo: boolean }) {
   return (
     <div className="card p-6">
       <form ref={form} action={action} className="space-y-4">
+        {next && <input type="hidden" name="next" value={next} />}
         <div>
           <label htmlFor="email" className="label">Email</label>
           <input ref={email} id="email" name="email" type="email" autoComplete="email" required className="input" />

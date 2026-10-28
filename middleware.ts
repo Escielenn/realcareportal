@@ -27,9 +27,10 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const path = request.nextUrl.pathname;
-  if (!user && path !== "/login" && !path.startsWith("/join/")) {
+  if (!user && path !== "/login" && path !== "/apply" && !path.startsWith("/join/")) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
+    url.search = path.startsWith("/forms/start/") ? `?next=${encodeURIComponent(path)}` : "";
     return NextResponse.redirect(url);
   }
   return response;

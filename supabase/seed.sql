@@ -1160,6 +1160,10 @@ insert into public.notifications (profile_id, kind, title_en, title_es, link, cr
 select p.id, 'reminder', 'Training due in 3 days', 'Su capacitación vence en 3 días', '/training', now() - interval '2 hours'
 from public.profiles p where p.email = 'demo.provider@example.com';
 delete from public.email_outbox;
+update public.form_templates set self_start = true, category = 'incident' where slug = 'incident-report';
+update public.form_templates set self_start = true, category = 'daily' where slug in ('rci-log-notes', 'goal-tracking');
+update public.form_templates set category = 'safety' where slug = 'fire-drill';
+insert into public.applications (full_name, email, phone, locale, provider_types, data, created_at) values ('Jamie Fontaine', 'jamie.fontaine@example.com', '555-0142', 'en', array['host_home'], '{"city": "Longmont", "experience": "Five years supporting adults with IDD in a group home."}'::jsonb, now() - interval '1 day'), ('Rosa Ibarra', 'rosa.ibarra@example.com', null, 'es', array['family_caregiver'], '{"city": "Pueblo"}'::jsonb, now() - interval '3 hours');
 insert into public.form_versions (template_id, version, schema) select id, version, schema from public.form_templates on conflict do nothing;
 delete from public.audit_log;
 commit;

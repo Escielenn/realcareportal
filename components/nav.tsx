@@ -19,7 +19,7 @@ export function ProviderNav({ items }: { items: Item[] }) {
           </Link>
         ))}
       </nav>
-      <nav className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-4 border-t border-line bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden" aria-label="Main">
+      <nav className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-5 border-t border-line bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden" aria-label="Main">
         {items.map((i) => (
           <Link key={i.href} href={i.href} aria-current={active(i.href) ? "page" : undefined}
             className={`relative flex flex-col items-center gap-0.5 py-2 text-xs font-semibold ${active(i.href) ? "text-teal" : "text-muted"}`}>
@@ -55,4 +55,5 @@ const Icons = {
   training: <svg viewBox="0 0 24 24" {...s}><path d="M2 8l10-5 10 5-10 5z" /><path d="M6 10v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5" /></svg>,
   forms: <svg viewBox="0 0 24 24" {...s}><rect x="5" y="3" width="14" height="18" rx="2" /><path d="M9 8h6M9 12h6M9 16h4" /></svg>,
   messages: <svg viewBox="0 0 24 24" {...s}><path d="M4 5h16v11H8l-4 4z" /></svg>,
+  documents: <svg viewBox="0 0 24 24" {...s}><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" /><path d="M12 10v6M9 13l3-3 3 3" /></svg>,
 };
