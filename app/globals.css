@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #1d2b2f;
+  --color-muted: #5b6b70;
+  --color-line: #dfe5e3;
+  --color-paper: #f7f6f2;
+  --color-sand: #f0ede4;
+  --color-teal: #0f5c5f;
+  --color-teal-dark: #0a4446;
+  --color-teal-soft: #e3efee;
+  --color-coral: #c4553a;
+  --color-coral-soft: #fbe9e3;
+  --color-amber: #9a6a00;
+  --color-amber-soft: #fdf3d8;
+  --color-green: #2f7a4b;
+  --color-green-soft: #e4f2e8;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sig: "Brush Script MT", "Segoe Script", cursive;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+:focus-visible {
+  outline: 3px solid #e0a03a;
+  outline-offset: 2px;
+}
+
+@utility card {
+  @apply rounded-2xl border border-line bg-white;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-semibold transition-colors disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-teal text-white hover:bg-teal-dark;
+}
+@utility btn-ghost {
+  @apply btn border border-line bg-white text-ink hover:bg-sand;
+}
+@utility btn-danger {
+  @apply btn bg-coral text-white hover:opacity-90;
+}
+@utility input {
+  @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-[16px] text-ink placeholder:text-muted/70 focus:border-teal disabled:bg-sand disabled:text-muted;
+}
+@utility label {
+  @apply mb-1.5 block text-[15px] font-medium text-ink;
+}
+@utility pill {
+  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+  .print-page {
+    break-after: page;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
