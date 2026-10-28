@@ -53,10 +53,11 @@ for (const [path, text] of [
   ["/training/documentation", "Documentation Submissions"], ["/training/injection-admin", "RCI Injection Administration"],
 ]) await visit(p, path, text);
 
-await step(p, "linked video lesson + transcript", async () => {
+await step(p, "course video plays from portal storage", async () => {
   await p.page.goto(BASE + "/training/documentation");
   await p.page.click("a:has-text('Watch the training')");
-  await p.page.waitForSelector("text=Watch the training video", { timeout: 15000 });
+  const v = await p.page.waitForSelector("video", { timeout: 15000 });
+  await p.page.waitForFunction((el) => el.readyState >= 1 && el.duration > 600, v, { timeout: 30000 });
   await p.page.click("summary:has-text('Read the transcript')");
   await p.page.waitForSelector("text=Welcome to Real Care", { timeout: 5000 });
 });

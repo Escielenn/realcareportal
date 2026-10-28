@@ -325,6 +325,16 @@ def dropbox(file_name):
     return VIDEO_LINKS[file_name]
 
 
+
+# Course videos, moved from Dropbox into the private training-media bucket (720p MP4).
+# Paths are courses/<course_id>/<name>.mp4 so storage policy can check course access.
+VIDEO_SECONDS = {"respite": 609, "documentation": 765, "injection-admin": 647, "employee-orientation": 990,
+                 "qmap-part-1": 1158, "qmap-part-2": 1344, "qmap-part-3": 1988}
+
+
+def stored(name, slug):
+    return f"courses/{uid('course:' + slug)}/{name}.mp4", VIDEO_SECONDS[name]
+
 def quiz_from(pairs, pass_percent=80):
     return ("quiz", "Quiz", "Prueba", [(pe, ps, oe, os_, c, xe, xs) for pe, ps, oe, os_, c, xe, xs in pairs], pass_percent)
 
@@ -356,7 +366,7 @@ for slug, stem, te, ts, de, ds, video, secs, specialty, price in [
 ]:
     courses.append((slug, te, ts, de, ds, specialty, price, [
         ("video", "Watch the training", "Vea la capacitación",
-         cc.transcript(f"{stem}-Voiceover-EN.md"), cc.transcript(f"{stem}-Voiceover-ES.md"), dropbox(video), secs, "embed"),
+         cc.transcript(f"{stem}-Voiceover-EN.md"), cc.transcript(f"{stem}-Voiceover-ES.md"), *stored(slug, slug), "file"),
         quiz_from(cc.pair(f"{stem}-Quiz-EN.md", f"{stem}-Quiz-ES.md")),
     ]))
 
@@ -368,7 +378,7 @@ QMAP_PARTS = [
 qmap_lessons = []
 for n, te, ts, video, vo in QMAP_PARTS:
     body = cc.transcript(vo) if vo else ""
-    qmap_lessons.append(("video", f"{te} video", f"{ts}: video", body, (ES_PENDING + body) if body else "", QMAP_VIDEOS[n], None, "embed"))
+    qmap_lessons.append(("video", f"{te} video", f"{ts}: video", body, (ES_PENDING + body) if body else "", *stored(f"qmap-part-{n}", "qmap"), "file"))
     qz = quiz_from(en_only(cc.parse_quiz(f"qmap-{n}-quiz-en.md")), 85)
     qmap_lessons.append(("quiz", f"{te} quiz", f"{ts}: prueba", qz[3], 85))
 courses.append(("qmap", "QMAP", "QMAP",

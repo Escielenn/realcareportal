@@ -87,11 +87,18 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
           </>
         ) : lesson.kind === "video" ? (
           <>
-            {body && <p className="mb-4 text-muted">{body}</p>}
+            {body && body.length <= 400 && <p className="mb-4 text-muted">{body}</p>}
+            {lang === "es" && body && body.length > 400 && <p className="mb-3 text-sm text-muted">La narración del video está en inglés. La transcripción en español está abajo.</p>}
             {video ? (
               <VideoLesson lessonId={lesson.id} src={video.src} lang={lang} initialWatched={video.watched} duration={lesson.video_seconds} initiallyComplete={video.complete} nextHref={nextHref} />
             ) : (
               <p className="rounded-xl bg-sand p-4 text-muted">{lang === "es" ? "El video todavía no está disponible." : "The video isn't available yet."}</p>
+            )}
+            {body && body.length > 400 && (
+              <details className="mt-5 rounded-xl border border-line">
+                <summary className="cursor-pointer px-4 py-3 font-semibold text-navy">{lang === "es" ? "Leer la transcripción" : "Read the transcript"}</summary>
+                <div className="max-h-[28rem] overflow-y-auto border-t border-line px-4 py-3"><Markdown text={body} /></div>
+              </details>
             )}
           </>
         ) : lesson.kind === "quiz" ? (

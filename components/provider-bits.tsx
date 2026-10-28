@@ -14,6 +14,11 @@ const V = {
   courseDone: { en: "Course complete!", es: "¡Curso completado!" },
 };
 
+const clock = (sec: number) => {
+  const t = Math.max(0, Math.round(sec));
+  return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
+};
+
 export function VideoLesson({ lessonId, src, lang, initialWatched, duration: knownDuration, initiallyComplete, nextHref }: {
   lessonId: string; src: string; lang: "en" | "es"; initialWatched: number; duration: number | null; initiallyComplete: boolean; nextHref: string;
 }) {
@@ -51,7 +56,7 @@ export function VideoLesson({ lessonId, src, lang, initialWatched, duration: kno
       />
       <div className="rounded-xl bg-sand p-4">
         <div className="mb-2 flex items-center justify-between text-sm">
-          <span className="font-semibold">{complete ? `✓ ${V.done[lang]}` : `${V.watched[lang]} ${Math.round(watched)}s ${V.of[lang]} ${Math.round(duration)}s`}</span>
+          <span className="font-semibold">{complete ? `✓ ${V.done[lang]}` : `${V.watched[lang]} ${clock(watched)} ${V.of[lang]} ${clock(duration)}`}</span>
           <span className="text-muted">{complete ? "100%" : `${pct}%`}</span>
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-white"><div className={`h-full rounded-full ${complete ? "bg-green" : "bg-teal"}`} style={{ width: `${complete ? 100 : pct}%` }} /></div>
