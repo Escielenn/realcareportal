@@ -1,0 +1,327 @@
+{
+ "0": {
+  "title": "COMMUNITY ACCOUNT RECORD (Currency + Logic)",
+  "description": "Community Account Record with currency formatting, calculated ending balance, and SSI conditional.",
+  "labelPlacement": "top_label",
+  "descriptionPlacement": "below",
+  "button": {
+   "type": "text",
+   "text": "Submit",
+   "imageUrl": ""
+  },
+  "version": "2.1.1.8",
+  "id": 12,
+  "confirmations": [
+   {
+    "id": "6d855e058b5b",
+    "name": "Default Confirmation",
+    "isDefault": true,
+    "type": "message",
+    "message": "Thank you — the Community Account Record has been submitted.",
+    "url": "",
+    "pageId": "",
+    "queryString": ""
+   }
+  ],
+  "notifications": [
+   {
+    "id": "21232f297a57",
+    "to": "{admin_email}",
+    "name": "Admin Notification",
+    "event": "form_submission",
+    "toType": "email",
+    "subject": "Community Account Record submitted for {Name:1}",
+    "message": "{all_fields}"
+   }
+  ],
+  "fields": [
+   {
+    "type": "text",
+    "id": 1,
+    "label": "Name",
+    "isRequired": true,
+    "size": "medium"
+   },
+   {
+    "type": "text",
+    "id": 2,
+    "label": "Provider",
+    "isRequired": true,
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 3,
+    "label": "Month / Year (pick any day in month)",
+    "isRequired": true,
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "3.1",
+      "label": "MM"
+     },
+     {
+      "id": "3.2",
+      "label": "DD"
+     },
+     {
+      "id": "3.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "id": 10,
+    "label": "Personal Needs / Cash On Hand — Ledger",
+    "displayOnly": true
+   },
+   {
+    "type": "html",
+    "id": 11,
+    "label": "Ledger Guidance",
+    "displayOnly": true,
+    "content": "<p>Enter each transaction row below (e.g., <em>Balance Forward</em>, <em>Personal Needs Money Deposit</em>). Columns: Date, Description, +, −, =, Receipt Attached.</p>"
+   },
+   {
+    "type": "list",
+    "id": 12,
+    "label": "Personal Needs Ledger (add rows as needed)",
+    "enableColumns": true,
+    "inputs": [
+     {
+      "id": "12.1",
+      "name": "Date"
+     },
+     {
+      "id": "12.2",
+      "name": "Description / Type of Transaction"
+     },
+     {
+      "id": "12.3",
+      "name": "+ (Addition)"
+     },
+     {
+      "id": "12.4",
+      "name": "- (Expenditure)"
+     },
+     {
+      "id": "12.5",
+      "name": "= (Balance)"
+     },
+     {
+      "id": "12.6",
+      "name": "Receipt Attached (Y/N)"
+     }
+    ]
+   },
+   {
+    "type": "number",
+    "id": 13,
+    "label": "Ending Balance (Personal Needs/Cash on Hand)",
+    "size": "medium",
+    "numberFormat": "currency",
+    "rangeMin": "0"
+   },
+   {
+    "type": "section",
+    "id": 20,
+    "label": "Bank Account Summary",
+    "displayOnly": true
+   },
+   {
+    "type": "checkbox",
+    "id": 21,
+    "label": "Account Type",
+    "choices": [
+     {
+      "text": "Checking Account",
+      "value": "checking"
+     },
+     {
+      "text": "Savings Account",
+      "value": "savings"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "21.1",
+      "label": "Checking Account"
+     },
+     {
+      "id": "21.2",
+      "label": "Savings Account"
+     }
+    ]
+   },
+   {
+    "type": "number",
+    "id": 22,
+    "label": "Beginning Balance",
+    "size": "medium",
+    "numberFormat": "currency",
+    "rangeMin": "0"
+   },
+   {
+    "type": "number",
+    "id": 23,
+    "label": "Total Deposits",
+    "size": "medium",
+    "numberFormat": "currency",
+    "rangeMin": "0"
+   },
+   {
+    "type": "number",
+    "id": 24,
+    "label": "Total Expenditures",
+    "size": "medium",
+    "numberFormat": "currency",
+    "rangeMin": "0"
+   },
+   {
+    "type": "number",
+    "id": 25,
+    "label": "Ending Balance (calculated)",
+    "size": "medium",
+    "numberFormat": "currency",
+    "enableCalculation": true,
+    "calculationFormula": "{Beginning Balance:22}+{Total Deposits:23}-{Total Expenditures:24}",
+    "calculationRounding": "2"
+   },
+   {
+    "type": "checkbox",
+    "id": 26,
+    "label": "Attachments Required",
+    "choices": [
+     {
+      "text": "Bank Statement must be attached",
+      "value": "bank_statement"
+     },
+     {
+      "text": "Receipts must be attached",
+      "value": "receipts"
+     }
+    ],
+    "inputs": [
+     {
+      "id": "26.1",
+      "label": "Bank Statement must be attached"
+     },
+     {
+      "id": "26.2",
+      "label": "Receipts must be attached"
+     }
+    ]
+   },
+   {
+    "type": "textarea",
+    "id": 27,
+    "label": "Additional Info",
+    "size": "medium"
+   },
+   {
+    "type": "radio",
+    "id": 28,
+    "label": "Individual has earned income",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ]
+   },
+   {
+    "type": "radio",
+    "id": 29,
+    "label": "Earned Income has been reported to SSI?",
+    "choices": [
+     {
+      "text": "Yes",
+      "value": "Yes"
+     },
+     {
+      "text": "No",
+      "value": "No"
+     }
+    ],
+    "conditionalLogic": {
+     "actionType": "show",
+     "logicType": "all",
+     "rules": [
+      {
+       "fieldId": "28",
+       "operator": "is",
+       "value": "Yes"
+      }
+     ]
+    }
+   },
+   {
+    "type": "section",
+    "id": 30,
+    "label": "Signatures & Review",
+    "displayOnly": true
+   },
+   {
+    "type": "text",
+    "id": 31,
+    "label": "Provider Signature (typed)",
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 32,
+    "label": "Provider Sign Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "32.1",
+      "label": "MM"
+     },
+     {
+      "id": "32.2",
+      "label": "DD"
+     },
+     {
+      "id": "32.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "text",
+    "id": 33,
+    "label": "Reviewed By (Real Care Admin)",
+    "size": "medium"
+   },
+   {
+    "type": "date",
+    "id": 34,
+    "label": "Reviewed Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "inputs": [
+     {
+      "id": "34.1",
+      "label": "MM"
+     },
+     {
+      "id": "34.2",
+      "label": "DD"
+     },
+     {
+      "id": "34.3",
+      "label": "YYYY"
+     }
+    ]
+   }
+  ]
+ },
+ "version": "2.1.1.8"
+}

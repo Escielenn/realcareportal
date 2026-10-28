@@ -1,0 +1,299 @@
+{
+ "0": {
+  "title": "SCC TIMESHEETS (Two Pages)",
+  "description": "SCC Provider Timesheet and SCC / DSP Provider Timesheet.",
+  "labelPlacement": "top_label",
+  "descriptionPlacement": "below",
+  "button": {
+   "type": "text",
+   "text": "Submit",
+   "imageUrl": ""
+  },
+  "version": "2.1.1.8",
+  "id": 8,
+  "pagination": {
+   "type": "percentage",
+   "style": "blue",
+   "pages": [
+    {
+     "text": "SCC Provider Timesheet"
+    },
+    {
+     "text": "SCC / DSP Provider Timesheet"
+    }
+   ]
+  },
+  "confirmations": [
+   {
+    "id": "3fe6a6fb21dc",
+    "name": "Default Confirmation",
+    "isDefault": true,
+    "type": "message",
+    "message": "Thanks—your timesheets were submitted.",
+    "url": "",
+    "pageId": "",
+    "queryString": ""
+   }
+  ],
+  "notifications": [
+   {
+    "id": "21232f297a57",
+    "to": "{admin_email}",
+    "name": "Admin Notification",
+    "event": "form_submission",
+    "toType": "email",
+    "subject": "Timesheets submitted",
+    "message": "{all_fields}"
+   }
+  ],
+  "fields": [
+   {
+    "type": "page",
+    "id": 1,
+    "paginationType": "percentage",
+    "displayOnly": true,
+    "nextButton": {
+     "type": "text",
+     "text": "Next"
+    },
+    "previousButton": {
+     "type": "text",
+     "text": "Previous"
+    },
+    "pageNumber": 1
+   },
+   {
+    "type": "section",
+    "id": 10,
+    "label": "SCC Provider Timesheet",
+    "displayOnly": true,
+    "formId": 8
+   },
+   {
+    "type": "text",
+    "id": 11,
+    "label": "DSP Name",
+    "size": "medium",
+    "formId": 8
+   },
+   {
+    "type": "text",
+    "id": 12,
+    "label": "Month of",
+    "size": "medium",
+    "placeholder": "e.g., March 2026",
+    "formId": 8
+   },
+   {
+    "type": "list",
+    "id": 13,
+    "label": "Direct Care Entries (add a row for each shift / visit)",
+    "formId": 8,
+    "enableColumns": true,
+    "choices": [
+     {
+      "text": "Add Row",
+      "value": ""
+     }
+    ],
+    "inputs": [
+     {
+      "id": "13.1",
+      "name": "Date"
+     },
+     {
+      "id": "13.2",
+      "name": "Client Initials"
+     },
+     {
+      "id": "13.3",
+      "name": "Service Type (e.g., SCC)"
+     },
+     {
+      "id": "13.4",
+      "name": "Time In"
+     },
+     {
+      "id": "13.5",
+      "name": "Time Out"
+     },
+     {
+      "id": "13.6",
+      "name": "Total Hours"
+     },
+     {
+      "id": "13.7",
+      "name": "# of Trips"
+     }
+    ]
+   },
+   {
+    "type": "number",
+    "id": 14,
+    "label": "Total Direct Care Hours (sum)",
+    "size": "medium",
+    "formId": 8
+   },
+   {
+    "type": "text",
+    "id": 15,
+    "label": "Provider Signature (typed name)",
+    "size": "medium",
+    "formId": 8
+   },
+   {
+    "type": "date",
+    "id": 16,
+    "label": "Signature Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "formId": 8,
+    "inputs": [
+     {
+      "id": "16.1",
+      "label": "MM"
+     },
+     {
+      "id": "16.2",
+      "label": "DD"
+     },
+     {
+      "id": "16.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "html",
+    "id": 17,
+    "label": "Submission Note",
+    "displayOnly": true,
+    "content": "<p><strong>Due to Real Care, Inc. by the 22nd of each month.</strong> Include your monthly tracking form as well. Email: <a href='mailto:timesheets@realcarecolorado.com'>timesheets@realcarecolorado.com</a></p>"
+   },
+   {
+    "type": "page",
+    "id": 99,
+    "paginationType": "percentage",
+    "displayOnly": true,
+    "nextButton": {
+     "type": "text",
+     "text": "Next"
+    },
+    "previousButton": {
+     "type": "text",
+     "text": "Previous"
+    },
+    "pageNumber": 2
+   },
+   {
+    "type": "section",
+    "id": 110,
+    "label": "SCC / DSP Provider Timesheet",
+    "displayOnly": true,
+    "formId": 8
+   },
+   {
+    "type": "text",
+    "id": 111,
+    "label": "DSP Name",
+    "size": "medium",
+    "formId": 8
+   },
+   {
+    "type": "text",
+    "id": 112,
+    "label": "Month of",
+    "size": "medium",
+    "placeholder": "e.g., March 2026",
+    "formId": 8
+   },
+   {
+    "type": "list",
+    "id": 113,
+    "label": "Direct Care Entries (add a row for each shift / visit)",
+    "formId": 8,
+    "enableColumns": true,
+    "choices": [
+     {
+      "text": "Add Row",
+      "value": ""
+     }
+    ],
+    "inputs": [
+     {
+      "id": "113.1",
+      "name": "Date"
+     },
+     {
+      "id": "113.2",
+      "name": "Client Initials"
+     },
+     {
+      "id": "113.3",
+      "name": "Service Type (e.g., SCC)"
+     },
+     {
+      "id": "113.4",
+      "name": "Time In"
+     },
+     {
+      "id": "113.5",
+      "name": "Time Out"
+     },
+     {
+      "id": "113.6",
+      "name": "Total Hours"
+     },
+     {
+      "id": "113.7",
+      "name": "# of Trips"
+     }
+    ]
+   },
+   {
+    "type": "number",
+    "id": 114,
+    "label": "Total Direct Care Hours (sum)",
+    "size": "medium",
+    "formId": 8
+   },
+   {
+    "type": "text",
+    "id": 115,
+    "label": "Provider Signature (typed name)",
+    "size": "medium",
+    "formId": 8
+   },
+   {
+    "type": "date",
+    "id": 116,
+    "label": "Signature Date",
+    "dateType": "datefield",
+    "calendarIconType": "none",
+    "formId": 8,
+    "inputs": [
+     {
+      "id": "116.1",
+      "label": "MM"
+     },
+     {
+      "id": "116.2",
+      "label": "DD"
+     },
+     {
+      "id": "116.3",
+      "label": "YYYY"
+     }
+    ]
+   },
+   {
+    "type": "html",
+    "id": 117,
+    "label": "Submission Note",
+    "displayOnly": true,
+    "content": "<p><strong>Due to Real Care, Inc. by the 22nd of each month.</strong> Include your monthly tracking form as well. Email: <a href='mailto:timesheets@realcarecolorado.com'>timesheets@realcarecolorado.com</a></p>"
+   }
+  ]
+ },
+ "version": "2.1.1.8"
+}
