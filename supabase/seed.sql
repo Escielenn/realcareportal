@@ -1160,6 +1160,8 @@ insert into public.orders (provider_id, program_id, description, amount_cents, m
 select tc.provider_id, '50e88256-f3ac-5e06-b792-4afcf9b4e52f', 'All-Access Package (12 months)', 7500, 'wix', tc.starts_on + interval '9 hours' from public.training_cycles tc where tc.cycle_number = 2;
 insert into public.entitlements (provider_id, program_id, order_id, starts_on, ends_on)
 select o.provider_id, o.program_id, o.id, o.created_at::date, (o.created_at::date + 364) from public.orders o where o.method = 'wix' and o.program_id is not null;
+insert into public.program_auto_renew (provider_id, program_id, auto_renew)
+select id, '50e88256-f3ac-5e06-b792-4afcf9b4e52f', true from public.profiles where email in ('brianna.cole@example.com', 'fatima.noor@example.com');
 insert into public.orders (provider_id, course_id, description, amount_cents, method, created_at)
 select p.id, c.id, 'QMAP', 3000, 'wix', now() - interval '20 days' from public.profiles p, public.courses c
 where c.slug = 'qmap' and p.email in ('brianna.cole@example.com', 'evan.ruiz@example.com', 'hector.salinas@example.com', 'fatima.noor@example.com', 'jordan.lee@example.com');

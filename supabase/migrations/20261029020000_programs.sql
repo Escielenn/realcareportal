@@ -1,7 +1,8 @@
 -- Programs: annual packages providers opt into (e.g. the All-Access Package from realcaretraining.com).
 -- A program bundles courses, has a price per term (default 12 months), and an optional audience (provider types).
 -- Joining or renewing creates an order and an entitlement tied to the program. Course access follows program membership.
--- Designed so Stripe Checkout can replace demo checkout later: a Stripe webhook would call the same _join_program() helper.
+-- Designed so Stripe can replace demo checkout later: a Stripe webhook would call the same _join_program() helper.
+-- Price is one price per program for everyone (decision Oct 28, 2026). Providers can turn automatic renewal on or off per program.
 
 -------------------------------------------------------------------------------- tables
 create or replace function public.touch_updated_at() returns trigger
@@ -198,6 +199,60 @@ begin
   return v_order;
 end $$;
 
+-------------------------------------------------------------------------------- automatic renewal (provider's choice, per program)
+create table public.program_auto_renew (
+  provider_id uuid not null references public.profiles(id) on delete cascade,
+  program_id uuid not null references public.programs(id) on delete restrict,
+  auto_renew boolean not null default false,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  primary key (provider_id, program_id)
+);
+create trigger touch before update on public.program_auto_renew for each row execute function public.touch_updated_at();
+create trigger audit after insert or update or delete on public.program_auto_renew for each row execute function public.audit_trigger();
+alter table public.program_auto_renew enable row level security;
+create policy "own or staff" on public.program_auto_renew for select to authenticated
+  using (provider_id = (select auth.uid()) or (select public.is_staff()));
+-- No insert/update/delete policies: changes go through set_auto_renew().
+
+create or replace function public.set_auto_renew(p_program uuid, p_on boolean) returns void
+language plpgsql security definer set search_path = '' as $$
+begin
+  if auth.uid() is null then raise exception 'not signed in'; end if;
+  if not exists (select 1 from public.entitlements e where e.provider_id = auth.uid() and e.program_id = p_program) then
+    raise exception 'Join the program first.';
+  end if;
+  insert into public.program_auto_renew (provider_id, program_id, auto_renew) values (auth.uid(), p_program, coalesce(p_on, false))
+  on conflict (provider_id, program_id) do update set auto_renew = excluded.auto_renew;
+end $$;
+
+-- Nightly: renew terms that end within 3 days for providers who turned automatic renewal on.
+-- Free programs renew any time. Paid programs renew here only in demo mode; in production a Stripe
+-- subscription charges the saved card and its webhook calls _join_program() instead.
+create or replace function public._program_autorenew(p_as_of date) returns int
+language plpgsql security definer set search_path = '' as $$
+declare v_count int := 0; r record; v_demo boolean := coalesce((select demo_mode from public.app_settings where id = 1), false);
+begin
+  for r in
+    select ar.provider_id, pr.id as program_id, pr.price_cents, pr.duration_days, max(e.ends_on) as ends_on
+    from public.program_auto_renew ar
+    join public.programs pr on pr.id = ar.program_id and pr.active
+    join public.profiles pf on pf.id = ar.provider_id and pf.active
+    join public.entitlements e on e.provider_id = ar.provider_id and e.program_id = ar.program_id
+    where ar.auto_renew
+    group by ar.provider_id, pr.id, pr.price_cents, pr.duration_days
+    having max(e.ends_on) between p_as_of and p_as_of + 3
+  loop
+    if r.price_cents = 0 or v_demo then
+      perform public._join_program(r.provider_id, r.program_id, case when r.price_cents > 0 then 'demo_checkout' else 'paid_by_real_care' end,
+        r.price_cents, r.duration_days, 'Automatic renewal', null);
+      perform public.notify(r.provider_id, 'program_renewed', '/programs', 'program_renewed:' || r.provider_id || ':' || r.program_id || ':' || r.ends_on);
+      v_count := v_count + 1;
+    end if;
+  end loop;
+  return v_count;
+end $$;
+
 -------------------------------------------------------------------------------- PHI-free notifications for programs
 create or replace function public.notify(p_profile uuid, p_kind text, p_link text, p_dedupe text default null, p_n int default null)
 returns void language plpgsql security definer set search_path = '' as $$
@@ -220,6 +275,8 @@ begin
     when 'access_granted' then v_en := 'You have access to a new course'; v_es := 'Tiene acceso a un curso nuevo';
     when 'program_joined' then v_en := 'Your program access is active'; v_es := 'Su acceso al programa está activo';
     when 'program_ending' then v_en := 'Your program access ends in ' || p_n || ' days'; v_es := 'Su acceso al programa termina en ' || p_n || ' días';
+    when 'program_renewed' then v_en := 'Your program renewed automatically'; v_es := 'Su programa se renovó automáticamente';
+    when 'program_autorenew_soon' then v_en := 'Your program renews automatically in ' || p_n || ' days'; v_es := 'Su programa se renueva automáticamente en ' || p_n || ' días';
     when 'program_ended' then v_en := 'Your program access has ended. You can renew it.'; v_es := 'Su acceso al programa terminó. Puede renovarlo.';
     when 'welcome' then v_en := 'Welcome to the Real Care Portal'; v_es := 'Bienvenido al Portal de Real Care';
     when 'staff_incident' then v_en := 'New incident report submitted. Log in to view.'; v_es := 'Nuevo informe de incidente. Inicie sesión para verlo.';
@@ -232,7 +289,7 @@ begin
   values (p_profile, p_kind, v_en, v_es, coalesce(p_link, '/dashboard'), p_dedupe)
   on conflict (dedupe_key) do nothing;
   if not found then return; end if;
-  if p.email_notifications or p_kind in ('form_returned', 'doc_returned', 'overdue', 'welcome', 'staff_incident', 'program_ending') then
+  if p.email_notifications or p_kind in ('form_returned', 'doc_returned', 'overdue', 'welcome', 'staff_incident', 'program_ending', 'program_renewed', 'program_autorenew_soon') then
     insert into public.email_outbox (profile_id, to_email, subject, body, kind)
     values (p_profile, p.email,
       case when p.locale = 'es' then v_es else v_en end,
@@ -255,7 +312,13 @@ begin
     order by e.provider_id, e.program_id, e.ends_on desc
   loop
     v_days := r.ends_on - p_as_of;
-    if v_days in (30, 7) then
+    if exists (select 1 from public.program_auto_renew ar join public.programs pr on pr.id = ar.program_id and pr.active
+               where ar.provider_id = r.provider_id and ar.program_id = r.program_id and ar.auto_renew) and v_days >= 0 then
+      if v_days = 7 then
+        perform public.notify(r.provider_id, 'program_autorenew_soon', '/programs', 'program_autorenew_soon:' || r.id, v_days);
+        v_count := v_count + 1;
+      end if;
+    elsif v_days in (30, 7) then
       perform public.notify(r.provider_id, 'program_ending', '/programs', 'program_ending:' || r.id || ':' || v_days, v_days);
       v_count := v_count + 1;
     elsif v_days = -1 then
@@ -273,9 +336,10 @@ begin
   perform public._run_renewals(v_today);
   perform public._send_reminders(v_today);
   perform public._generate_recurring(v_today);
+  perform public._program_autorenew(v_today);
   perform public._program_reminders(v_today);
 end $$;
 
 -------------------------------------------------------------------------------- grants (internal helpers stay ungranted)
-revoke execute on function public._join_program(uuid, uuid, text, int, int, text, uuid), public._program_reminders(date), public.touch_updated_at() from authenticated, anon, public;
-grant execute on function public.join_program(uuid), public.grant_program(uuid, uuid, int, text), public.set_program_courses(uuid, uuid[]) to authenticated;
+revoke execute on function public._join_program(uuid, uuid, text, int, int, text, uuid), public._program_reminders(date), public._program_autorenew(date), public.touch_updated_at() from authenticated, anon, public;
+grant execute on function public.join_program(uuid), public.grant_program(uuid, uuid, int, text), public.set_program_courses(uuid, uuid[]), public.set_auto_renew(uuid, boolean) to authenticated;
