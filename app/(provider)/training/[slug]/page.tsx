@@ -5,6 +5,7 @@ import { getLang, t, fmtDate } from "@/lib/i18n";
 import { title } from "@/lib/data";
 import { MountainBand } from "@/components/mountains";
 import { Paywall } from "@/components/provider-bits";
+import { accessFor, programName, money } from "@/lib/programs";
 
 export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -21,6 +22,8 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
     supabase.from("lesson_progress").select("lesson_id").eq("provider_id", profile.id).eq("cycle_id", cycleId),
     supabase.from("completions").select("id, completed_at, score").eq("provider_id", profile.id).eq("course_id", course.id).eq("cycle_id", cycleId).maybeSingle(),
   ]);
+  const offers = access ? [] : (await accessFor(supabase, profile.id)).programsFor(course.id).filter((p) => p.active)
+    .map((p) => ({ name: programName(p, lang), price: p.price_cents ? money(p.price_cents) : lang === "es" ? "Gratis" : "Free" }));
   const courseLessons = new Set((lessons ?? []).map((l) => l.id));
   const done = new Set((progress ?? []).map((p) => p.lesson_id).filter((id) => courseLessons.has(id)));
   const next = (lessons ?? []).find((l) => !done.has(l.id)) ?? (lessons ?? [])[0];
@@ -39,7 +42,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
             <Link href={`/certificate/${completion.id}`} className="btn-ghost">{t(lang, "viewCertificate")}</Link>
           </div>
         ) : !access ? (
-          <Paywall courseId={course.id} priceCents={course.price_cents} accessDays={course.access_days} inAllAccess={course.in_all_access} lang={lang} />
+          <Paywall courseId={course.id} priceCents={course.price_cents} accessDays={course.access_days} programs={offers} lang={lang} />
         ) : null}
         <div className="p-5">
           <h2 className="mb-3 font-bold">{t(lang, "lessons")}</h2>

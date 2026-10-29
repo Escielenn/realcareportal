@@ -54,9 +54,10 @@ export async function grantAccess(_prev: R | undefined, fd: FormData): Promise<R
   const supabase = await createClient();
   const course = str(fd.get("course"));
   const days = Number(fd.get("days") || 365);
-  const { error } = await supabase.rpc("grant_access", {
-    p_provider: id(fd.get("provider")), p_course: course ? id(course) : null, p_days: Number.isFinite(days) ? days : 365, p_note: str(fd.get("note"), 500),
-  });
+  const common = { p_provider: id(fd.get("provider")), p_days: Number.isFinite(days) ? days : 365, p_note: str(fd.get("note"), 500) };
+  const { error } = course.startsWith("program:")
+    ? await supabase.rpc("grant_program", { ...common, p_program: id(course.slice(8)) })
+    : await supabase.rpc("grant_access", { ...common, p_course: id(course) });
   if (error) return { error: error.message };
   done(); return { ok: true, message: "Access granted and the provider was notified." };
 }
@@ -156,7 +157,7 @@ export async function saveCourse(_prev: R | undefined, fd: FormData): Promise<R>
     description_en: str(fd.get("description_en"), 1000), description_es: str(fd.get("description_es"), 1000),
     price_cents: Number.isFinite(price) && price >= 0 ? price : 0,
     access_days: Number.isFinite(days) && days > 0 ? days : 365,
-    in_all_access: fd.get("in_all_access") === "on", is_specialty: fd.get("is_specialty") === "on", published: fd.get("published") === "on",
+    is_specialty: fd.get("is_specialty") === "on", published: fd.get("published") === "on",
   }).eq("id", id(fd.get("id")));
   if (error) return { error: error.message };
   done(); return { ok: true, message: "Saved" };

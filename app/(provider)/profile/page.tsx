@@ -8,7 +8,7 @@ export default async function ProfilePage() {
   const lang = await getLang();
   const es = lang === "es";
   const [{ data: ents }, { data: orders }] = await Promise.all([
-    supabase.from("entitlements").select("id, starts_on, ends_on, course_id, courses(title_en, title_es)").eq("provider_id", profile.id).order("ends_on", { ascending: false }),
+    supabase.from("entitlements").select("id, starts_on, ends_on, course_id, courses(title_en, title_es), programs(name_en, name_es)").eq("provider_id", profile.id).order("ends_on", { ascending: false }),
     supabase.from("orders").select("id, description, amount_cents, method, status, created_at").eq("provider_id", profile.id).order("created_at", { ascending: false }),
   ]);
   const today = new Date().toISOString().slice(0, 10);
@@ -28,15 +28,19 @@ export default async function ProfilePage() {
       <ProfileForm lang={lang} locale={profile.locale} phone={(profile as unknown as { phone: string | null }).phone ?? ""} emailNotifications={(profile as unknown as { email_notifications: boolean }).email_notifications} />
 
       <section className="card p-5">
-        <h2 className="mb-3 font-bold">{es ? "Mi acceso a cursos" : "My course access"}</h2>
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h2 className="font-bold">{es ? "Mis programas y cursos" : "My programs & courses"}</h2>
+          <a href="/programs" className="text-sm font-semibold text-teal hover:underline">{es ? "Renovar o unirse" : "Renew or join"}</a>
+        </div>
         <ul className="divide-y divide-line">
           {(ents ?? []).map((e) => {
             const c = e.courses as unknown as { title_en: string; title_es: string } | null;
-            const active = e.ends_on >= today && e.starts_on <= today;
+            const pr = e.programs as unknown as { name_en: string; name_es: string } | null;
+            const active = e.ends_on >= today;
             return (
               <li key={e.id} className="flex items-center justify-between gap-2 py-2">
-                <span className="font-medium">{c ? (es ? c.title_es : c.title_en) : es ? "Acceso completo (14 cursos)" : "All-Access (14 courses)"}</span>
-                <span className={`text-sm ${active ? "text-green" : "text-muted"}`}>{active ? (es ? "Activo hasta " : "Active until ") : es ? "Terminó " : "Ended "}{fmtDate(e.ends_on, lang)}</span>
+                <span className="font-medium">{c ? (es ? c.title_es : c.title_en) : pr ? (es ? pr.name_es : pr.name_en) : "—"}</span>
+                <span className={`text-sm ${active ? "text-green" : "text-muted"}`}>{e.starts_on > today ? (es ? "Comienza " + fmtDate(e.starts_on, lang) + " · hasta " : "Starts " + fmtDate(e.starts_on, lang) + " · until ") : active ? (es ? "Activo hasta " : "Active until ") : es ? "Terminó " : "Ended "}{fmtDate(e.ends_on, lang)}</span>
               </li>
             );
           })}

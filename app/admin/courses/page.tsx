@@ -36,7 +36,7 @@ export default async function CoursesAdmin() {
                 <td className="px-4 py-3"><Link href={`/admin/courses/${c.id}`} className="font-semibold text-teal hover:underline">{c.title_en}</Link><p className="text-muted">{c.title_es}</p></td>
                 <td className="px-4 py-3">{count(c.id)} <span className="text-muted">({count(c.id, "reading")} reading, {count(c.id, "video")} video, {count(c.id, "quiz")} quiz)</span></td>
                 <td className="px-4 py-3">{reqFor(c.id)} of 4 types</td>
-                <td className="px-4 py-3">${(c.price_cents / 100).toFixed(2)}{c.in_all_access ? <span className="text-muted"> · All-Access</span> : <span className="text-amber"> · sold separately</span>}</td>
+                <td className="px-4 py-3">${(c.price_cents / 100).toFixed(2)}{c.price_cents > 0 && <span className="text-muted"> on its own</span>}</td>
                 <td className="px-4 py-3">{c.published ? <span className="pill bg-green-soft text-green">Published</span> : <span className="pill bg-sand text-muted">Draft</span>}</td>
               </tr>
             ))}

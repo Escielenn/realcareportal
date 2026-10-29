@@ -7,10 +7,11 @@ const METHOD: Record<string, string> = { wix: "Wix (imported)", demo_checkout: "
 
 export default async function PaymentsPage() {
   const { supabase } = await requireStaff();
-  const [{ data: orders }, { data: people }, { data: courses }] = await Promise.all([
+  const [{ data: orders }, { data: people }, { data: courses }, { data: programs }] = await Promise.all([
     supabase.from("orders").select("*").order("created_at", { ascending: false }).limit(300),
     supabase.from("profiles").select("id, full_name").eq("role", "provider").order("full_name"),
-    supabase.from("courses").select("id, title_en, in_all_access, price_cents").order("sort"),
+    supabase.from("courses").select("id, title_en, price_cents").order("sort"),
+    supabase.from("programs").select("id, name_en").order("sort"),
   ]);
   const names = new Map((people ?? []).map((p) => [p.id, p.full_name]));
   const paid = (orders ?? []).filter((o) => o.status === "paid");
@@ -21,7 +22,7 @@ export default async function PaymentsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Payments &amp; access</h1>
-        <p className="text-muted">Course fees and who has access to what. QMAP and Respite are sold separately; the other 14 courses are covered by All-Access.</p>
+        <p className="text-muted">Program memberships, single-course purchases and grants. Set up what each program includes on <Link href="/admin/programs" className="text-teal hover:underline">Programs</Link>.</p>
       </div>
       <div className="grid gap-3 sm:grid-cols-3">
         <div className="card p-4"><p className="text-2xl font-bold">${sum((o) => o.method !== "paid_by_real_care").toFixed(2)}</p><p className="text-sm text-muted">Collected from providers (all time)</p></div>
@@ -50,8 +51,8 @@ export default async function PaymentsPage() {
         </section>
         <section className="card h-fit p-5">
           <h2 className="mb-1 font-bold">Give access</h2>
-          <p className="mb-4 text-sm text-muted">For courses Real Care pays for. The provider gets an in-app notice right away.</p>
-          <GrantAccessForm providers={(people ?? []).map((p) => ({ id: p.id, name: p.full_name }))} courses={(courses ?? []).map((c) => ({ id: c.id, title: `${c.title_en}${c.in_all_access ? "" : " (sold separately)"}` }))} />
+          <p className="mb-4 text-sm text-muted">For programs or courses Real Care pays for. The provider gets an in-app notice right away.</p>
+          <GrantAccessForm providers={(people ?? []).map((p) => ({ id: p.id, name: p.full_name }))} programs={(programs ?? []).map((p) => ({ id: p.id, title: p.name_en }))} courses={(courses ?? []).map((c) => ({ id: c.id, title: c.title_en }))} />
           <p className="mt-4 text-xs text-muted">Live card payments go through Stripe Checkout in production. This demo uses a simulated checkout with no card.</p>
         </section>
       </div>

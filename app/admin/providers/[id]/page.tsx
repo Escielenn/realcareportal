@@ -15,13 +15,14 @@ export default async function ProviderDetail({ params }: { params: Promise<{ id:
   if (!p) notFound();
   await supabase.rpc("log_event", { p_action: "view_provider", p_table: "profiles", p_record: id });
 
-  const [tr, { data: links }, { data: assignments }, { data: msgs }, { data: ents }, { data: notes }] = await Promise.all([
+  const [tr, { data: links }, { data: assignments }, { data: msgs }, { data: ents }, { data: notes }, { data: programs }] = await Promise.all([
     trainingFor(supabase, id, p.provider_types),
     supabase.from("provider_individuals").select("starts_on, ends_on, individuals(id, full_name)").eq("provider_id", id),
     supabase.from("assignments").select("id, due_on, form_templates(title_en), individuals(full_name), submissions(id, status, submitted_at)").eq("provider_id", id).order("due_on", { ascending: false }),
     supabase.from("messages").select("id, body, created_at, sender_id").eq("provider_id", id).order("created_at"),
-    supabase.from("entitlements").select("id, course_id, starts_on, ends_on, courses(title_en)").eq("provider_id", id).order("ends_on", { ascending: false }),
+    supabase.from("entitlements").select("id, course_id, starts_on, ends_on, courses(title_en), programs(name_en)").eq("provider_id", id).order("ends_on", { ascending: false }),
     supabase.from("completions").select("course_id, note, source, completed_at").eq("provider_id", id).neq("source", "portal"),
+    supabase.from("programs").select("id, name_en").order("sort"),
   ]);
   const today = new Date().toISOString().slice(0, 10);
   const status = trainingStatus(tr.required.length, tr.doneCount, tr.current?.due_on ?? null);
@@ -112,20 +113,20 @@ export default async function ProviderDetail({ params }: { params: Promise<{ id:
           <MarkCompleteForm providerId={p.id} courses={tr.required.filter((c) => !tr.doneNow.has(c.id)).map((c) => ({ id: c.id, title: c.title_en }))} />
         </section>
         <section className="card p-5">
-          <h2 className="mb-3 font-bold">Course access</h2>
+          <h2 className="mb-3 font-bold">Programs &amp; course access</h2>
           <ul className="mb-4 divide-y divide-line text-sm">
             {(ents ?? []).map((e) => {
               const active = e.starts_on <= today && e.ends_on >= today;
               return (
                 <li key={e.id} className="flex items-center justify-between py-1.5">
-                  <span>{(e.courses as unknown as { title_en: string } | null)?.title_en ?? "All-Access (14 courses)"}</span>
-                  <span className={active ? "text-green" : "text-muted"}>{active ? "until" : "ended"} {fmtDate(e.ends_on)}</span>
+                  <span>{(e.courses as unknown as { title_en: string } | null)?.title_en ?? (e.programs as unknown as { name_en: string } | null)?.name_en ?? "—"}</span>
+                  <span className={active ? "text-green" : "text-muted"}>{e.starts_on > today ? `starts ${fmtDate(e.starts_on)}, until` : active ? "until" : "ended"} {fmtDate(e.ends_on)}</span>
                 </li>
               );
             })}
             {(ents ?? []).length === 0 && <li className="py-1.5 text-muted">No paid access.</li>}
           </ul>
-          <GrantAccessForm providerId={p.id} courses={tr.courses.map((c) => ({ id: c.id, title: c.title_en }))} />
+          <GrantAccessForm providerId={p.id} programs={(programs ?? []).map((x) => ({ id: x.id, title: x.name_en }))} courses={tr.courses.map((c) => ({ id: c.id, title: c.title_en }))} />
         </section>
       </div>
 

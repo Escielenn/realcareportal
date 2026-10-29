@@ -3,6 +3,7 @@ import { requireProvider } from "@/lib/auth";
 import { getLang, t, fmtDate, trainingStatus } from "@/lib/i18n";
 import { trainingFor, title } from "@/lib/data";
 import { ProgressBar, TrainingPill } from "@/components/status";
+import { accessFor, daysUntil, programName } from "@/lib/programs";
 
 export default async function TrainingPage() {
   const { supabase, profile } = await requireProvider();
@@ -10,11 +11,9 @@ export default async function TrainingPage() {
   const tr = await trainingFor(supabase, profile.id, profile.provider_types);
   const { data: progress } = await supabase.from("lesson_progress").select("lesson_id, cycle_id, lessons(course_id)").eq("provider_id", profile.id).eq("cycle_id", tr.current?.id ?? "00000000-0000-0000-0000-000000000000");
   const started = new Set((progress ?? []).map((p) => (p.lessons as unknown as { course_id: string } | null)?.course_id));
-  const { data: ents } = await supabase.from("entitlements").select("course_id, starts_on, ends_on").eq("provider_id", profile.id);
-  const today = new Date().toISOString().slice(0, 10);
-  const activeEnts = (ents ?? []).filter((e) => e.starts_on <= today && e.ends_on >= today);
-  const hasAccess = (c: { id: string; price_cents: number; in_all_access?: boolean }) =>
-    c.price_cents === 0 || activeEnts.some((e) => e.course_id === c.id || (e.course_id === null && (c as { in_all_access?: boolean }).in_all_access));
+  const acc = await accessFor(supabase, profile.id);
+  const hasAccess = acc.canOpen;
+  const held = acc.programs.filter((p) => acc.latest.has(p.id));
   const status = trainingStatus(tr.required.length, tr.doneCount, tr.current?.due_on ?? null);
   const courseById = new Map(tr.courses.map((c) => [c.id, c]));
 
@@ -36,33 +35,60 @@ export default async function TrainingPage() {
         </div>
       </div>
 
+      <Link href="/programs" className="card flex flex-wrap items-center justify-between gap-3 p-4 hover:border-teal">
+        <div>
+          <p className="font-semibold">{lang === "es" ? "Programas y precios" : "Programs & pricing"}</p>
+          <p className="text-sm text-muted">
+            {held.length === 0
+              ? lang === "es" ? "Únase a un programa anual para abrir sus cursos." : "Join a yearly program to open your courses."
+              : held.map((p) => {
+                  const e = acc.latest.get(p.id)!;
+                  const left = daysUntil(e.ends_on);
+                  return `${programName(p, lang)}: ${left < 0 ? (lang === "es" ? "terminó " : "ended ") : lang === "es" ? "hasta " : "until "}${fmtDate(e.ends_on, lang)}`;
+                }).join(" · ")}
+          </p>
+        </div>
+        <span className="text-sm font-semibold text-teal">{lang === "es" ? "Ver" : "View"} →</span>
+      </Link>
+
       <section>
         <h2 className="mb-3 text-lg font-bold">{t(lang, "required")}</h2>
-        <ul className="grid gap-3 sm:grid-cols-2">
-          {tr.required
-            .slice()
-            .sort((a, b) => Number(tr.doneNow.has(a.id)) - Number(tr.doneNow.has(b.id)) || a.sort - b.sort)
-            .map((c) => {
-              const done = tr.doneNow.get(c.id);
-              return (
-                <li key={c.id}>
-                  <Link href={`/training/${c.slug}`} className={`card flex h-full items-start justify-between gap-3 p-4 hover:border-teal ${done ? "opacity-80" : ""}`}>
-                    <div>
-                      <p className="font-semibold">{title(c, lang)}</p>
-                      <p className="mt-0.5 text-sm text-muted">
-                        {done ? `${t(lang, "complete")} · ${fmtDate(done.completed_at, lang)}` : started.has(c.id) ? t(lang, "inProgress") : t(lang, "notStarted")}
-                      </p>
-                    </div>
-                    {done ? (
-                      <span className="pill bg-green-soft text-green">✓</span>
-                    ) : !hasAccess(c) ? (
-                      <span className="pill bg-amber-soft text-amber">🔒 ${(c.price_cents / 100).toFixed(0)}</span>
-                    ) : null}
-                  </Link>
-                </li>
-              );
-            })}
-        </ul>
+        {(() => {
+          const card = (c: (typeof tr.required)[number]) => {
+            const done = tr.doneNow.get(c.id);
+            return (
+              <li key={c.id}>
+                <Link href={`/training/${c.slug}`} className={`card flex h-full items-start justify-between gap-3 p-4 hover:border-teal ${done ? "opacity-80" : ""}`}>
+                  <div>
+                    <p className="font-semibold">{title(c, lang)}</p>
+                    <p className="mt-0.5 text-sm text-muted">
+                      {done ? `${t(lang, "complete")} · ${fmtDate(done.completed_at, lang)}` : started.has(c.id) ? t(lang, "inProgress") : t(lang, "notStarted")}
+                    </p>
+                  </div>
+                  {done ? (
+                    <span className="pill bg-green-soft text-green" aria-label={t(lang, "complete")}>✓</span>
+                  ) : !hasAccess(c) ? (
+                    <span className="pill bg-amber-soft text-amber">🔒 ${(c.price_cents / 100).toFixed(0)}</span>
+                  ) : null}
+                </Link>
+              </li>
+            );
+          };
+          const todo = tr.required.filter((c) => !tr.doneNow.has(c.id)).sort((a, b) => a.sort - b.sort);
+          const finished = tr.required.filter((c) => tr.doneNow.has(c.id)).sort((a, b) => a.sort - b.sort);
+          return (
+            <>
+              {todo.length > 0 ? <ul className="grid gap-3 sm:grid-cols-2">{todo.map(card)}</ul>
+                : <p className="card p-4 font-semibold text-green">✓ {lang === "es" ? "Terminó todos sus cursos requeridos de este ciclo." : "You finished every required course this cycle."}</p>}
+              {finished.length > 0 && (
+                <details className="mt-3">
+                  <summary className="cursor-pointer py-2 font-semibold text-teal">{lang === "es" ? "Terminados" : "Done"} ({finished.length})</summary>
+                  <ul className="mt-2 grid gap-3 sm:grid-cols-2">{finished.map(card)}</ul>
+                </details>
+              )}
+            </>
+          );
+        })()}
       </section>
 
       {tr.optional.length > 0 && (

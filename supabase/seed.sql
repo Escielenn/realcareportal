@@ -1141,10 +1141,25 @@ insert into public.announcements (title_en, title_es, body_en, body_es, audience
  'Por favor complete su formulario de simulacro de incendio en el portal antes del 6 de noviembre.', '{host_home}', '2026-10-22 08:00:00-06');
 update public.courses set in_all_access = false, access_days = 60 where slug = 'qmap';
 update public.courses set in_all_access = false where slug = 'respite';
-insert into public.orders (provider_id, description, amount_cents, method, created_at)
-select tc.provider_id, 'All-Access Package (12 months)', 7500, 'wix', tc.starts_on + interval '9 hours' from public.training_cycles tc where tc.cycle_number = 2;
-insert into public.entitlements (provider_id, course_id, order_id, starts_on, ends_on)
-select o.provider_id, null, o.id, o.created_at::date, (o.created_at::date + 365) from public.orders o where o.method = 'wix';
+insert into public.programs (id, slug, name_en, name_es, description_en, description_es, price_cents, duration_days, audience, is_example, sort, active) values
+('50e88256-f3ac-5e06-b792-4afcf9b4e52f', 'all-access', 'All-Access Package', 'Paquete de acceso completo',
+ 'Every core Real Care course for 12 months, with certificates. Covers your annual required training.',
+ 'Todos los cursos básicos de Real Care por 12 meses, con certificados. Cubre su capacitación anual requerida.', 7500, 365, '{}', false, 1, true),
+('c951f62b-ea6e-5927-a42c-192f313743e9', 'specialty-bundle', 'Specialty Bundle (example)', 'Paquete especializado (ejemplo)',
+ 'Respite, injection administration and documentation training for 12 months. A sample program to show how bundles work.',
+ 'Relevo, administración de inyecciones y documentación por 12 meses. Un programa de ejemplo para mostrar cómo funcionan los paquetes.', 2500, 365, '{host_home,family_caregiver}', true, 2, true)
+on conflict (id) do update set slug = excluded.slug, name_en = excluded.name_en, name_es = excluded.name_es, description_en = excluded.description_en,
+  description_es = excluded.description_es, price_cents = excluded.price_cents, duration_days = excluded.duration_days, audience = excluded.audience,
+  is_example = excluded.is_example, sort = excluded.sort, active = excluded.active;
+delete from public.programs where id not in ('50e88256-f3ac-5e06-b792-4afcf9b4e52f', 'c951f62b-ea6e-5927-a42c-192f313743e9')
+  and not exists (select 1 from public.entitlements e where e.program_id = programs.id);
+delete from public.program_courses where program_id in ('50e88256-f3ac-5e06-b792-4afcf9b4e52f', 'c951f62b-ea6e-5927-a42c-192f313743e9');
+insert into public.program_courses (program_id, course_id) select '50e88256-f3ac-5e06-b792-4afcf9b4e52f', id from public.courses where in_all_access;
+insert into public.program_courses (program_id, course_id) select 'c951f62b-ea6e-5927-a42c-192f313743e9', id from public.courses where slug in ('respite', 'injection-admin', 'documentation');
+insert into public.orders (provider_id, program_id, description, amount_cents, method, created_at)
+select tc.provider_id, '50e88256-f3ac-5e06-b792-4afcf9b4e52f', 'All-Access Package (12 months)', 7500, 'wix', tc.starts_on + interval '9 hours' from public.training_cycles tc where tc.cycle_number = 2;
+insert into public.entitlements (provider_id, program_id, order_id, starts_on, ends_on)
+select o.provider_id, o.program_id, o.id, o.created_at::date, (o.created_at::date + 364) from public.orders o where o.method = 'wix' and o.program_id is not null;
 insert into public.orders (provider_id, course_id, description, amount_cents, method, created_at)
 select p.id, c.id, 'QMAP', 3000, 'wix', now() - interval '20 days' from public.profiles p, public.courses c
 where c.slug = 'qmap' and p.email in ('brianna.cole@example.com', 'evan.ruiz@example.com', 'hector.salinas@example.com', 'fatima.noor@example.com', 'jordan.lee@example.com');

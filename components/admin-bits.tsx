@@ -104,7 +104,7 @@ export function MarkCompleteForm({ providerId, courses }: { providerId: string; 
   );
 }
 
-export function GrantAccessForm({ providerId, providers, courses }: { providerId?: string; providers?: { id: string; name: string }[]; courses: { id: string; title: string }[] }) {
+export function GrantAccessForm({ providerId, providers, programs, courses }: { providerId?: string; providers?: { id: string; name: string }[]; programs: { id: string; title: string }[]; courses: { id: string; title: string }[] }) {
   const [state, action, pending] = useActionState(grantAccess, undefined);
   return (
     <form action={action} className="space-y-3">
@@ -119,8 +119,12 @@ export function GrantAccessForm({ providerId, providers, courses }: { providerId
       <div>
         <label className="label text-sm" htmlFor="ga-course">Access to</label>
         <select id="ga-course" name="course" className="input py-2 text-sm">
-          <option value="">All-Access (14 core courses)</option>
-          {courses.map((c) => <option key={c.id} value={c.id}>{c.title}</option>)}
+          <optgroup label="Programs">
+            {programs.map((p) => <option key={p.id} value={`program:${p.id}`}>{p.title}</option>)}
+          </optgroup>
+          <optgroup label="Single courses">
+            {courses.map((c) => <option key={c.id} value={c.id}>{c.title}</option>)}
+          </optgroup>
         </select>
       </div>
       <div className="grid grid-cols-[100px_1fr] gap-2">
@@ -336,7 +340,7 @@ export function CourseForm({ c }: { c: Record<string, unknown> }) {
       <div className="flex flex-wrap items-end gap-4">
         <div><label className="label text-sm">Price ($)</label><input name="price" type="number" step="0.01" min={0} defaultValue={Number(c.price_cents ?? 0) / 100} className="input w-28 py-2" /></div>
         <div><label className="label text-sm">Access (days)</label><input name="access_days" type="number" min={1} defaultValue={Number(c.access_days ?? 365)} className="input w-28 py-2" /></div>
-        {[["in_all_access", "Included in All-Access"], ["is_specialty", "Specialty course"], ["published", "Published to providers"]].map(([k, l]) => (
+        {[["is_specialty", "Specialty course"], ["published", "Published to providers"]].map(([k, l]) => (
           <label key={k} className="flex items-center gap-2 pb-2.5 text-sm font-medium"><input type="checkbox" name={k} defaultChecked={Boolean(c[k])} className="h-4 w-4 accent-[#0f5c5f]" /> {l}</label>
         ))}
       </div>

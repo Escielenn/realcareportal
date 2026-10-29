@@ -48,7 +48,7 @@ const p = await session("provider", "demo.provider@example.com");
 for (const [path, text] of [
   ["/dashboard", "Hello, Maria"], ["/training", "My training"], ["/training/confidentiality", "Confidentiality"],
   ["/training/qmap", "This course needs to be purchased"], ["/training/welcome", "A quick tour"], ["/forms", "Returned for a correction"],
-  ["/messages", "Messages"], ["/notifications", "Notifications"], ["/profile", "My profile"],
+  ["/messages", "Messages"], ["/notifications", "Notifications"], ["/profile", "My profile"], ["/programs", "All-Access Package"],
   ["/documents", "Send a document"], ["/help", "How to use the portal"],
   ["/training/documentation", "Documentation Submissions"], ["/training/injection-admin", "RCI Injection Administration"],
 ]) await visit(p, path, text);
@@ -70,7 +70,7 @@ if (process.env.SHOTS) {
     await p.page.screenshot({ path: `${dir}/${name}.png`, fullPage: false });
   }
   await p.page.setViewportSize({ width: 390, height: 844 });
-  for (const [path, name] of [["/dashboard", "dashboard-phone"], ["/training", "training-phone"], ["/forms", "forms-phone"], ["/documents", "documents-phone"], ["/messages", "messages-phone"], ["/help", "help-phone"], ["/profile", "profile-phone"]]) {
+  for (const [path, name] of [["/dashboard", "dashboard-phone"], ["/training", "training-phone"], ["/forms", "forms-phone"], ["/documents", "documents-phone"], ["/messages", "messages-phone"], ["/help", "help-phone"], ["/profile", "profile-phone"], ["/programs", "programs-phone"]]) {
     await p.page.goto(BASE + path, { waitUntil: "networkidle" });
     await p.page.screenshot({ path: `${dir}/${name}.png`, fullPage: true });
   }
@@ -114,6 +114,11 @@ await step(p, "demo checkout unlocks QMAP", async () => {
   await p.page.click("button:has-text('Buy this course')");
   await p.page.waitForSelector("a:has-text('Start')", { timeout: 15000 });
 });
+await step(p, "renew All-Access program", async () => {
+  await p.page.goto(BASE + "/programs");
+  await p.page.click("button:has-text('Renew')");
+  await p.page.waitForSelector("text=Renewed through", { timeout: 15000 });
+});
 await step(p, "switch to Spanish", async () => {
   await p.page.goto(BASE + "/dashboard");
   await p.page.click("button[aria-pressed=false]:has-text('ES')");
@@ -135,14 +140,14 @@ for (const [path, text] of [
   ["/admin", "Annual training renewal"], ["/admin/providers", "Providers & training"], ["/admin/providers?status=overdue", "Overdue"],
   ["/admin/review", "Review queue"], ["/admin/review?show=all", "All submissions"], ["/admin/transcripts", "Transcripts"],
   ["/admin/transcripts?type=host_home&from=2026-01-01&to=2026-12-31", "Reporting period"], ["/admin/messages", "Messages"],
-  ["/admin/courses", "Courses"], ["/admin/requirements", "Training requirements"], ["/admin/payments", "Payments"],
+  ["/admin/courses", "Courses"], ["/admin/requirements", "Training requirements"], ["/admin/payments", "Payments"], ["/admin/programs", "Specialty Bundle"],
   ["/admin/invites", "Invite providers"], ["/admin/documents", "Documents"], ["/admin/forms", "Form library"],
   ["/admin/individuals", "People supported"], ["/admin/applications", "Jamie Fontaine"], ["/admin/notifications", "Alerts"],
   ["/admin/messages", "One private conversation"], ["/admin/messages?show=all", "Messages"], ["/admin/announcements", "New announcement"], ["/admin/reports", "Training compliance by provider type"], ["/admin/import", "Import training history"], ["/admin/outbox", "Email outbox"], ["/admin/audit", "Audit log"],
 ]) await visit(s, path, text);
 
 if (process.env.SHOTS) {
-  for (const [path, name] of [["/admin", "admin"], ["/admin/messages?show=all", "admin-inbox"], ["/admin/reports", "admin-reports"], ["/admin/forms", "admin-forms"], ["/admin/review", "admin-review"], ["/admin/providers", "admin-providers"]]) {
+  for (const [path, name] of [["/admin", "admin"], ["/admin/messages?show=all", "admin-inbox"], ["/admin/reports", "admin-reports"], ["/admin/forms", "admin-forms"], ["/admin/review", "admin-review"], ["/admin/providers", "admin-providers"], ["/admin/programs", "admin-programs"]]) {
     await s.page.goto(BASE + path, { waitUntil: "networkidle" });
     await s.page.screenshot({ path: `${process.env.SHOTS}/${name}.png`, fullPage: true });
   }
