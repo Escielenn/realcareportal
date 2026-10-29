@@ -32,7 +32,7 @@ create policy "staff read" on public.sign_in_failures for select to authenticate
 -- Alerts staff once per hour per account at 5 failures in 15 minutes (3 for staff accounts).
 create or replace function public.log_failed_sign_in(p_email text) returns void
 language plpgsql security definer set search_path = '' as $$
-declare v_hash text; v_recent int; v_role text;
+declare v_hash text; v_recent int; v_role text; v_limit int;
 begin
   if coalesce(trim(p_email), '') = '' or length(p_email) > 200 then return; end if;
   -- Flood guard: stop recording if the table is being spammed.
@@ -43,7 +43,8 @@ begin
   select role into v_role from public.profiles where lower(email) = lower(trim(p_email));
   if v_role is not null then
     select count(*) into v_recent from public.sign_in_failures where email_hash = v_hash and created_at > now() - interval '15 minutes';
-    if v_recent >= case when v_role in ('staff', 'admin') then 3 else 5 end then
+    v_limit := case when v_role in ('staff', 'admin') then 3 else 5 end;
+    if v_recent >= v_limit then
       perform public.notify_staff('staff_signin_alert', '/admin/audit', 'signin_alert:' || left(v_hash, 16) || ':' || to_char(now(), 'YYYYMMDDHH24'));
     end if;
   end if;
