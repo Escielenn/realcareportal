@@ -49,7 +49,7 @@ for (const [path, text] of [
   ["/dashboard", "Hello, Maria"], ["/training", "My training"], ["/training/confidentiality", "Confidentiality"],
   ["/training/qmap", "This course needs to be purchased"], ["/training/welcome", "A quick tour"], ["/forms", "Returned for a correction"],
   ["/messages", "Messages"], ["/notifications", "Notifications"], ["/profile", "My profile"],
-  ["/documents", "Send a document"],
+  ["/documents", "Send a document"], ["/help", "How to use the portal"],
   ["/training/documentation", "Documentation Submissions"], ["/training/injection-admin", "RCI Injection Administration"],
 ]) await visit(p, path, text);
 
@@ -132,7 +132,8 @@ for (const [path, text] of [
   ["/admin/transcripts?type=host_home&from=2026-01-01&to=2026-12-31", "Reporting period"], ["/admin/messages", "Messages"],
   ["/admin/courses", "Courses"], ["/admin/requirements", "Training requirements"], ["/admin/payments", "Payments"],
   ["/admin/invites", "Invite providers"], ["/admin/documents", "Documents"], ["/admin/forms", "Form library"],
-  ["/admin/individuals", "People supported"], ["/admin/applications", "Jamie Fontaine"], ["/admin/notifications", "Alerts"], ["/admin/import", "Import training history"], ["/admin/outbox", "Email outbox"], ["/admin/audit", "Audit log"],
+  ["/admin/individuals", "People supported"], ["/admin/applications", "Jamie Fontaine"], ["/admin/notifications", "Alerts"],
+  ["/admin/messages", "One private conversation"], ["/admin/messages?show=all", "Messages"], ["/admin/announcements", "New announcement"], ["/admin/reports", "Training compliance by provider type"], ["/admin/import", "Import training history"], ["/admin/outbox", "Email outbox"], ["/admin/audit", "Audit log"],
 ]) await visit(s, path, text);
 
 if (process.env.SHOTS) {
@@ -151,6 +152,21 @@ await step(s, "assign a form", async () => {
   await s.page.locator("input[name=providers]").first().check();
   await s.page.click("button:has-text('Assign to')");
   await s.page.waitForSelector("text=Assigned to 1 provider", { timeout: 15000 });
+});
+await step(s, "open a conversation and post an announcement", async () => {
+  await s.page.goto(BASE + "/admin/messages?show=all");
+  await s.page.locator("a[href^='/admin/messages/']").first().click();
+  await s.page.waitForSelector("text=Assigned to", { timeout: 15000 });
+  await s.page.goto(BASE + "/admin/announcements");
+  await s.page.fill("#an-te", "Smoke test announcement");
+  await s.page.fill("#an-be", "Fictional test message.");
+  await s.page.click("button:has-text('Post announcement')");
+  await s.page.waitForSelector("text=Posted.", { timeout: 15000 });
+});
+await step(s, "report CSV download", async () => {
+  await s.page.goto(BASE + "/admin/reports");
+  const [dl] = await Promise.all([s.page.waitForEvent("download", { timeout: 15000 }), s.page.click("a:has-text('Download CSV') >> nth=0")]);
+  if (!/real-care-training/.test(dl.suggestedFilename())) throw new Error("unexpected file " + dl.suggestedFilename());
 });
 await step(s, "provider detail", async () => {
   await s.page.goto(BASE + "/admin/providers");
@@ -201,6 +217,10 @@ const ap = await anon.newPage();
 await ap.goto(BASE + "/join/83265b49-d84b-53ff-9e13-45fd3e167c5b");
 const jt = await ap.innerText("body");
 results.push({ who: "anon", path: "/join/<riley>", status: 200, ok: /Activate my account/.test(jt), note: /Activate my account/.test(jt) ? "" : jt.slice(0, 200) });
+const ap3 = await anon.newPage();
+await ap3.goto(BASE + "/forgot");
+const ft = await ap3.innerText("body");
+results.push({ who: "anon", path: "/forgot", status: 200, ok: /Forgot your password/.test(ft), note: /Forgot your password/.test(ft) ? "" : ft.slice(0, 200) });
 const ap2 = await anon.newPage();
 await ap2.goto(BASE + "/apply");
 const at = await ap2.innerText("body");

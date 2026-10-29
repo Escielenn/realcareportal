@@ -33,17 +33,22 @@ export function ProviderNav({ items }: { items: Item[] }) {
   );
 }
 
-export function AdminNav({ items }: { items: { href: string; label: string; badge?: number }[] }) {
+export function AdminNav({ groups }: { groups: { heading: string; items: { href: string; label: string; badge?: number }[] }[] }) {
   const path = usePathname();
-  const active = (href: string) => (href === "/admin" ? path === "/admin" : path.startsWith(href));
+  const active = (href: string) => (href === "/admin" ? path === "/admin" : path === href || path.startsWith(href + "/") || path.startsWith(href + "?"));
   return (
-    <nav className="flex gap-1 overflow-x-auto md:flex-col" aria-label="Staff">
-      {items.map((i) => (
+    <nav className="flex gap-1 overflow-x-auto md:flex-col md:gap-0" aria-label="Staff">
+      {groups.map((g) => (
+        <div key={g.heading} className="flex gap-1 md:mb-3 md:flex-col">
+          <p className="hidden px-3 pt-1 pb-1 text-[11px] font-semibold tracking-[0.14em] text-white/50 uppercase md:block">{g.heading}</p>
+          {g.items.map((i) => (
         <Link key={i.href} href={i.href} aria-current={active(i.href) ? "page" : undefined}
           className={`flex items-center justify-between rounded-lg px-3 py-2 whitespace-nowrap font-medium ${active(i.href) ? "bg-teal text-white shadow-sm" : "text-white/80 hover:bg-white/10 hover:text-white"}`}>
           {i.label}
           {!!i.badge && <span className="ml-2 rounded-full bg-sky px-2 text-xs font-bold text-navy">{i.badge}</span>}
         </Link>
+          ))}
+        </div>
       ))}
     </nav>
   );

@@ -14,7 +14,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
   const [tr, { data: assignments }, { data: announcements }, { data: lastMsg }] = await Promise.all([
     trainingFor(supabase, profile.id, profile.provider_types),
     supabase.from("assignments").select("id, due_on, individual_id, form_templates(title_en, title_es), individuals(full_name), submissions(id, status, submitted_at)").eq("provider_id", profile.id).order("due_on"),
-    supabase.from("announcements").select("*").order("created_at", { ascending: false }).limit(3),
+    supabase.from("announcements").select("*").eq("archived", false).or(`expires_on.is.null,expires_on.gte.${new Date().toISOString().slice(0, 10)}`).order("pinned", { ascending: false }).order("created_at", { ascending: false }).limit(10),
     supabase.from("messages").select("body, created_at, sender_id").eq("provider_id", profile.id).order("created_at", { ascending: false }).limit(1),
   ]);
 
@@ -33,7 +33,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
   const nextCourse = tr.required.find((c) => !tr.doneNow.has(c.id));
   const daysLeft = tr.current ? daysBetween(today, tr.current.due_on) : null;
   const firstName = profile.full_name.split(" ")[0];
-  const myAnnouncements = (announcements ?? []).filter((a) => !a.audience?.length || a.audience.some((x: string) => profile.provider_types.includes(x)));
+  const myAnnouncements = (announcements ?? []).filter((a) => !a.audience?.length || a.audience.some((x: string) => profile.provider_types.includes(x))).slice(0, 3);
 
   return (
     <div className="space-y-6">
@@ -175,9 +175,9 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
           <div className="grid gap-3 md:grid-cols-2">
             {myAnnouncements.map((a) => (
               <article key={a.id} className="card p-4">
-                <p className="text-xs font-semibold text-muted">{fmtDate(a.created_at, lang)}</p>
+                <p className="text-xs font-semibold text-muted">{a.pinned && <span className="mr-1 text-teal">{lang === "es" ? "Fijado ·" : "Pinned ·"}</span>}{fmtDate(a.created_at, lang)}</p>
                 <h3 className="mt-1 font-semibold">{lang === "es" ? a.title_es : a.title_en}</h3>
-                <p className="mt-1 text-muted">{lang === "es" ? a.body_es : a.body_en}</p>
+                <p className="mt-1 whitespace-pre-wrap text-muted">{lang === "es" ? a.body_es : a.body_en}</p>
               </article>
             ))}
           </div>

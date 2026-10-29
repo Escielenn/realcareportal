@@ -1,6 +1,7 @@
 import { requireProvider } from "@/lib/auth";
 import { getLang, t, fmtDateTime } from "@/lib/i18n";
 import { MessageComposer } from "@/components/client-bits";
+import { MarkThreadRead } from "@/components/phase3-bits";
 
 export default async function MessagesPage() {
   const { supabase, profile } = await requireProvider();
@@ -8,8 +9,9 @@ export default async function MessagesPage() {
   const { data: msgs } = await supabase.from("messages").select("id, body, created_at, sender_id").eq("provider_id", profile.id).order("created_at");
   return (
     <div className="mx-auto max-w-2xl space-y-4">
+      <MarkThreadRead providerId={profile.id} />
       <div>
-        <h1 className="text-2xl font-bold">{t(lang, "messages")}</h1>
+        <h1 className="text-3xl font-semibold text-navy">{t(lang, "messages")}</h1>
         <p className="text-muted">{t(lang, "messagesIntro")}</p>
       </div>
       <div className="card space-y-3 p-4">

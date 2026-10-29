@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { submitForm } from "@/app/actions";
+import { saveDraft } from "@/app/phase3-actions";
 import { recordDocument } from "@/app/documents/actions";
 import { createClient } from "@/lib/supabase/client";
 import { Markdown } from "@/lib/md";
@@ -32,6 +33,9 @@ const L = {
   upload: { en: "Choose a file", es: "Elegir un archivo" },
   uploaded: { en: "Attached", es: "Adjuntado" },
   uploading: { en: "Uploading…", es: "Subiendo…" },
+  draftSaved: { en: "Draft saved at", es: "Borrador guardado a las" },
+  draftHint: { en: "Your answers save as a draft while you work.", es: "Sus respuestas se guardan como borrador mientras trabaja." },
+  draftErr: { en: "Couldn't save the draft. Check your connection.", es: "No se pudo guardar el borrador. Revise su conexión." },
   daysMarked: { en: "days marked", es: "días marcados" },
   clearRow: { en: "Clear", es: "Borrar" },
   previewFile: { en: "File uploads are off in the preview.", es: "La subida de archivos está desactivada en la vista previa." },
@@ -57,10 +61,11 @@ export function Instructions({ schema, lang }: { schema: FormSchema; lang: "en" 
 const isEmpty = (v: unknown) => v === undefined || v === null || v === "" || (Array.isArray(v) && v.length === 0);
 
 export function FormEngine({
-  assignmentId, schema, lang, individual, initial = {}, mode, flags = {}, doneHref, preview = false,
+  assignmentId, schema, lang, individual, initial = {}, mode, flags = {}, doneHref, preview = false, autosave = false, draftSavedAt = null,
 }: {
   assignmentId: string; schema: FormSchema; lang: "en" | "es"; individual: Individual;
   initial?: Values; mode: "new" | "returned"; flags?: Record<string, string>; doneHref: string; preview?: boolean;
+  autosave?: boolean; draftSavedAt?: string | null;
 }) {
   const [values, setValues] = useState<Values>(initial);
   const [touched, setTouched] = useState(false);
@@ -71,7 +76,33 @@ export function FormEngine({
   const vis = useMemo(() => new Set(visibleFields(schema, values).map((f) => f.id)), [schema, values]);
   const missing = (f: Field) => f.required === true && vis.has(f.id) && editable(f) && isEmpty(values[f.id]);
   const allFields = schema.sections.flatMap((s) => s.fields);
-  const set = (id: string, v: unknown) => setValues((x) => ({ ...x, [id]: v }));
+  const set = (id: string, v: unknown) => { dirty.current = true; setValues((x) => ({ ...x, [id]: v })); };
+
+  // Drafts save to the portal (never the browser) a few seconds after typing stops, and when the page is hidden.
+  const dirty = useRef(false);
+  const [savedAt, setSavedAt] = useState<string | null>(draftSavedAt);
+  const [saveErr, setSaveErr] = useState(false);
+  const latest = useRef(values);
+  latest.current = values;
+  const canDraft = autosave && mode === "new" && !preview;
+  const flush = useRef(async () => {});
+  flush.current = async () => {
+    if (!canDraft || !dirty.current) return;
+    dirty.current = false;
+    const r = await saveDraft(assignmentId, latest.current as Record<string, unknown>);
+    if (r.error) { setSaveErr(true); dirty.current = true; } else { setSaveErr(false); setSavedAt(r.savedAt ?? new Date().toISOString()); }
+  };
+  useEffect(() => {
+    if (!canDraft) return;
+    const t = setTimeout(() => flush.current(), 4000);
+    return () => clearTimeout(t);
+  }, [values, canDraft]);
+  useEffect(() => {
+    if (!canDraft) return;
+    const onHide = () => { if (document.visibilityState === "hidden") flush.current(); };
+    document.addEventListener("visibilitychange", onHide);
+    return () => document.removeEventListener("visibilitychange", onHide);
+  }, [canDraft]);
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -197,7 +228,14 @@ export function FormEngine({
         );
       })}
       {error && <p role="alert" className="rounded-xl bg-coral-soft px-4 py-3 text-sm font-medium text-coral">{error}</p>}
-      <button disabled={pending} className="btn-primary w-full text-base sm:w-auto">{pending ? "…" : mode === "returned" ? L.resubmit[lang] : L.submit[lang]}</button>
+      <div className="flex flex-wrap items-center gap-3">
+        <button disabled={pending} className="btn-primary w-full text-base sm:w-auto">{pending ? "…" : mode === "returned" ? L.resubmit[lang] : L.submit[lang]}</button>
+        {canDraft && (
+          <p className="text-sm text-muted" aria-live="polite">
+            {saveErr ? L.draftErr[lang] : savedAt ? `${L.draftSaved[lang]} ${new Date(savedAt).toLocaleTimeString(lang === "es" ? "es-US" : "en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/Denver" })}` : L.draftHint[lang]}
+          </p>
+        )}
+      </div>
     </form>
   );
 }

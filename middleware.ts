@@ -27,7 +27,8 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const path = request.nextUrl.pathname;
-  if (!user && path !== "/login" && path !== "/apply" && !path.startsWith("/join/")) {
+  const isPublic = path === "/login" || path === "/apply" || path === "/forgot" || path.startsWith("/join/") || path.startsWith("/reset/");
+  if (!user && !isPublic) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.search = path.startsWith("/forms/start/") ? `?next=${encodeURIComponent(path)}` : "";

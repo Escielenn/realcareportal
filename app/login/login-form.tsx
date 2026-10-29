@@ -31,6 +31,7 @@ export function LoginForm({ demo, next }: { demo: boolean; next?: string }) {
         {state?.error && (
           <p role="alert" className="rounded-lg bg-coral-soft px-3 py-2 text-sm text-coral">{state.error}</p>
         )}
+        <p className="-mt-1 text-right text-sm"><a href="/forgot" className="font-semibold text-teal hover:underline">Forgot your password? / ¿Olvidó su contraseña?</a></p>
         <button type="submit" disabled={pending} className="btn-primary w-full">
           {pending ? "Signing in…" : "Sign in / Iniciar sesión"}
         </button>

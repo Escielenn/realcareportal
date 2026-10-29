@@ -6,12 +6,13 @@ import { AdminNav } from "@/components/nav";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const { supabase, profile } = await requireStaff();
-  const [{ count: queue }, { count: pendingImports }, { count: docs }, { count: apps }, { count: unread }] = await Promise.all([
+  const [{ count: queue }, { count: pendingImports }, { count: docs }, { count: apps }, { count: unread }, { count: openThreads }] = await Promise.all([
     supabase.from("submissions").select("id", { count: "exact", head: true }).eq("status", "submitted"),
     supabase.from("import_batches").select("id", { count: "exact", head: true }).eq("status", "staged"),
     supabase.from("documents").select("id", { count: "exact", head: true }).eq("status", "submitted"),
     supabase.from("applications").select("id", { count: "exact", head: true }).eq("status", "new"),
     supabase.from("notifications").select("id", { count: "exact", head: true }).eq("profile_id", profile.id).is("read_at", null),
+    supabase.from("message_threads").select("provider_id", { count: "exact", head: true }).eq("status", "open"),
   ]);
   return (
     <div className="min-h-dvh md:flex">
@@ -27,24 +28,34 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         </div>
         <div className="px-2 pb-3">
           <AdminNav
-            items={[
-              { href: "/admin", label: "Overview" },
-              { href: "/admin/providers", label: "Providers & training" },
-              { href: "/admin/notifications", label: "Alerts", badge: unread ?? 0 },
-              { href: "/admin/review", label: "Review queue", badge: queue ?? 0 },
-              { href: "/admin/documents", label: "Documents", badge: docs ?? 0 },
-              { href: "/admin/forms", label: "Forms & assignments" },
-              { href: "/admin/individuals", label: "People supported" },
-              { href: "/admin/applications", label: "Applications", badge: apps ?? 0 },
-              { href: "/admin/transcripts", label: "Transcripts" },
-              { href: "/admin/messages", label: "Messages" },
-              { href: "/admin/courses", label: "Courses" },
-              { href: "/admin/requirements", label: "Requirements" },
-              { href: "/admin/payments", label: "Payments & access" },
-              { href: "/admin/invites", label: "Invite providers" },
-              { href: "/admin/import", label: "Import from Wix", badge: pendingImports ?? 0 },
-              { href: "/admin/outbox", label: "Email outbox" },
-              { href: "/admin/audit", label: "Audit log" },
+            groups={[
+              { heading: "Today", items: [
+                { href: "/admin", label: "Overview" },
+                { href: "/admin/notifications", label: "Alerts", badge: unread ?? 0 },
+                { href: "/admin/review", label: "Review queue", badge: queue ?? 0 },
+                { href: "/admin/documents", label: "Documents", badge: docs ?? 0 },
+                { href: "/admin/messages", label: "Messages", badge: openThreads ?? 0 },
+              ] },
+              { heading: "People", items: [
+                { href: "/admin/providers", label: "Providers & training" },
+                { href: "/admin/individuals", label: "People supported" },
+                { href: "/admin/applications", label: "Applications", badge: apps ?? 0 },
+                { href: "/admin/invites", label: "Invite providers" },
+              ] },
+              { heading: "Content", items: [
+                { href: "/admin/forms", label: "Forms & assignments" },
+                { href: "/admin/courses", label: "Courses" },
+                { href: "/admin/requirements", label: "Requirements" },
+                { href: "/admin/announcements", label: "Announcements" },
+              ] },
+              { heading: "Records", items: [
+                { href: "/admin/reports", label: "Reports" },
+                { href: "/admin/transcripts", label: "Transcripts" },
+                { href: "/admin/payments", label: "Payments & access" },
+                { href: "/admin/import", label: "Import from Wix", badge: pendingImports ?? 0 },
+                { href: "/admin/outbox", label: "Email outbox" },
+                { href: "/admin/audit", label: "Audit log" },
+              ] },
             ]}
           />
         </div>

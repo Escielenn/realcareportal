@@ -55,6 +55,7 @@ export default async function ProfilePage() {
         </ul>
       </section>
 
+      <a href="/help" className="btn-ghost w-full">{es ? "Ayuda: cómo usar el portal" : "Help: how to use the portal"}</a>
       <form action={signOut}>
         <button className="btn-ghost w-full">{es ? "Cerrar sesión" : "Sign out"}</button>
       </form>

@@ -7,6 +7,7 @@ import type { FormSchema } from "@/lib/forms";
 import { FormView, History } from "@/components/form-view";
 import { SubmissionPill } from "@/components/status";
 import { ReviewPanel } from "./review-panel";
+import { PrintButton } from "@/components/client-bits";
 
 export default async function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -30,7 +31,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
 
   return (
     <div className="space-y-5">
-      <Link href="/admin/review" className="text-sm font-semibold text-teal hover:underline">← Review queue</Link>
+      <Link href="/admin/review" className="no-print text-sm font-semibold text-teal hover:underline">← Review queue</Link>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold">{a.form_templates.title_en}</h1>
@@ -39,13 +40,13 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
             {a.individuals ? ` · for ${a.individuals.full_name}` : ""} · due {fmtDate(a.due_on)} · submitted {fmtDateTime(s.submitted_at)}
           </p>
         </div>
-        <SubmissionPill status={s.status} />
+        <div className="flex items-center gap-2"><SubmissionPill status={s.status} /><span className="no-print"><PrintButton label="Print / PDF" /></span></div>
       </div>
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         <FormView schema={schema} data={data} lang="en" individual={a.individuals} />
         <div className="space-y-5">
           {s.status === "submitted" ? (
-            <ReviewPanel submissionId={s.id} fields={fields} />
+            <div className="no-print"><ReviewPanel submissionId={s.id} fields={fields} /></div>
           ) : s.status === "returned" ? (
             <div className="card p-5">
               <h2 className="mb-2 font-bold text-coral">Returned to provider</h2>

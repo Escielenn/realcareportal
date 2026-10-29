@@ -6,6 +6,7 @@ import { fmtDate, fmtDateTime, providerTypeLabel, trainingStatus } from "@/lib/i
 import { TrainingPill, SubmissionPill } from "@/components/status";
 import { MessageComposer, RenewProviderButton } from "@/components/client-bits";
 import { MarkCompleteForm, GrantAccessForm } from "@/components/admin-bits";
+import { ActiveToggle, ResetLinkButton } from "@/components/phase3-bits";
 
 export default async function ProviderDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -164,8 +165,21 @@ export default async function ProviderDetail({ params }: { params: Promise<{ id:
         </section>
       </div>
 
+      <section className="card grid gap-6 p-5 md:grid-cols-2">
+        <div>
+          <h2 className="mb-1 font-bold">Sign-in help</h2>
+          <p className="mb-3 text-sm text-muted">Make a one-time link the provider uses to choose a new password.</p>
+          <ResetLinkButton profileId={p.id} />
+        </div>
+        <div>
+          <h2 className="mb-1 font-bold">Account</h2>
+          <p className="mb-3 text-sm text-muted">{p.active ? "Active. The provider can sign in." : "Deactivated. The provider can't sign in; their records are kept."}</p>
+          <ActiveToggle profileId={p.id} active={p.active} name={p.full_name} />
+        </div>
+      </section>
+
       <section className="card p-5" id="messages">
-        <h2 className="mb-3 font-bold">Messages</h2>
+        <div className="mb-3 flex items-center justify-between"><h2 className="font-bold">Messages</h2><Link href={`/admin/messages/${p.id}`} className="text-sm font-semibold text-teal hover:underline">Open conversation →</Link></div>
         <div className="space-y-3">
           {(msgs ?? []).map((m) => {
             const fromProvider = m.sender_id === p.id;
