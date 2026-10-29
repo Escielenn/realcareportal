@@ -24,11 +24,12 @@ This pass fixed the gaps that mattered most before real records arrive:
 | OWASP-A07-002 | Demo password shipped in every browser bundle | Medium (prod) | High | **Fixed**: sent only when demo mode is on |
 | OWASP-A07-003 | Leaked-password protection is off in Supabase Auth | Low | High | **Open**: dashboard setting (Auth → Passwords) |
 | OWASP-A01-004 | Paid-course lesson text (transcripts) readable before purchase | Low | High | Accepted for now: training content, no PHI; videos are protected |
-| OWASP-A01-005 | Older course-editor uploads in `training-media` readable by any signed-in user | Low | High | Open: move to `courses/<id>/` paths |
-| OWASP-A03-001 | npm reported 1 high and 1 moderate advisory at install | Medium | Low `[MANUAL VERIFICATION REQUIRED]` | Open: run `npm audit` with approval |
-| OWASP-A08-001 | GitHub Actions use tag references (`@v4`), not commit SHAs | Low | High | Open |
+| OWASP-A01-005 | Older course-editor uploads in `training-media` readable by any signed-in user | Low | High | **Fixed** (Oct 28): editor uploads to `courses/<id>/lessons/<id>/`; the open branch of the storage policy is removed |
+| OWASP-A03-001 | npm reported 1 high and 1 moderate advisory at install | Medium | High | **Fixed** (Oct 28): PostCSS inside Next.js (build-time only) pinned to 8.5.32 with an npm override; `npm audit` now reports 0 |
+| OWASP-A08-001 | GitHub Actions use tag references (`@v4`), not commit SHAs | Low | High | **Fixed** (Oct 28): pinned to commit SHAs |
 | OWASP-A02-002 | The GitHub repository is public | Informational | High | Open: make private before real data |
-| OWASP-A09-002 | Failed sign-ins aren't in the portal's audit log | Low | Medium | Open: Supabase Auth logs record them; add alerting before launch |
+| OWASP-A09-002 | Failed sign-ins aren't in the portal's audit log | Low | Medium | **Fixed** (Oct 28): each failure is logged (email stored only as a SHA-256 hash); staff get an alert at 5 failures in 15 minutes (3 for staff accounts) |
+| ADV-0028 | New functions were callable by signed-out visitors (Supabase advisor) | Low | High | **Fixed** (Oct 28): allowlist migration; only sign-in, invite, password-help and application functions accept anon |
 
 ## Findings
 
@@ -144,11 +145,21 @@ Assessed. Server actions return short messages; some pass through Postgres messa
 1. Supabase Team + HIPAA add-on and BAA; Vercel BAA (Phase 2, T201).
 2. `update app_settings set demo_mode = false, staff_mfa_required = true;` and set `NEXT_PUBLIC_DEMO_MODE=false` in Vercel.
 3. Production database without the seed; demo accounts never created there.
-4. Turn on leaked-password protection; run `npm audit` and fix high findings; pin GitHub Actions to SHAs.
+4. Turn on leaked-password protection (Supabase dashboard → Auth → Passwords). `npm audit` and Action pinning are done; re-run `npm audit` before launch.
 5. Make the GitHub repository private.
-6. Move course-editor uploads under `courses/<course_id>/` (A01-005).
+6. ~~Move course-editor uploads under `courses/<course_id>/`~~ Done Oct 28.
 7. Outside HIPAA review (Phase 2, T218).
 
 ## Limitations
 
 Static review and read-only database checks, not a penetration test. Deployed Supabase Auth settings (rate limits, session lifetime), Vercel project settings and dependency advisories weren't inspected. Business rules (who may see what) were taken from CLAUDE.md and the phase plans.
+
+## Follow-up pass (Oct 28, 2026, evening)
+
+- Found that the security-hardening migration had not reached the hosted database (an approval timed out). Applied it, then re-applied the program-aware `has_course_access` and `demo_checkout` so the newer versions win.
+- Verified staff MFA enforcement live inside a rolled-back transaction: with `staff_mfa_required` on, a staff session at `aal1` is not staff and sees no providers; at `aal2` it is staff.
+- Programs: 23 RLS and RPC checks pass (`supabase/tests/programs.sql`), including that providers can't change prices or course lists, can't grant themselves programs, can't call the internal join or renewal helpers, can't write auto-renew rows directly, and can't see hidden programs or other providers' terms.
+- Failed sign-in logging checked: 5 failures recorded as hashes, staff alerted once, no email address stored.
+- Supabase security advisor after this pass: only leaked-password protection remains (a dashboard switch). The "signed-in users can execute security definer functions" notices are by design: every such function checks the caller inside.
+
+Still open for Jason: turn on leaked-password protection; make the GitHub repository private before real data.
