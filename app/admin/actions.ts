@@ -205,8 +205,12 @@ export async function saveLesson(_prev: R | undefined, fd: FormData): Promise<R>
 }
 
 export async function setLessonVideo(lessonId: string, path: string, seconds: number): Promise<R> {
-  if (!/^lessons\/[0-9a-f-]{36}\/[\w.\-]{1,120}$/i.test(path)) return { error: "Invalid file path" };
   const supabase = await createClient();
+  const { data: lesson } = await supabase.from("lessons").select("course_id").eq("id", id(lessonId)).single();
+  if (!lesson) return { error: "Lesson not found" };
+  // Media must live under courses/<course_id>/ so the storage policy can check course access.
+  const prefix = `courses/${lesson.course_id}/lessons/${lessonId}/`;
+  if (!path.startsWith(prefix) || !/^[\w.\-]{1,120}$/.test(path.slice(prefix.length))) return { error: "Invalid file path" };
   const { error } = await supabase.from("lessons").update({ video_url: path, video_seconds: Math.round(seconds) || null }).eq("id", id(lessonId));
   if (error) return { error: error.message };
   done(); return { ok: true };

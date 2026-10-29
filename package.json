@@ -28,5 +28,10 @@
     "@types/react-dom": "19.1.9",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.2"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.32"
+    }
   }
 }

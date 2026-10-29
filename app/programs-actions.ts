@@ -21,6 +21,18 @@ export async function joinProgram(programId: string): Promise<R> {
   return { ok: true };
 }
 
+// Provider turns automatic renewal on or off for a program they hold.
+export async function setAutoRenew(programId: string, on: boolean): Promise<R> {
+  const id = uuid(programId);
+  if (!id) return { error: "Invalid" };
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("set_auto_renew", { p_program: id, p_on: !!on });
+  if (error) return { error: error.message };
+  revalidatePath("/programs");
+  revalidatePath("/profile");
+  return { ok: true };
+}
+
 // Staff: create or edit a program and its course list.
 export async function saveProgram(_p: R | undefined, fd: FormData): Promise<R> {
   const existing = uuid(fd.get("id"));

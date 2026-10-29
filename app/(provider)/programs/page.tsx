@@ -3,7 +3,7 @@ import { requireProvider } from "@/lib/auth";
 import { getLang, fmtDate } from "@/lib/i18n";
 import { title, type Course } from "@/lib/data";
 import { accessFor, daysUntil, money, programName, today } from "@/lib/programs";
-import { JoinProgramButton } from "@/components/program-bits";
+import { JoinProgramButton, AutoRenewSwitch } from "@/components/program-bits";
 
 const L = {
   title: { en: "Programs & pricing", es: "Programas y precios" },
@@ -98,6 +98,11 @@ export default async function ProgramsPage() {
                   <p className="text-sm text-muted">{L.renewFrom[lang]} {fmtDate(new Date(Date.parse(last!.ends_on) - 60 * 86_400_000).toISOString().slice(0, 10), lang)}</p>
                 )}
               </div>
+              {last && (
+                <div className="border-t border-line px-5 py-4">
+                  <AutoRenewSwitch programId={p.id} on={acc.autoRenew.has(p.id)} lang={lang} price={p.price_cents ? money(p.price_cents) : L.free[lang]} />
+                </div>
+              )}
             </li>
           );
         })}

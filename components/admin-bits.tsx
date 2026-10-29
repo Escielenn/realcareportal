@@ -403,7 +403,7 @@ export function LessonForm({ l }: { l: Record<string, unknown> }) {
   );
 }
 
-export function VideoUploader({ lessonId, current }: { lessonId: string; current: string | null }) {
+export function VideoUploader({ courseId, lessonId, current }: { courseId: string; lessonId: string; current: string | null }) {
   const [status, setStatus] = useState<string>();
   const [pending, start] = useTransition();
   const router = useRouter();
@@ -419,7 +419,7 @@ export function VideoUploader({ lessonId, current }: { lessonId: string; current
     });
     setStatus(`Uploading ${(f.size / 1048576).toFixed(1)} MB…`);
     const safe = f.name.replace(/[^\w.\-]+/g, "-").slice(-100);
-    const path = `lessons/${lessonId}/${Date.now()}-${safe}`;
+    const path = `courses/${courseId}/lessons/${lessonId}/${Date.now()}-${safe}`;
     const { error } = await createClient().storage.from("training-media").upload(path, f, { contentType: f.type, upsert: false });
     if (error) { setStatus(`Upload failed: ${error.message}`); return; }
     start(async () => {

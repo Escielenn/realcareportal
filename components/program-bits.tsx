@@ -2,7 +2,7 @@
 
 import { useActionState, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { joinProgram, saveProgram, grantProgram } from "@/app/programs-actions";
+import { joinProgram, saveProgram, grantProgram, setAutoRenew } from "@/app/programs-actions";
 
 const TYPES: [string, string][] = [["host_home", "Host Home"], ["family_caregiver", "Family Caregiver"], ["scc_dsp", "SCC / DSP"], ["nmt", "NMT"]];
 
@@ -25,6 +25,39 @@ export function JoinProgramButton({ programId, label, primary = true }: { progra
         {pending ? "…" : label}
       </button>
       {error && <p role="alert" className="mt-2 text-sm text-coral">{error}</p>}
+    </div>
+  );
+}
+
+export function AutoRenewSwitch({ programId, on, lang, price }: { programId: string; on: boolean; lang: "en" | "es"; price: string }) {
+  const router = useRouter();
+  const [pending, start] = useTransition();
+  const [value, setValue] = useState(on);
+  const [error, setError] = useState<string | null>(null);
+  const id = `ar-${programId}`;
+  const flip = () => {
+    const next = !value;
+    setValue(next);
+    start(async () => {
+      const r = await setAutoRenew(programId, next);
+      if (r.error) { setValue(!next); setError(r.error); } else { setError(null); router.refresh(); }
+    });
+  };
+  return (
+    <div className="flex items-start gap-3">
+      <button id={id} type="button" role="switch" aria-checked={value} disabled={pending} onClick={flip}
+        className={`relative mt-0.5 inline-flex h-7 w-12 shrink-0 items-center rounded-full border-2 transition-colors ${value ? "border-teal bg-teal" : "border-line bg-sand"}`}>
+        <span className={`inline-block h-5 w-5 rounded-full bg-white shadow transition-transform ${value ? "translate-x-5" : "translate-x-0.5"}`} aria-hidden />
+      </button>
+      <label htmlFor={id} className="text-sm">
+        <span className="block font-semibold">{lang === "es" ? "Renovación automática" : "Renew automatically"}</span>
+        <span className="block text-muted">
+          {value
+            ? lang === "es" ? `Activada. Se renueva por ${price} unos días antes de que termine. Puede apagarla cuando quiera.` : `On. Renews for ${price} a few days before it ends. You can turn it off any time.`
+            : lang === "es" ? "Apagada. Le enviaremos recordatorios para renovar a mano." : "Off. We'll send reminders so you can renew yourself."}
+        </span>
+        {error && <span role="alert" className="block text-coral">{error}</span>}
+      </label>
     </div>
   );
 }

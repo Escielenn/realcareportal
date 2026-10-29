@@ -47,7 +47,7 @@ export default async function LessonEditor({ params }: { params: Promise<{ id: s
             {videoSrc ? <video src={videoSrc} controls className="aspect-video w-full rounded-xl bg-black" /> : <p className="rounded-xl bg-sand p-6 text-center text-muted">No video uploaded yet.</p>}
             {lesson.video_seconds && <p className="mt-2 text-sm text-muted">Length: {lesson.video_seconds} seconds. Providers must watch at least {Math.round(lesson.video_seconds * 0.9)} seconds.</p>}
           </div>
-          <VideoUploader lessonId={lesson.id} current={lesson.video_url} />
+          <VideoUploader courseId={lesson.course_id} lessonId={lesson.id} current={lesson.video_url} />
         </section>
       )}
 

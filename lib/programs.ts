@@ -13,10 +13,11 @@ export const money = (cents: number) => `$${(cents / 100).toFixed(cents % 100 ? 
 
 // Everything a provider needs to see what they can open and which programs they hold.
 export async function accessFor(supabase: SupabaseClient, providerId: string) {
-  const [{ data: programs }, { data: links }, { data: ents }] = await Promise.all([
+  const [{ data: programs }, { data: links }, { data: ents }, { data: renew }] = await Promise.all([
     supabase.from("programs").select("*").order("sort"),
     supabase.from("program_courses").select("program_id, course_id"),
     supabase.from("entitlements").select("id, program_id, course_id, starts_on, ends_on").eq("provider_id", providerId).order("ends_on", { ascending: false }),
+    supabase.from("program_auto_renew").select("program_id, auto_renew").eq("provider_id", providerId),
   ]);
   const t = today();
   const terms = (ents ?? []) as Term[];
@@ -39,6 +40,7 @@ export async function accessFor(supabase: SupabaseClient, providerId: string) {
     coursesOf,
     terms,
     latest,
+    autoRenew: new Set((renew ?? []).filter((r) => r.auto_renew).map((r) => r.program_id as string)),
     canOpen: (c: { id: string; price_cents: number }) => c.price_cents === 0 || open.has(c.id),
     programsFor: (courseId: string) => ((programs ?? []) as Program[]).filter((p) => coursesOf.get(p.id)?.has(courseId)),
   };

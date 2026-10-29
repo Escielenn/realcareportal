@@ -12,12 +12,14 @@ export default async function ProgramDetail({ params }: { params: Promise<{ id: 
   const { supabase } = await requireStaff();
   const { data: program } = await supabase.from("programs").select("*").eq("id", id).maybeSingle();
   if (!program) notFound();
-  const [{ data: courses }, { data: links }, { data: ents }, { data: people }] = await Promise.all([
+  const [{ data: courses }, { data: links }, { data: ents }, { data: people }, { data: renew }] = await Promise.all([
     supabase.from("courses").select("id, title_en, published").order("sort"),
     supabase.from("program_courses").select("course_id").eq("program_id", id),
     supabase.from("entitlements").select("id, provider_id, starts_on, ends_on, orders(method, amount_cents, status)").eq("program_id", id).order("ends_on", { ascending: false }),
     supabase.from("profiles").select("id, full_name, active").eq("role", "provider").order("full_name"),
+    supabase.from("program_auto_renew").select("provider_id").eq("program_id", id).eq("auto_renew", true),
   ]);
+  const autoRenew = new Set((renew ?? []).map((r) => r.provider_id));
   const names = new Map((people ?? []).map((p) => [p.id, p.full_name]));
   const t = today();
   // One row per provider: their latest term.
@@ -31,7 +33,7 @@ export default async function ProgramDetail({ params }: { params: Promise<{ id: 
       <Link href="/admin/programs" className="text-sm font-semibold text-teal hover:underline">← Programs</Link>
       <div>
         <h1 className="text-2xl font-bold">{program.name_en}</h1>
-        <p className="text-muted">{program.price_cents ? money(program.price_cents) : "Free"} per {program.duration_days === 365 ? "12 months" : `${program.duration_days} days`} · {(links ?? []).length} courses · {activeCount} active members</p>
+        <p className="text-muted">One price for everyone: {program.price_cents ? money(program.price_cents) : "Free"} per {program.duration_days === 365 ? "12 months" : `${program.duration_days} days`} · {(links ?? []).length} courses · {activeCount} active members</p>
       </div>
       <div className="grid gap-6 xl:grid-cols-[1fr_380px]">
         <section className="card p-5">
@@ -55,7 +57,7 @@ export default async function ProgramDetail({ params }: { params: Promise<{ id: 
                   <li key={m.id} className="flex items-start justify-between gap-2 py-2">
                     <span>
                       <Link href={`/admin/providers/${m.provider_id}`} className="font-medium text-teal hover:underline">{names.get(m.provider_id) ?? "Provider"}</Link>
-                      <span className="block text-xs text-muted">{o ? `${METHOD[o.method] ?? o.method}${o.amount_cents ? ` · ${money(o.amount_cents)}` : ""}${o.status === "refunded" ? " · refunded" : ""}` : ""}</span>
+                      <span className="block text-xs text-muted">{o ? `${METHOD[o.method] ?? o.method}${o.amount_cents ? ` · ${money(o.amount_cents)}` : ""}${o.status === "refunded" ? " · refunded" : ""}` : ""}{autoRenew.has(m.provider_id) ? " · auto-renew on" : ""}</span>
                     </span>
                     <span className={`shrink-0 tabular-nums ${ended ? "text-muted" : soon ? "font-semibold text-amber" : "text-green"}`}>{ended ? "ended" : "until"} {fmtDate(m.ends_on)}</span>
                   </li>

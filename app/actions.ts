@@ -18,7 +18,10 @@ export async function signIn(_prev: { error?: string } | undefined, formData: Fo
   if (!email || !password) return { error: "Enter your email and password." };
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error || !data.user) return { error: "That email and password don't match. Please try again." };
+  if (error || !data.user) {
+    await supabase.rpc("log_failed_sign_in", { p_email: email });
+    return { error: "That email and password don't match. Please try again." };
+  }
   const { data: profile } = await supabase.from("profiles").select("role, locale, active").eq("id", data.user.id).single();
   if (!profile?.active) {
     await supabase.auth.signOut();

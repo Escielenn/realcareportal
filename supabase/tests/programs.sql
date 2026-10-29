@@ -39,6 +39,19 @@ select 'qmap stays locked without a purchase', not public.has_course_access('4e6
 insert into results (check_name, ok)
 select 'provider cannot ask about another provider', not public.has_course_access('da5c7d56-a9d8-5267-956b-500ba5a379eb', 'c005138d-d318-56d3-8bc4-415fb3e9fd69');
 
+-- Automatic renewal is the provider's own switch.
+select public.set_auto_renew('50e88256-f3ac-5e06-b792-4afcf9b4e52f', true);
+insert into results (check_name, ok) select 'provider can turn on auto-renew', auto_renew from public.program_auto_renew
+  where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898' and program_id = '50e88256-f3ac-5e06-b792-4afcf9b4e52f';
+do $$ begin
+  begin insert into public.program_auto_renew (provider_id, program_id, auto_renew) values ('da5c7d56-a9d8-5267-956b-500ba5a379eb', '50e88256-f3ac-5e06-b792-4afcf9b4e52f', true);
+    insert into results (check_name, ok) values ('provider cannot write auto-renew rows directly', false);
+  exception when others then insert into results (check_name, ok) values ('provider cannot write auto-renew rows directly', true); end;
+  begin perform public._program_autorenew(current_date);
+    insert into results (check_name, ok) values ('provider cannot run the renewal job', false);
+  exception when others then insert into results (check_name, ok) values ('provider cannot run the renewal job', true); end;
+end $$;
+
 -- Join the example bundle (host homes are in its audience); respite opens.
 select public.join_program('c951f62b-ea6e-5927-a42c-192f313743e9');
 insert into results (check_name, ok)
@@ -74,6 +87,11 @@ set local request.jwt.claims = '{"sub":"4e6d8d70-2d43-5307-aeeb-664bf5c96898","r
 insert into results (check_name, ok) select 'providers cannot see hidden programs', not exists (select 1 from public.programs where slug = 'test-hidden');
 
 reset role;
+-- The nightly job renews Maria's All-Access (ends within 3 days, auto-renew on, demo mode on).
+insert into results (check_name, ok) select 'nightly job renewed someone', public._program_autorenew(current_date) >= 1;
+insert into results (check_name, ok)
+select 'nightly job renews when auto-renew is on', exists (select 1 from public.entitlements where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898'
+              and program_id = '50e88256-f3ac-5e06-b792-4afcf9b4e52f' and starts_on > current_date);
 do $$ declare bad text; begin
   select string_agg(check_name, '; ') into bad from results where not ok;
   if bad is not null then raise exception 'FAILED: %', bad; end if;
