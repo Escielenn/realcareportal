@@ -3,14 +3,11 @@
 import { useActionState, useRef } from "react";
 import { signIn } from "@/app/actions";
 
-const DEMO_ACCOUNTS = [
-  { label: "Provider (English)", who: "Maria Delgado, Host Home", email: "demo.provider@example.com" },
-  { label: "Proveedor (español)", who: "Luis Herrera, SCC/DSP", email: "demo.proveedor@example.com" },
-  { label: "Real Care staff", who: "Dana Whitfield, reviewer", email: "demo.staff@example.com" },
-];
-const DEMO_PASSWORD = "RealCare-Demo-2026";
 
-export function LoginForm({ demo, next }: { demo: boolean; next?: string }) {
+type DemoAccount = { label: string; who: string; email: string };
+
+// Demo accounts (fictional) arrive from the server only when demo mode is on, so production bundles never contain them.
+export function LoginForm({ demo, next }: { demo: { accounts: DemoAccount[]; password: string } | null; next?: string }) {
   const [state, action, pending] = useActionState(signIn, undefined);
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
@@ -41,7 +38,7 @@ export function LoginForm({ demo, next }: { demo: boolean; next?: string }) {
         <div className="mt-6 border-t border-line pt-5">
           <p className="mb-3 text-sm font-semibold text-muted">Demo accounts</p>
           <div className="grid gap-2">
-            {DEMO_ACCOUNTS.map((a) => (
+            {demo.accounts.map((a) => (
               <button
                 key={a.email}
                 type="button"
@@ -49,7 +46,7 @@ export function LoginForm({ demo, next }: { demo: boolean; next?: string }) {
                 onClick={() => {
                   if (email.current && password.current) {
                     email.current.value = a.email;
-                    password.current.value = DEMO_PASSWORD;
+                    password.current.value = demo.password;
                     form.current?.requestSubmit();
                   }
                 }}

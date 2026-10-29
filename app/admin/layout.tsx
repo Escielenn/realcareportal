@@ -62,7 +62,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <div className="hidden border-t border-white/15 px-4 py-4 text-sm md:mt-auto md:block">
           <p className="font-semibold">{profile.full_name}</p>
           <p className="text-white/70 capitalize">{profile.role}</p>
-          <form action={signOut} className="mt-2">
+          <Link href="/staff-security" className="mt-2 block text-white/80 underline-offset-2 hover:underline">Two-step sign-in</Link>
+          <form action={signOut} className="mt-1">
             <button className="text-white/80 underline-offset-2 hover:underline">Sign out</button>
           </form>
         </div>

@@ -2,8 +2,33 @@ import { SUPABASE_URL, SUPABASE_KEY } from "@/lib/config";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+// Content Security Policy with a per-request nonce: only scripts Next.js renders with this nonce may run.
+function contentSecurityPolicy(nonce: string) {
+  const supabase = new URL(SUPABASE_URL).origin;
+  const dev = process.env.NODE_ENV !== "production";
+  return [
+    "default-src 'self'",
+    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${dev ? " 'unsafe-eval'" : ""}`,
+    "style-src 'self' 'unsafe-inline'",
+    `img-src 'self' data: blob: ${supabase}`,
+    `media-src 'self' blob: ${supabase}`,
+    `connect-src 'self' ${supabase} ${supabase.replace("https://", "wss://")}`,
+    "font-src 'self' data:",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+    "upgrade-insecure-requests",
+  ].join("; ");
+}
+
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({ request });
+  const nonce = btoa(crypto.randomUUID());
+  const csp = contentSecurityPolicy(nonce);
+  request.headers.set("x-nonce", nonce);
+  request.headers.set("Content-Security-Policy", csp);
+  const next = () => NextResponse.next({ request: { headers: new Headers(request.headers) } });
+  let response = next();
 
   const supabase = createServerClient(
     SUPABASE_URL,
@@ -15,7 +40,7 @@ export async function middleware(request: NextRequest) {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
-          response = NextResponse.next({ request });
+          response = next();
           cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
         },
       },
@@ -34,6 +59,7 @@ export async function middleware(request: NextRequest) {
     url.search = path.startsWith("/forms/start/") ? `?next=${encodeURIComponent(path)}` : "";
     return NextResponse.redirect(url);
   }
+  response.headers.set("Content-Security-Policy", csp);
   return response;
 }
 
