@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { todayDenver } from "@/lib/i18n";
 
 export type Program = {
   id: string; slug: string; name_en: string; name_es: string; description_en: string; description_es: string;
@@ -6,7 +7,8 @@ export type Program = {
 };
 export type Term = { id: string; program_id: string | null; course_id: string | null; starts_on: string; ends_on: string };
 
-export const today = () => new Date().toISOString().slice(0, 10);
+// Real Care runs on Colorado time, so "today" is the Denver date, not UTC.
+export const today = () => todayDenver();
 export const daysUntil = (d: string) => Math.round((Date.parse(d) - Date.parse(today())) / 86_400_000);
 export const programName = (p: Pick<Program, "name_en" | "name_es">, lang: "en" | "es") => (lang === "es" ? p.name_es : p.name_en);
 export const money = (cents: number) => `$${(cents / 100).toFixed(cents % 100 ? 2 : 0)}`;

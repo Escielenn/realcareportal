@@ -86,7 +86,7 @@ export default async function ProgramsPage() {
                   {!last ? null : active ? (
                     <span className={left <= 30 ? "text-amber" : "text-green"}>
                       {last.starts_on > t0 ? L.renewedThrough[lang] : L.activeUntil[lang]} {fmtDate(last.ends_on, lang)}
-                      {left <= 30 && last.starts_on <= t0 && <> · {L.endsSoon[lang]} {left} {L.days[lang]}</>}
+                      {left <= 30 && last.starts_on <= t0 && <> · {left === 0 ? (lang === "es" ? "Termina hoy" : "Ends today") : left === 1 ? (lang === "es" ? "Termina mañana" : "Ends tomorrow") : `${L.endsSoon[lang]} ${left} ${L.days[lang]}`}</>}
                     </span>
                   ) : (
                     <span className="text-muted">{L.ended[lang]} {fmtDate(last.ends_on, lang)}</span>
