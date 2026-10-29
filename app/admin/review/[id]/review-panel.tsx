@@ -34,7 +34,7 @@ export function ReviewPanel({ submissionId, fields }: { submissionId: string; fi
                 {f.label}
               </label>
               {on && (
-                <input autoFocus className="input mt-2 py-1.5 text-sm" placeholder="What should they fix?" value={flags[f.id]}
+                <input autoFocus className="input mt-2 py-1.5 text-sm" placeholder="e.g. Add the time you left…" value={flags[f.id]}
                   onChange={(e) => setFlags((x) => ({ ...x, [f.id]: e.target.value }))} />
               )}
             </li>

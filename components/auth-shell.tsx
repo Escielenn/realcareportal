@@ -4,7 +4,7 @@ import { MountainBand } from "@/components/mountains";
 // Sign-in and invitation screens: a mountain hero beside the form, echoing realcarecolorado.com.
 export function AuthShell({ children, title, subtitle }: { children: React.ReactNode; title: string; subtitle?: React.ReactNode }) {
   return (
-    <main className="min-h-dvh lg:grid lg:grid-cols-[1.1fr_1fr]">
+    <main id="main" tabIndex={-1} className="min-h-dvh outline-none lg:grid lg:grid-cols-[1.1fr_1fr]">
       <MountainBand className="flex flex-col justify-between px-6 py-8 sm:px-10 lg:min-h-dvh lg:px-14 lg:py-12">
         <div className="flex items-center gap-3">
           <Logo tile className="h-20 sm:h-24" />

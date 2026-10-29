@@ -55,7 +55,7 @@ export function AnnouncementForm() {
     <form action={action} className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2">
         <div><label className="label" htmlFor="an-te">Title (English)</label><input id="an-te" name="title_en" className="input" required maxLength={140} /></div>
-        <div><label className="label" htmlFor="an-ts">Title (Spanish)</label><input id="an-ts" name="title_es" className="input" maxLength={140} placeholder="Leave blank to show the English" /></div>
+        <div><label className="label" htmlFor="an-ts">Title (Spanish)</label><input id="an-ts" name="title_es" className="input" maxLength={140} placeholder="Leave blank to show the English…" /></div>
         <div><label className="label" htmlFor="an-be">Message (English)</label><textarea id="an-be" name="body_en" rows={4} className="input" required maxLength={4000} /></div>
         <div><label className="label" htmlFor="an-bs">Message (Spanish)</label><textarea id="an-bs" name="body_es" rows={4} className="input" maxLength={4000} /></div>
       </div>
@@ -113,7 +113,7 @@ export function ForgotForm() {
         </div>
       </div>
       <p className="text-muted">{es ? "Escriba el correo de su cuenta. El personal de Real Care le enviará un enlace para elegir una contraseña nueva." : "Enter the email for your account. Real Care staff will send you a link to choose a new password."}</p>
-      <div><label className="label" htmlFor="fp-email">{es ? "Correo electrónico" : "Email"}</label><input id="fp-email" name="email" type="email" className="input" required autoComplete="email" /></div>
+      <div><label className="label" htmlFor="fp-email">{es ? "Correo electrónico" : "Email"}</label><input id="fp-email" name="email" type="email" spellCheck={false} className="input" required autoComplete="email" /></div>
       <button className="btn-primary w-full" disabled={pending}>{es ? "Pedir ayuda" : "Ask for help"}</button>
     </form>
   );

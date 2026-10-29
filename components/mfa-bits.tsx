@@ -69,6 +69,7 @@ export function MfaSetup({ blocked }: { blocked: string | null }) {
     router.refresh();
   }
   async function remove(id: string) {
+    if (!window.confirm("Remove this authenticator? You'll need to set one up again before using the staff console.")) return;
     const { error } = await createClient().auth.mfa.unenroll({ factorId: id });
     if (error) return setMsg({ err: "Enter a code first (sign out and back in), then remove it." });
     await load(); router.refresh();
@@ -95,7 +96,7 @@ export function MfaSetup({ blocked }: { blocked: string | null }) {
             <li>Enter the 6-digit code the app shows.</li>
           </ol>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={enroll.qr} alt="QR code to add Real Care Portal to your authenticator app" className="h-48 w-48 rounded-xl border border-line bg-white p-2" />
+          <img src={enroll.qr} alt="QR code to add Real Care Portal to your authenticator app" width={192} height={192} className="h-48 w-48 rounded-xl border border-line bg-white p-2" />
           <p className="text-sm">Key: <code className="rounded bg-sand px-1.5 py-0.5 break-all">{enroll.secret}</code></p>
           <div><label className="label" htmlFor="mfa-new">Code</label><input id="mfa-new" className="input max-w-[12rem] text-center text-xl tracking-[0.3em]" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} /></div>
           <button className="btn-primary" disabled={code.length !== 6}>Turn on</button>

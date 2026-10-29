@@ -96,7 +96,7 @@ export function MarkCompleteForm({ providerId, courses }: { providerId: string; 
       </div>
       <div className="grid grid-cols-2 gap-2">
         <div><label className="label text-sm" htmlFor="mc-date">Completed on</label><input id="mc-date" name="date" type="date" required className="input py-2 text-sm" /></div>
-        <div><label className="label text-sm" htmlFor="mc-note">Reason (required)</label><input id="mc-note" name="note" required placeholder="e.g. In-person class" className="input py-2 text-sm" /></div>
+        <div><label className="label text-sm" htmlFor="mc-note">Reason (required)</label><input id="mc-note" name="note" required placeholder="e.g. In-person class…" className="input py-2 text-sm" /></div>
       </div>
       <button disabled={pending} className="btn-ghost text-sm">Mark complete</button>
       <Msg s={state} />
@@ -125,7 +125,7 @@ export function GrantAccessForm({ providerId, providers, courses }: { providerId
       </div>
       <div className="grid grid-cols-[100px_1fr] gap-2">
         <div><label className="label text-sm" htmlFor="ga-days">Days</label><input id="ga-days" name="days" type="number" min={1} max={730} defaultValue={365} className="input py-2 text-sm" /></div>
-        <div><label className="label text-sm" htmlFor="ga-note">Note (required)</label><input id="ga-note" name="note" required placeholder="e.g. Real Care covers QMAP for new host homes" className="input py-2 text-sm" /></div>
+        <div><label className="label text-sm" htmlFor="ga-note">Note (required)</label><input id="ga-note" name="note" required placeholder="e.g. Real Care covers QMAP for new host homes…" className="input py-2 text-sm" /></div>
       </div>
       <button disabled={pending} className="btn-ghost text-sm">Grant access, paid by Real Care</button>
       <Msg s={state} />
@@ -166,7 +166,7 @@ export function InviteForm() {
     <form action={action} className="space-y-3">
       <div className="grid gap-3 sm:grid-cols-2">
         <div><label className="label text-sm" htmlFor="inv-name">Full name</label><input id="inv-name" name="full_name" required className="input py-2" /></div>
-        <div><label className="label text-sm" htmlFor="inv-email">Email</label><input id="inv-email" name="email" type="email" required className="input py-2" /></div>
+        <div><label className="label text-sm" htmlFor="inv-email">Email</label><input id="inv-email" name="email" type="email" spellCheck={false} required className="input py-2" /></div>
       </div>
       <fieldset>
         <legend className="label text-sm">Provider type</legend>

@@ -33,6 +33,8 @@ const L = {
   upload: { en: "Choose a file", es: "Elegir un archivo" },
   uploaded: { en: "Attached", es: "Adjuntado" },
   uploading: { en: "Uploading…", es: "Subiendo…" },
+  rowRemoved: { en: "Row removed.", es: "Fila quitada." },
+  undo: { en: "Undo", es: "Deshacer" },
   draftSaved: { en: "Draft saved at", es: "Borrador guardado a las" },
   draftHint: { en: "Your answers save as a draft while you work.", es: "Sus respuestas se guardan como borrador mientras trabaja." },
   draftErr: { en: "Couldn't save the draft. Check your connection.", es: "No se pudo guardar el borrador. Revise su conexión." },
@@ -98,6 +100,12 @@ export function FormEngine({
     return () => clearTimeout(t);
   }, [values, canDraft]);
   useEffect(() => {
+    if (mode !== "returned" && !canDraft) return;
+    const warn = (e: BeforeUnloadEvent) => { if (dirty.current && !pending) { e.preventDefault(); e.returnValue = ""; } };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [canDraft, mode, pending]);
+  useEffect(() => {
     if (!canDraft) return;
     const onHide = () => { if (document.visibilityState === "hidden") flush.current(); };
     document.addEventListener("visibilitychange", onHide);
@@ -107,7 +115,16 @@ export function FormEngine({
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setTouched(true);
-    if (allFields.some(missing)) { setError(L.missing[lang]); return; }
+    const firstMissing = allFields.find(missing);
+    if (firstMissing) {
+      setError(L.missing[lang]);
+      requestAnimationFrame(() => {
+        const el = document.getElementById(`f_${firstMissing.id}`) ?? document.querySelector<HTMLElement>(`[data-field="${firstMissing.id}"] input, [data-field="${firstMissing.id}"] select, [data-field="${firstMissing.id}"] textarea, [data-field="${firstMissing.id}"] button`);
+        el?.focus();
+        el?.scrollIntoView({ block: "center" });
+      });
+      return;
+    }
     if (preview) { setError(lang === "es" ? "Vista previa: todo está completo. No se envió nada." : "Preview: everything required is filled in. Nothing was sent."); return; }
     // Send only visible, editable answers.
     const data: Values = {};
@@ -141,7 +158,7 @@ export function FormEngine({
                 const wrap = `${flag ? "rounded-xl border-2 border-coral bg-coral-soft/40 p-3" : ""}`;
                 const req = f.required && <span className="text-coral"> *</span>;
                 return (
-                  <div key={f.id} className={wrap}>
+                  <div key={f.id} className={wrap} data-field={f.id}>
                     {flag && <p className="mb-2 text-sm font-semibold text-coral">{L.fix[lang]} {flag}</p>}
                     {f.type === "info" ? (
                       <div className="rounded-xl bg-sand/70 px-4 py-3 text-[15px]">
@@ -246,6 +263,9 @@ function Repeater({ f, lang, can, rows, onChange, label, req, help }: {
 }) {
   const cols = f.columns ?? [];
   const colLabel = (c: Column) => (lang === "es" ? c.label_es : c.label_en);
+  const [removed, setRemoved] = useState<{ row: Row; at: number } | null>(null);
+  const removeRow = (i: number) => { setRemoved({ row: rows[i], at: i }); onChange(rows.filter((_, j) => j !== i)); };
+  const undo = () => { if (!removed) return; const next = [...rows]; next.splice(removed.at, 0, removed.row); onChange(next); setRemoved(null); };
   const setCell = (i: number, id: string, v: string | number | null) => onChange(rows.map((r, j) => (j === i ? { ...r, [id]: v } : r)));
   const fmt = (c: Column, v: unknown) => (v === null || v === undefined || v === "" ? "—" : c.type === "currency" ? money(Number(v)) : c.type === "hours" ? Number(v).toFixed(2) : String(v));
 
@@ -278,7 +298,7 @@ function Repeater({ f, lang, can, rows, onChange, label, req, help }: {
           <li key={i} className="rounded-xl border border-line p-3">
             <div className="mb-2 flex items-center justify-between text-sm font-semibold text-muted">
               <span>{L.row[lang]} {i + 1}</span>
-              {can && <button type="button" className="text-coral" onClick={() => onChange(rows.filter((_, j) => j !== i))}>{L.remove[lang]}</button>}
+              {can && <button type="button" className="text-coral" onClick={() => removeRow(i)}>{L.remove[lang]}</button>}
             </div>
             <div className="grid grid-cols-2 gap-2">
               {cols.map((c) => (
@@ -300,7 +320,7 @@ function Repeater({ f, lang, can, rows, onChange, label, req, help }: {
               {rows.map((r, i) => (
                 <tr key={i}>
                   {cols.map((c) => <td key={c.id} className="p-1 align-top">{cell(c, r, i)}</td>)}
-                  <td className="p-1 text-right">{can && <button type="button" className="text-sm font-semibold text-coral" onClick={() => onChange(rows.filter((_, j) => j !== i))}>{L.remove[lang]}</button>}</td>
+                  <td className="p-1 text-right">{can && <button type="button" className="text-sm font-semibold text-coral" onClick={() => removeRow(i)}>{L.remove[lang]}</button>}</td>
                 </tr>
               ))}
             </tbody>
@@ -318,7 +338,14 @@ function Repeater({ f, lang, can, rows, onChange, label, req, help }: {
           })}
         </div>
       )}
-      {can && <button type="button" className="btn-ghost mt-2 py-1.5 text-sm" onClick={() => onChange([...rows, {}])}>{L.addRow[lang]}</button>}
+      <div aria-live="polite">
+        {removed && (
+          <p className="mt-2 flex items-center gap-3 rounded-xl bg-sand px-3 py-2 text-sm">
+            {L.rowRemoved[lang]} <button type="button" className="font-semibold text-teal hover:underline" onClick={undo}>{L.undo[lang]}</button>
+          </p>
+        )}
+      </div>
+      {can && <button type="button" className="btn-ghost mt-2 py-1.5 text-sm" onClick={() => { setRemoved(null); onChange([...rows, {}]); }}>{L.addRow[lang]}</button>}
     </div>
   );
 }

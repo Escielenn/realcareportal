@@ -166,7 +166,7 @@ export function TemplateEditor({ templateId, initial, individual }: { templateId
         <textarea id="schema" spellCheck={false} className="input h-[36rem] font-mono text-[13px] leading-5" value={text} onChange={(e) => setText(e.target.value)} />
         {parsed.err && <p role="alert" className="text-sm text-coral">JSON problem: {parsed.err}</p>}
         <div className="flex flex-wrap items-end gap-2">
-          <div className="min-w-56 flex-1"><label className="label" htmlFor="vnote">What changed?</label><input id="vnote" className="input" value={note} onChange={(e) => setNote(e.target.value)} placeholder="e.g. Added a question about meals" /></div>
+          <div className="min-w-56 flex-1"><label className="label" htmlFor="vnote">What changed?</label><input id="vnote" className="input" value={note} onChange={(e) => setNote(e.target.value)} placeholder="e.g. Added a question about meals…" /></div>
           <button className="btn-primary" disabled={pending || !!parsed.err} onClick={() => start(async () => { const res = await publishVersion(templateId, text, note); setR(res); if (res.ok) { setNote(""); router.refresh(); } })}>Publish new version</button>
         </div>
         <Msg r={r} />

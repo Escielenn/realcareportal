@@ -21,7 +21,7 @@ export default async function CoursesAdmin() {
         </div>
         <form action={createCourse} className="flex gap-2">
           <label className="sr-only" htmlFor="new-title">New course title</label>
-          <input id="new-title" name="title_en" placeholder="New course title" className="input w-56 py-2" required />
+          <input id="new-title" name="title_en" placeholder="e.g. Fall Prevention…" className="input w-56 py-2" required />
           <button className="btn-primary">+ New course</button>
         </form>
       </div>

@@ -91,7 +91,7 @@ export function DocumentReview({ documentId }: { documentId: string }) {
   }
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <input aria-label="Note to provider" placeholder="Note (required to return)" className="input max-w-xs py-1.5" value={note} onChange={(e) => setNote(e.target.value)} />
+      <input aria-label="Note to provider" placeholder="Note (needed to return it)…" className="input max-w-xs py-1.5" value={note} onChange={(e) => setNote(e.target.value)} />
       <button className="btn-primary py-1.5" disabled={busy} onClick={() => act("accept")}>Accept</button>
       <button className="btn-ghost py-1.5" disabled={busy} onClick={() => act("return")}>Return</button>
       {err && <span role="alert" className="text-sm text-coral">{err}</span>}

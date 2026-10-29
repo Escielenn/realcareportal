@@ -46,7 +46,7 @@ export default async function ProvidersPage({ searchParams }: { searchParams: Pr
         <form className="ml-auto" action="/admin/providers">
           {sp.status && <input type="hidden" name="status" value={sp.status} />}
           <label className="sr-only" htmlFor="q">Search providers</label>
-          <input id="q" name="q" defaultValue={sp.q} placeholder="Search by name" className="input w-56 py-1.5" />
+          <input id="q" name="q" defaultValue={sp.q} placeholder="Search by name…" className="input w-56 py-1.5" />
         </form>
       </div>
 

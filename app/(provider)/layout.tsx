@@ -50,7 +50,7 @@ export default async function ProviderLayout({ children }: { children: React.Rea
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl px-4 pt-6 pb-28 md:pt-8">{children}</main>
+      <main id="main" tabIndex={-1} className="mx-auto max-w-5xl px-4 pt-6 pb-28 outline-none md:pt-8">{children}</main>
     </div>
   );
 }

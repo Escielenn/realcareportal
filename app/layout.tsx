@@ -19,6 +19,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={lang}>
       <body className="min-h-dvh antialiased">
+        <a href="#main" className="sr-only z-50 rounded-full bg-white px-4 py-2 font-semibold text-teal shadow focus:not-sr-only focus:fixed focus:top-3 focus:left-3">Skip to main content / Ir al contenido</a>
         <MountainBackdrop />
         <div className="relative">{children}</div>
       </body>

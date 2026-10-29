@@ -70,8 +70,13 @@ if (process.env.SHOTS) {
     await p.page.screenshot({ path: `${dir}/${name}.png`, fullPage: false });
   }
   await p.page.setViewportSize({ width: 390, height: 844 });
-  await p.page.goto(BASE + "/dashboard", { waitUntil: "networkidle" });
-  await p.page.screenshot({ path: `${dir}/dashboard-phone.png` });
+  for (const [path, name] of [["/dashboard", "dashboard-phone"], ["/training", "training-phone"], ["/forms", "forms-phone"], ["/documents", "documents-phone"], ["/messages", "messages-phone"], ["/help", "help-phone"], ["/profile", "profile-phone"]]) {
+    await p.page.goto(BASE + path, { waitUntil: "networkidle" });
+    await p.page.screenshot({ path: `${dir}/${name}.png`, fullPage: true });
+  }
+  await p.page.goto(BASE + "/forms", { waitUntil: "networkidle" });
+  const firstForm = p.page.locator("a[href^='/forms/']:not([href*='start'])").first();
+  if (await firstForm.count()) { await firstForm.click(); await p.page.waitForLoadState("networkidle"); await p.page.screenshot({ path: `${dir}/form-phone.png`, fullPage: true }); }
   await p.page.setViewportSize({ width: 1280, height: 900 });
 }
 
@@ -137,8 +142,10 @@ for (const [path, text] of [
 ]) await visit(s, path, text);
 
 if (process.env.SHOTS) {
-  await s.page.goto(BASE + "/admin", { waitUntil: "networkidle" });
-  await s.page.screenshot({ path: `${process.env.SHOTS}/admin.png` });
+  for (const [path, name] of [["/admin", "admin"], ["/admin/messages?show=all", "admin-inbox"], ["/admin/reports", "admin-reports"], ["/admin/forms", "admin-forms"], ["/admin/review", "admin-review"], ["/admin/providers", "admin-providers"]]) {
+    await s.page.goto(BASE + path, { waitUntil: "networkidle" });
+    await s.page.screenshot({ path: `${process.env.SHOTS}/${name}.png`, fullPage: true });
+  }
 }
 await step(s, "form editor + QR", async () => {
   await s.page.goto(BASE + "/admin/forms");

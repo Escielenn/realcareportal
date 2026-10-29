@@ -36,7 +36,7 @@ export function ApplyForm() {
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
       <div><label className="label" htmlFor="ap-name">{es ? "Nombre completo" : "Full name"}</label><input id="ap-name" name="full_name" className="input" required autoComplete="name" /></div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <div><label className="label" htmlFor="ap-email">{es ? "Correo electrónico" : "Email"}</label><input id="ap-email" name="email" type="email" className="input" required autoComplete="email" /></div>
+        <div><label className="label" htmlFor="ap-email">{es ? "Correo electrónico" : "Email"}</label><input id="ap-email" name="email" type="email" spellCheck={false} className="input" required autoComplete="email" /></div>
         <div><label className="label" htmlFor="ap-phone">{es ? "Teléfono" : "Phone"}</label><input id="ap-phone" name="phone" type="tel" className="input" autoComplete="tel" /></div>
       </div>
       <div><label className="label" htmlFor="ap-city">{es ? "Ciudad" : "City"}</label><input id="ap-city" name="city" className="input" autoComplete="address-level2" /></div>

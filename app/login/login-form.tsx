@@ -19,7 +19,7 @@ export function LoginForm({ demo, next }: { demo: { accounts: DemoAccount[]; pas
         {next && <input type="hidden" name="next" value={next} />}
         <div>
           <label htmlFor="email" className="label">Email</label>
-          <input ref={email} id="email" name="email" type="email" autoComplete="email" required className="input" />
+          <input ref={email} id="email" name="email" type="email" spellCheck={false} autoComplete="email" required className="input" />
         </div>
         <div>
           <label htmlFor="password" className="label">Password / Contraseña</label>
