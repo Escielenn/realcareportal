@@ -59,9 +59,18 @@ export function TourGuide() {
   const [pos, setPos] = useState<Pos | null>(null);
   const [box, setBox] = useState<Box | null>(null);
   const [pending, start] = useTransition();
+  // Set while the guide is moving to the next page, so the pop-up shows "Loading" instead of "Tour paused".
+  const [moving, setMoving] = useState<string | null>(null);
+  const [slow, setSlow] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => { setPos(readPos()); }, [pathname]);
+  useEffect(() => { if (moving && pathname === moving) { setMoving(null); setSlow(false); } }, [pathname, moving]);
+  useEffect(() => {
+    if (!moving) return;
+    const t = setTimeout(() => setSlow(true), 15000);
+    return () => clearTimeout(t);
+  }, [moving]);
 
   const tour = pos ? TOURS[pos.role] : null;
   const step = pos && tour ? tour.steps[pos.i] : null;
@@ -78,6 +87,8 @@ export function TourGuide() {
 
   useLayoutEffect(() => {
     if (!here) return;
+    // Room to scroll the last parts of a page above the guide (set before scrolling so the scroll can reach it).
+    document.body.style.paddingBottom = "70vh";
     const el = step?.target ? document.querySelector<HTMLElement>(`[data-tour="${step.target}"]`) : null;
     if (el) {
       const y = el.getBoundingClientRect().top + window.scrollY - 96; // clear the sticky header
@@ -85,10 +96,8 @@ export function TourGuide() {
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-    const t = setTimeout(measure, 400);
-    // Room to scroll the last parts of a page above the guide.
-    document.body.style.paddingBottom = "65vh";
-    heading.current?.focus();
+    const t = setTimeout(measure, 450);
+    heading.current?.focus({ preventScroll: true });
     window.addEventListener("scroll", measure, { passive: true });
     window.addEventListener("resize", measure);
     return () => {
@@ -108,6 +117,10 @@ export function TourGuide() {
     return () => window.removeEventListener("keydown", onKey);
   }, [pos, end]);
 
+  // Warm up the next page so Next feels instant.
+  const nextPath = pos && tour && pos.i + 1 < tour.steps.length ? tour.steps[pos.i + 1].path : null;
+  useEffect(() => { if (nextPath && nextPath !== pathname) router.prefetch(nextPath); }, [nextPath, pathname, router]);
+
   if (!pos || !tour || !step) return null;
 
   const go = (i: number) => {
@@ -115,17 +128,34 @@ export function TourGuide() {
     writePos(next);
     setPos(next);
     setBox(null);
-    if (tour.steps[i].path !== pathname) router.push(tour.steps[i].path);
+    if (tour.steps[i].path !== pathname) {
+      setMoving(tour.steps[i].path);
+      setSlow(false);
+      router.push(tour.steps[i].path);
+    }
   };
   const last = pos.i === tour.steps.length - 1;
   const other: TourRole = pos.role === "provider" ? "staff" : "provider";
+
+  // On the way to the next page: keep the pop-up up with a loading note.
+  if (!here && moving === step.path && !slow) {
+    return (
+      <div className="no-print" aria-live="polite">
+        <div aria-hidden className="pointer-events-none fixed inset-0 z-40 bg-[rgba(20,12,45,0.45)]" />
+        <div role="status" className="fixed inset-x-0 bottom-0 z-50 mx-auto flex max-w-2xl items-center gap-4 rounded-t-3xl bg-white p-8 shadow-2xl md:bottom-6 md:rounded-3xl">
+          <span aria-hidden className="h-8 w-8 shrink-0 animate-spin rounded-full border-4 border-teal-soft border-t-teal" />
+          <span className="text-xl font-semibold text-navy">Opening the next page…</span>
+        </div>
+      </div>
+    );
+  }
 
   // Wandered off the tour's page: a small bar to come back.
   if (!here) {
     return (
       <div className="no-print fixed inset-x-3 bottom-24 z-50 mx-auto flex max-w-md items-center gap-3 rounded-2xl bg-navy px-4 py-3 text-white shadow-xl md:bottom-6">
         <span className="flex-1 font-semibold">Tour paused · step {pos.i + 1} of {tour.steps.length}</span>
-        <button type="button" onClick={() => router.push(step.path)} className="rounded-xl bg-white px-4 py-2 font-bold text-navy">Back to tour</button>
+        <button type="button" onClick={() => { setMoving(step.path); setSlow(false); router.push(step.path); }} className="rounded-xl bg-white px-4 py-2 font-bold text-navy">Back to tour</button>
         <button type="button" onClick={end} className="rounded-xl px-2 py-2 text-white/80 underline">End</button>
       </div>
     );

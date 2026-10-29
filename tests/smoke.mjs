@@ -258,7 +258,12 @@ for (const [role, label, viewport, total] of [["provider", "Take a tour as a pro
       const next = tp.locator('button:has-text("Next →")');
       if (!(await next.count())) break;
       await next.click();
-      await tp.waitForLoadState("networkidle");
+      // Like a person: no waiting for the network. The guide must never show "Tour paused" after Next.
+      for (let k = 0; k < 30; k++) {
+        if (await tp.locator("text=Tour paused").count()) throw new Error(`"Tour paused" appeared after Next on step ${i + 1}`);
+        if (await tp.locator("#tour-title").count() && !(await tp.locator("text=Opening the next page").count())) break;
+        await tp.waitForTimeout(200);
+      }
     }
   } catch (e) { note = String(e.message).split("\n")[0]; }
   if (errs.length) note += ` page errors: ${errs.slice(0, 2).join(" | ")}`;
