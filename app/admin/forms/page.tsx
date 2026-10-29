@@ -30,7 +30,7 @@ export default async function FormsAdmin({ searchParams }: { searchParams: Promi
         <p className="text-muted">The form library, who has what to fill out, and repeating assignments. Editing a form publishes a new version; old submissions keep theirs.</p>
       </div>
 
-      <section className="card p-5" id="assign">
+      <section className="card p-5" id="assign" data-tour="assign">
         <h2 className="mb-4 text-lg font-semibold">Assign a form</h2>
         <AssignForm defaultTemplate={sp.assign} templates={active.map((t) => ({ id: t.id, title: t.title_en, per_individual: t.per_individual }))}
           providers={(providers ?? []).map((p) => ({ id: p.id, name: p.full_name }))} people={(people ?? []).map((p) => ({ id: p.id, name: p.full_name }))} links={currentLinks} />

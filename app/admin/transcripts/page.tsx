@@ -44,7 +44,7 @@ export default async function Transcripts({ searchParams }: { searchParams: Prom
           <h1 className="text-2xl font-bold">Transcripts</h1>
           <p className="text-muted">Built live from every course in one query. No CSV downloads, no uploads. Print them all at once.</p>
         </div>
-        <PrintButton label={`Print ${rows.length} transcript${rows.length === 1 ? "" : "s"}`} />
+        <span data-tour="print-all"><PrintButton label={`Print ${rows.length} transcript${rows.length === 1 ? "" : "s"}`} /></span>
       </div>
 
       <div className="no-print flex flex-wrap gap-2">

@@ -35,7 +35,7 @@ export default async function DocumentsPage() {
             : "Upload visit forms, medication lists and other paperwork. Only you and Real Care staff can see them."}
         </p>
       </div>
-      <section className="card p-5">
+      <section data-tour="upload" className="card p-5">
         <h2 className="mb-4 text-lg font-semibold">{es ? "Enviar un documento" : "Send a document"}</h2>
         <DocumentUpload userId={profile.id} lang={lang} people={people} types={(types ?? []).map((t) => ({ code: t.code, name: es ? t.name_es : t.name_en, per_individual: t.per_individual }))} />
       </section>

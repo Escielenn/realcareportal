@@ -12,6 +12,15 @@
 
 About 35 minutes. Do the renewal step last, because it opens Maria's next cycle.
 
+## 0. Guided tours (start here)
+
+On the sign-in page, press **Take a tour as a provider** or **Take a tour as staff**. The portal signs in as the fictional account and walks through each screen with a large pop-up: a short title, a few plain sentences, and **Next / Back**. The part being described is highlighted.
+
+- **Provider tour (12 steps, Maria):** home page, what needs attention, training progress, the training list and yearly reopening, training history, an in-portal video, programs and automatic renewal, forms, document upload, messages.
+- **Staff tour (13 steps, Dana):** today's numbers, automatic annual renewal, **bulk actions** (reminders, due dates, new training years for many providers at once), assigning a form to many providers on a repeat, the review queue, printing every transcript at once, programs, announcements, the shared inbox, reports, the audit log.
+
+Each tour ends with a button to take the other one. **End tour** or the Esc key stops it any time; wandering to another page shows a small "Back to tour" bar. Tours exist only while demo mode is on.
+
 ## 1. A provider's day (Maria, about 8 minutes)
 
 1. Sign in as **Provider (English)**. The home screen answers the agenda's six questions. The bell shows 2 unread notifications.

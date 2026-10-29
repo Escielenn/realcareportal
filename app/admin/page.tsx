@@ -42,7 +42,7 @@ export default async function AdminHome() {
         <p className="text-white/80">{fmtDate(today)} · {rows.length} providers</p>
       </MountainBand>
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+      <div data-tour="tiles" className="grid grid-cols-2 gap-3 lg:grid-cols-5">
         {stat("Forms waiting for review", q.length, "/admin/review")}
         {stat("Incident reports waiting", incidents.length, "/admin/review", incidents.length ? "text-coral" : "text-ink")}
         {stat("Training overdue", overdue.length, "/admin/providers?status=overdue", overdue.length ? "text-coral" : "text-ink")}
@@ -51,7 +51,7 @@ export default async function AdminHome() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <section className="card p-5">
+        <section data-tour="renewal" className="card p-5">
           <h2 className="mb-1 font-bold">Annual training renewal</h2>
           <p className="mb-4 text-sm text-muted">
             Opens each provider&apos;s next cycle on their own due date. Completions are never reset or deleted, so last year stays on the transcript.

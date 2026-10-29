@@ -73,7 +73,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
       )}
 
       {(returned.length > 0 || overdueForms.length > 0 || status === "overdue") && (
-        <section className="card border-coral/30 bg-coral-soft/40 p-5">
+        <section data-tour="attention" className="card border-coral/30 bg-coral-soft/40 p-5">
           <h2 className="mb-3 font-bold text-coral">{t(lang, "needsAttention")}</h2>
           <ul className="space-y-2">
             {returned.map((a) => (
@@ -99,7 +99,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
       )}
 
       <div className="grid gap-6 md:grid-cols-2">
-        <section className="card p-5">
+        <section data-tour="training-card" className="card p-5">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="font-bold">{t(lang, "myTraining")}</h2>
             <TrainingPill status={status} lang={lang} />

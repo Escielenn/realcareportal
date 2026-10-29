@@ -2,6 +2,7 @@ import { DEMO_MODE } from "@/lib/config";
 import { demoLogin } from "@/lib/demo";
 import { LoginForm } from "./login-form";
 import { AuthShell } from "@/components/auth-shell";
+import { TourStart } from "@/components/tour";
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
   const { next } = await searchParams;
@@ -16,6 +17,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         </>
       }
     >
+      {demo && <div className="mb-6"><TourStart /></div>}
       <LoginForm demo={demo ? demoLogin : null} next={next && /^\/forms\/start\/[0-9a-f-]{36}$/i.test(next) ? next : undefined} />
       {demo && <p className="mt-6 text-center text-xs text-muted">Demo environment. Every person and record here is fictional.</p>}
     </AuthShell>

@@ -239,6 +239,33 @@ const at = await ap2.innerText("body");
 results.push({ who: "anon", path: "/apply", status: 200, ok: /Become a provider/.test(at), note: /Become a provider/.test(at) ? "" : at.slice(0, 200) });
 await anon.close();
 
+// Guided tours: start from the sign-in page and click Next through every step.
+for (const [role, label, viewport, total] of [["provider", "Take a tour as a provider", { width: 390, height: 844 }, 12], ["staff", "Take a tour as staff", { width: 1280, height: 860 }, 13]]) {
+  const tc = await browser.newContext({ viewport });
+  const tp = await tc.newPage();
+  const errs = [];
+  tp.on("pageerror", (e) => errs.push(e.message));
+  let seen = 0, note = "";
+  try {
+    await tp.goto(BASE + "/login", { waitUntil: "networkidle" });
+    if (process.env.SHOTS && role === "provider") await tp.screenshot({ path: `${process.env.SHOTS}/tour-login.png`, fullPage: true });
+    await tp.click(`button:has-text("${label}")`);
+    for (let i = 0; i < total; i++) {
+      await tp.waitForSelector("#tour-title", { timeout: 20000 });
+      await tp.waitForTimeout(800);
+      seen++;
+      if (process.env.SHOTS) await tp.screenshot({ path: `${process.env.SHOTS}/tour-${role}-${String(i + 1).padStart(2, "0")}.png` });
+      const next = tp.locator('button:has-text("Next →")');
+      if (!(await next.count())) break;
+      await next.click();
+      await tp.waitForLoadState("networkidle");
+    }
+  } catch (e) { note = String(e.message).split("\n")[0]; }
+  if (errs.length) note += ` page errors: ${errs.slice(0, 2).join(" | ")}`;
+  results.push({ who: "tour", path: `${role} (${seen}/${total} steps)`, status: 200, ok: seen === total && !errs.length, note });
+  await tc.close();
+}
+
 await browser.close();
 const bad = results.filter((r) => !r.ok);
 for (const r of results) console.log(`${r.ok ? "PASS" : "FAIL"}  ${r.who.padEnd(9)} ${r.path}${r.note ? "  -> " + r.note : ""}`);

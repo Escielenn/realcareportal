@@ -32,7 +32,7 @@ export function ProvidersTable({ rows }: { rows: BulkRow[] }) {
   };
   return (
     <div className="space-y-3">
-      <div className={`sticky top-0 z-10 flex flex-wrap items-center gap-2 rounded-xl border p-3 ${sel.size ? "border-teal bg-teal-soft" : "border-line bg-white"}`}>
+      <div data-tour="bulk" className={`sticky top-0 z-10 flex flex-wrap items-center gap-2 rounded-xl border p-3 ${sel.size ? "border-teal bg-teal-soft" : "border-line bg-white"}`}>
         <span className="text-sm font-semibold">{sel.size ? `${sel.size} selected` : "Select providers for bulk actions"}</span>
         <button disabled={!sel.size || pending} onClick={() => run("remind")} className="btn-ghost px-3 py-1.5 text-sm">Send reminder</button>
         <button disabled={!sel.size || pending} onClick={() => run("open")} className="btn-ghost px-3 py-1.5 text-sm">Open new cycle</button>

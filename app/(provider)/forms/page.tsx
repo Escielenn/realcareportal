@@ -33,7 +33,7 @@ export default async function FormsPage({ searchParams }: { searchParams: Promis
     <div className="space-y-6">
       <h1 className="text-3xl font-semibold text-navy">{t(lang, "forms")}</h1>
       {(selfStart ?? []).length > 0 && (
-        <section className="card p-4">
+        <section data-tour="start-form" className="card p-4">
           <h2 className="mb-2 font-semibold">{lang === "es" ? "Empezar un formulario" : "Start a form"}</h2>
           <div className="flex flex-wrap gap-2">
             {(selfStart ?? []).map((f) => (

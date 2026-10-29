@@ -99,7 +99,7 @@ export default async function ProgramsPage() {
                 )}
               </div>
               {last && (
-                <div className="border-t border-line px-5 py-4">
+                <div data-tour="auto-renew" className="border-t border-line px-5 py-4">
                   <AutoRenewSwitch programId={p.id} on={acc.autoRenew.has(p.id)} lang={lang} price={p.price_cents ? money(p.price_cents) : L.free[lang]} />
                 </div>
               )}

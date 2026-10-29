@@ -35,7 +35,7 @@ export default async function TrainingPage() {
         </div>
       </div>
 
-      <Link href="/programs" className="card flex flex-wrap items-center justify-between gap-3 p-4 hover:border-teal">
+      <Link href="/programs" data-tour="programs-link" className="card flex flex-wrap items-center justify-between gap-3 p-4 hover:border-teal">
         <div>
           <p className="font-semibold">{lang === "es" ? "Programas y precios" : "Programs & pricing"}</p>
           <p className="text-sm text-muted">
@@ -107,7 +107,7 @@ export default async function TrainingPage() {
         </section>
       )}
 
-      <section>
+      <section data-tour="history">
         <h2 className="mb-3 text-lg font-bold">{t(lang, "history")}</h2>
         <div className="space-y-3">
           {tr.cycles.map((cy) => {
