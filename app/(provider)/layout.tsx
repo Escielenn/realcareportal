@@ -22,8 +22,8 @@ export default async function ProviderLayout({ children }: { children: React.Rea
       <header className="no-print brand-bar sticky top-0 z-10 text-white shadow-md">
         <div className="mx-auto flex max-w-5xl items-center gap-4 px-4 py-3">
           <Link href="/dashboard" className="flex items-center gap-2.5 font-bold" aria-label="Real Care Portal home">
-            <Logo tile className="h-11" />
-            <span className="hidden font-display text-lg leading-tight sm:block">Provider<br className="hidden lg:block" /> Portal</span>
+            <Logo tile className="h-10" />
+            <span className="font-display text-base leading-tight sm:text-lg">Real Care<span className="hidden sm:block text-sm font-medium text-white/85">Provider Portal</span></span>
           </Link>
           <ProviderNav
             items={[

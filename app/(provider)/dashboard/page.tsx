@@ -33,7 +33,11 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
   const nextCourse = tr.required.find((c) => !tr.doneNow.has(c.id));
   const daysLeft = tr.current ? daysBetween(today, tr.current.due_on) : null;
   const firstName = profile.full_name.split(" ")[0];
-  const myAnnouncements = (announcements ?? []).filter((a) => !a.audience?.length || a.audience.some((x: string) => profile.provider_types.includes(x))).slice(0, 3);
+  const cutoff = new Date(Date.now() - 30 * 86_400_000).toISOString();
+  const myAnnouncements = (announcements ?? [])
+    .filter((a) => !a.audience?.length || a.audience.some((x: string) => profile.provider_types.includes(x)))
+    .filter((a) => a.pinned || a.created_at >= cutoff)
+    .slice(0, 3);
 
   return (
     <div className="space-y-6">
@@ -123,16 +127,21 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
             <p className="text-muted">{t(lang, "allCaughtUp")}</p>
           ) : (
             <ul className="divide-y divide-line">
-              {dueForms.slice(0, 4).map((a) => (
+              {dueForms.slice(0, 3).map((a) => (
                 <li key={a.id} className="flex items-center justify-between gap-3 py-2.5">
                   <div className="min-w-0">
                     <p className="truncate font-semibold">{a.form_templates && title(a.form_templates, lang)}</p>
-                    <p className="text-sm text-muted">{a.individuals ? `${a.individuals.full_name} · ` : ""}{t(lang, "due")} {fmtDate(a.due_on, lang)}</p>
+                    <p className="text-sm">{a.individuals && <span className="font-medium text-ink">{a.individuals.full_name} · </span>}<span className="text-muted">{t(lang, "due")} {fmtDate(a.due_on, lang)}</span></p>
                   </div>
                   <Link href={`/forms/${a.id}`} className="btn-ghost shrink-0 px-3 py-1.5 text-sm">{t(lang, "start")}</Link>
                 </li>
               ))}
             </ul>
+          )}
+          {dueForms.length > 3 && (
+            <Link href="/forms" className="mt-2 block text-sm font-semibold text-teal hover:underline">
+              {lang === "es" ? `Ver los ${dueForms.length} formularios →` : `See all ${dueForms.length} forms →`}
+            </Link>
           )}
         </section>
 

@@ -42,7 +42,17 @@ export default async function FormsPage({ searchParams }: { searchParams: Promis
           </div>
         </section>
       )}
-      {done && <p role="status" className="rounded-xl bg-green-soft px-4 py-3 font-semibold text-green">✓ {t(lang, "thanksSubmitted")}</p>}
+      {done && (
+        <div role="status" className="card border-green bg-green-soft p-5">
+          <p className="text-lg font-bold text-green">✓ {t(lang, "thanksSubmitted")}</p>
+          <p className="mt-1 text-ink">
+            {lang === "es"
+              ? "Lo enviamos al personal de Real Care. Si algo necesita una corrección, recibirá un aviso aquí."
+              : "It went to Real Care staff. If anything needs a correction, you'll get a notice here."}
+          </p>
+          <Link href="/dashboard" className="btn-ghost mt-3">{lang === "es" ? "Volver al inicio" : "Back to home"}</Link>
+        </div>
+      )}
       {groups.map((g) =>
         g.rows.length === 0 && g.key !== "todo" ? null : (
           <section key={g.key}>
@@ -56,8 +66,8 @@ export default async function FormsPage({ searchParams }: { searchParams: Promis
                     <Link href={`/forms/${r.id}`} className="flex items-center justify-between gap-3 p-4 hover:bg-sand/60">
                       <div className="min-w-0">
                         <p className="truncate font-semibold">{title(r.form_templates, lang)}</p>
-                        <p className="text-sm text-muted">
-                          {r.individuals ? `${r.individuals.full_name} · ` : ""}
+                        {r.individuals && <p className="text-sm font-medium text-ink">{r.individuals.full_name}</p>}
+                        <p className={`text-sm ${!r.sub && r.due_on < today ? "font-semibold text-coral" : "text-muted"}`}>
                           {r.sub ? `${t(lang, "submittedOn")} ${fmtDate(r.sub.submitted_at, lang)}` : `${r.due_on < today ? t(lang, "overdue") : t(lang, "due")} ${fmtDate(r.due_on, lang)}`}
                         </p>
                       </div>

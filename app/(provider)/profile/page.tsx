@@ -25,7 +25,6 @@ export default async function ProfilePage() {
         <h1 className="text-2xl font-bold">{es ? "Mi perfil" : "My profile"}</h1>
         <p className="text-muted">{profile.full_name} · {profile.email} · {profile.provider_types.map((t) => providerTypeLabel[t]?.[lang] ?? t).join(", ")}</p>
       </div>
-      <ProfileForm lang={lang} locale={profile.locale} phone={(profile as unknown as { phone: string | null }).phone ?? ""} emailNotifications={(profile as unknown as { email_notifications: boolean }).email_notifications} />
 
       <section className="card p-5">
         <div className="mb-3 flex items-center justify-between gap-2">
@@ -40,12 +39,15 @@ export default async function ProfilePage() {
             return (
               <li key={e.id} className="flex items-center justify-between gap-2 py-2">
                 <span className="font-medium">{c ? (es ? c.title_es : c.title_en) : pr ? (es ? pr.name_es : pr.name_en) : "—"}</span>
-                <span className={`text-sm ${active ? "text-green" : "text-muted"}`}>{e.starts_on > today ? (es ? "Comienza " + fmtDate(e.starts_on, lang) + " · hasta " : "Starts " + fmtDate(e.starts_on, lang) + " · until ") : active ? (es ? "Activo hasta " : "Active until ") : es ? "Terminó " : "Ended "}{fmtDate(e.ends_on, lang)}</span>
+                <span className={`text-sm ${active ? "font-semibold text-green" : "text-muted"}`}>{e.starts_on > today ? (es ? "Comienza " + fmtDate(e.starts_on, lang) + " · hasta " : "Starts " + fmtDate(e.starts_on, lang) + " · until ") : active ? (es ? "Activo hasta " : "Active until ") : es ? "Terminó " : "Ended "}{fmtDate(e.ends_on, lang)}</span>
               </li>
             );
           })}
         </ul>
       </section>
+
+      <ProfileForm lang={lang} locale={profile.locale} phone={(profile as unknown as { phone: string | null }).phone ?? ""} emailNotifications={(profile as unknown as { email_notifications: boolean }).email_notifications} />
+
 
       <section className="card p-5">
         <h2 className="mb-3 font-bold">{es ? "Pagos" : "Payments"}</h2>

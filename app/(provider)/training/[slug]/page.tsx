@@ -44,6 +44,14 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
         ) : !access ? (
           <Paywall courseId={course.id} priceCents={course.price_cents} accessDays={course.access_days} programs={offers} lang={lang} />
         ) : null}
+        {!completion && access && next && (
+          <div className="border-b border-line px-5 py-4">
+            <Link href={`/training/${slug}/${next.id}`} className="btn-primary w-full sm:w-auto">
+              {done.size ? `${t(lang, "continueTraining")}: ${title(next, lang)}` : `${t(lang, "start")}: ${title(next, lang)}`} →
+            </Link>
+            <p className="mt-2 text-sm text-muted">{done.size} {lang === "es" ? "de" : "of"} {(lessons ?? []).length} {lang === "es" ? "lecciones terminadas" : "lessons done"}</p>
+          </div>
+        )}
         <div className="p-5">
           <h2 className="mb-3 font-bold">{t(lang, "lessons")}</h2>
           <ol className="space-y-2">

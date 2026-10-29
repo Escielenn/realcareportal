@@ -15,6 +15,16 @@ export default async function MessagesPage() {
         <p className="text-muted">{t(lang, "messagesIntro")}</p>
       </div>
       <div className="card space-y-3 p-4">
+        {(msgs ?? []).length === 0 && (
+          <div className="rounded-xl bg-sand/60 p-4 text-center">
+            <p className="font-semibold">{lang === "es" ? "Todavía no hay mensajes" : "No messages yet"}</p>
+            <p className="mt-1 text-sm text-muted">
+              {lang === "es"
+                ? "¿Preguntas sobre la capacitación o los formularios? Escriba al personal de Real Care aquí. Normalmente respondemos en un día hábil."
+                : "Questions about training or forms? Write to Real Care staff here. We usually answer within one business day."}
+            </p>
+          </div>
+        )}
         {(msgs ?? []).map((m) => {
           const mine = m.sender_id === profile.id;
           return (

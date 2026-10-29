@@ -90,7 +90,7 @@ h3,
   @apply mb-1.5 block text-[15px] font-medium text-ink;
 }
 @utility pill {
-  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap;
+  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[13px] leading-none font-semibold whitespace-nowrap;
 }
 
 @utility btn-sky {
@@ -128,3 +128,7 @@ h3,
     box-shadow: none !important;
   }
 }
+
+/* Long staff tables keep their headings in view (UX review #12). */
+thead th { position: sticky; top: 0; z-index: 1; background: color-mix(in oklab, var(--color-sand, #f3efe8) 92%, white); }
+tbody tr:hover { background: color-mix(in oklab, var(--color-sand, #f3efe8) 40%, transparent); }

@@ -37,7 +37,7 @@ const L = {
   undo: { en: "Undo", es: "Deshacer" },
   draftSaved: { en: "Draft saved at", es: "Borrador guardado a las" },
   draftHint: { en: "Your answers save as a draft while you work.", es: "Sus respuestas se guardan como borrador mientras trabaja." },
-  draftErr: { en: "Couldn't save the draft. Check your connection.", es: "No se pudo guardar el borrador. Revise su conexión." },
+  draftErr: { en: "Not saved: no connection. Keep this page open; it saves when you're back online.", es: "No guardado: sin conexión. Deje esta página abierta; se guardará cuando vuelva la conexión." },
   daysMarked: { en: "days marked", es: "días marcados" },
   clearRow: { en: "Clear", es: "Borrar" },
   previewFile: { en: "File uploads are off in the preview.", es: "La subida de archivos está desactivada en la vista previa." },
@@ -91,9 +91,22 @@ export function FormEngine({
   flush.current = async () => {
     if (!canDraft || !dirty.current) return;
     dirty.current = false;
-    const r = await saveDraft(assignmentId, latest.current as Record<string, unknown>);
-    if (r.error) { setSaveErr(true); dirty.current = true; } else { setSaveErr(false); setSavedAt(r.savedAt ?? new Date().toISOString()); }
+    try {
+      if (typeof navigator !== "undefined" && !navigator.onLine) throw new Error("offline");
+      const r = await saveDraft(assignmentId, latest.current as Record<string, unknown>);
+      if (r.error) { setSaveErr(true); dirty.current = true; } else { setSaveErr(false); setSavedAt(r.savedAt ?? new Date().toISOString()); }
+    } catch {
+      // No connection: keep the answers on screen and try again when the phone is back online.
+      setSaveErr(true);
+      dirty.current = true;
+    }
   };
+  useEffect(() => {
+    if (!canDraft) return;
+    const retry = () => flush.current();
+    window.addEventListener("online", retry);
+    return () => window.removeEventListener("online", retry);
+  }, [canDraft]);
   useEffect(() => {
     if (!canDraft) return;
     const t = setTimeout(() => flush.current(), 4000);
