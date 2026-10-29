@@ -253,6 +253,7 @@ for (const [role, label, viewport, total] of [["provider", "Take a tour as a pro
     for (let i = 0; i < total; i++) {
       await tp.waitForSelector("#tour-title", { timeout: 20000 });
       await tp.waitForTimeout(800);
+      if (await tp.locator("text=Tour paused").count()) throw new Error(`"Tour paused" showing on step ${i + 1}`);
       seen++;
       if (process.env.SHOTS) await tp.screenshot({ path: `${process.env.SHOTS}/tour-${role}-${String(i + 1).padStart(2, "0")}.png` });
       const next = tp.locator('button:has-text("Next →")');
