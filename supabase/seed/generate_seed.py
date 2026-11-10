@@ -432,6 +432,8 @@ values ('{dcw}', 'dcw-notice-of-rights', 'DCW Notice of Rights', 'Aviso de derec
  'A one-time notice of your rights as a Direct Care Worker. Read both pages, then sign to confirm you received and reviewed it.',
  'Un aviso único de sus derechos como trabajador de cuidado directo. Lea las dos páginas y luego firme para confirmar que lo recibió y revisó.',
  {len(courses)}, false, 0, true, false);""")
+# Paused Nov 10, 2026 (Jason): kept but unpublished and unassigned until Real Care is ready.
+w(f"update public.courses set published = false where id = '{dcw}';")
 for li, (te, ts, be, bs) in enumerate([
     ("Notice of Rights: page 1", "Aviso de derechos: página 1",
      "*Real Care staff upload page 1 of the DCW Notice of Rights here. Until then, ask Real Care staff for the printed notice.*",
@@ -483,27 +485,45 @@ for email, name, types, loc, hire, cur_start, share in providers:
 w("insert into public.lesson_progress (provider_id, lesson_id, cycle_id, completed_at) select c.provider_id, l.id, c.cycle_id, c.completed_at from public.completions c join public.lessons l on l.course_id = c.course_id;")
 
 # ---------------------------------------------------------------- individuals (fictional)
+# name, dob, goals, client number, preferred name, status, program, county, residence, language, service start, case management agency, case manager
 individuals = [
-    ("Jordan Avery", "1988-04-12", ["Prepare a simple meal with support twice a week", "Attend one community activity each week"]),
-    ("Sam Whitaker", "1995-09-30", ["Use a visual schedule each morning", "Walk 20 minutes three times a week"]),
-    ("Robin Castillo", "1979-01-22", ["Ride the bus to the library with support", "Practice money skills at the store"]),
-    ("Taylor Nguyen", "2001-06-03", ["Join a weekly art class", "Call a family member on Sundays"]),
+    ("Jordan Avery", "1988-04-12", ["Prepare a simple meal with support twice a week", "Attend one community activity each week"],
+     "RC-1001", "Jordy", "active", "HCBS-DD", "Adams", "Host home", "en", "2023-11-01", "Example CCB North", "Pat Example"),
+    ("Sam Whitaker", "1995-09-30", ["Use a visual schedule each morning", "Walk 20 minutes three times a week"],
+     "RC-1002", None, "active", "HCBS-DD", "Denver", "Host home", "en", "2024-03-01", "Example CCB Metro", "Lee Sample"),
+    ("Robin Castillo", "1979-01-22", ["Ride the bus to the library with support", "Practice money skills at the store"],
+     "RC-1003", None, "active", "SLS", "Arapahoe", "Family home", "es", "2024-03-01", "Example CCB South", "Morgan Demo"),
+    ("Taylor Nguyen", "2001-06-03", ["Join a weekly art class", "Call a family member on Sundays"],
+     "RC-1004", "Tay", "active", "HCBS-DD", "Jefferson", "Host home", "en", "2024-01-01", "Example CCB West", "Casey Placeholder"),
+    ("Alex Romero", "1992-02-14", ["Practice a morning routine", "Try one new community place a month"],
+     "RC-1005", None, "prospective", "HCBS-DD", "Adams", "Host home", "en", None, "Example CCB North", "Pat Example"),
+    ("Jamie Ortega", "1985-08-08", ["Keep a weekly budget"],
+     "RC-0998", None, "discharged", "SLS", "Weld", "Own home", "en", "2021-05-01", "Example CCB North", "Pat Example"),
 ]
 ind_ids = {}
-for n, dob, goals in individuals:
+for n, dob, goals, num, pref, status, prog, county, res, lang, start, agency, cm in individuals:
     iid = uid("ind:" + n)
     ind_ids[n] = iid
-    w(f"insert into public.individuals (id, full_name, date_of_birth, goals) values ('{iid}', {q(n)}, '{dob}', {j(goals)});")
+    w(f"""insert into public.individuals (id, full_name, date_of_birth, goals, client_number, preferred_name, status, program, county, residence_type,
+  primary_language, service_start, service_end, case_management_agency, case_manager_name, case_manager_phone, case_manager_email)
+values ('{iid}', {q(n)}, '{dob}', {j(goals)}, {q(num)}, {q(pref)}, {q(status)}, {q(prog)}, {q(county)}, {q(res)}, {q(lang)}, {q(start)},
+  {q('2026-06-30' if status == 'discharged' else None)}, {q(agency)}, {q(cm)}, '303-555-01{len(n):02d}', {q(cm.lower().replace(' ', '.') + '@example.com')});""")
 
 links = [
-    ("demo.provider@example.com", "Jordan Avery", "2023-11-01", None),
-    ("demo.provider@example.com", "Sam Whitaker", "2024-03-01", None),
-    ("demo.provider@example.com", "Taylor Nguyen", "2024-01-01", "2026-06-30"),
-    ("demo.proveedor@example.com", "Robin Castillo", "2024-03-01", None),
-    ("brianna.cole@example.com", "Taylor Nguyen", "2026-07-01", None),
+    ("demo.provider@example.com", "Jordan Avery", "2023-11-01", None, "primary"),
+    ("demo.provider@example.com", "Sam Whitaker", "2024-03-01", None, "primary"),
+    ("demo.provider@example.com", "Taylor Nguyen", "2024-01-01", "2026-06-30", "primary"),
+    ("demo.proveedor@example.com", "Robin Castillo", "2024-03-01", None, "primary"),
+    ("brianna.cole@example.com", "Taylor Nguyen", "2026-07-01", None, "primary"),
+    ("evan.ruiz@example.com", "Jordan Avery", "2025-02-01", None, "respite"),
+    ("hector.salinas@example.com", "Alex Romero", "2026-11-01", None, "prospective"),
+    ("jordan.lee@example.com", "Jamie Ortega", "2021-05-01", "2026-06-30", "primary"),
 ]
-for e, n, s, ended in links:
-    w(f"insert into public.provider_individuals (provider_id, individual_id, starts_on, ends_on) values ('{uid(e)}', '{ind_ids[n]}', '{s}', {q(ended)});")
+for e, n, st, ended, rel in links:
+    w(f"insert into public.provider_individuals (provider_id, individual_id, starts_on, ends_on, relationship) values ('{uid(e)}', '{ind_ids[n]}', '{st}', {q(ended)}, {q(rel)});")
+for n in ["Jordan Avery", "Sam Whitaker", "Taylor Nguyen", "Alex Romero"]:
+    w(f"insert into public.individual_staff (individual_id, staff_id, role, starts_on) values ('{ind_ids[n]}', '{uid('demo.staff@example.com')}', 'coordinator', '2025-01-01');")
+w(f"insert into public.individual_staff (individual_id, staff_id, role, starts_on) values ('{ind_ids['Robin Castillo']}', '{uid('demo.reviewer@example.com')}', 'coordinator', '2025-01-01');")
 
 # ---------------------------------------------------------------- forms
 def opt(v, en, es):
@@ -698,14 +718,8 @@ values ('00000000-0000-0000-0000-000000000000', '{i}', 'authenticated', 'authent
     w(f"insert into public.profiles (id, role, full_name, email, locale, provider_types, hire_date, login_enabled) values ('{i}', 'provider', {q(name)}, {q(email)}, 'en', {types_sql}, {q(hire)}, false);")
     w(f"insert into public.training_cycles (id, provider_id, cycle_number, starts_on, due_on, label) values ('{uid('cycle:' + email + ':1')}', '{i}', 1, '{start}', '{add_years(date.fromisoformat(start), 1)}', 'Cycle 1');")
 
-# ---------------------------------------------------------------- per-provider assignments and an exemption (fictional)
-for email in ["demo.provider@example.com", "brianna.cole@example.com", "nora.patel@example.com"]:
-    w(f"insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('{uid(email)}', '{dcw}', 'assigned', 'once', 'One-time DCW Notice of Rights', '{staff_id}');")
+# ---------------------------------------------------------------- an exemption (fictional); the DCW notice assignments are paused
 w(f"insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('{uid('grace.holloway@example.com')}', '{course_ids['driving-safety']}', 'exempt', 'annual', 'Does not transport individuals (example exemption)', '{staff_id}');")
-b, bcy = uid("brianna.cole@example.com"), uid("cycle:brianna.cole@example.com:2")
-w(f"insert into public.lesson_progress (provider_id, lesson_id, cycle_id, completed_at) select '{b}', id, '{bcy}', '2026-11-04 10:00' from public.lessons where course_id = '{dcw}';")
-w(f"insert into public.lesson_acknowledgments (provider_id, lesson_id, cycle_id, typed_name, statement, acknowledged_at) values ('{b}', '{uid('lesson:dcw-notice-of-rights:2')}', '{bcy}', 'Brianna Cole', 'I received the DCW Notice of Rights and reviewed both pages.', '2026-11-04 10:00');")
-w(f"insert into public.completions (provider_id, course_id, cycle_id, completed_at, language, source) values ('{b}', '{dcw}', '{bcy}', '2026-11-04 10:00', 'en', 'portal');")
 
 # ---------------------------------------------------------------- seeded notifications: history read, one unread
 w("""update public.notifications set read_at = created_at;

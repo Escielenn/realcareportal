@@ -48,7 +48,7 @@ const p = await session("provider", "demo.provider@example.com");
 for (const [path, text] of [
   ["/dashboard", "Hello, Maria"], ["/training", "My training"], ["/training/confidentiality", "Confidentiality"],
   ["/training/qmap", "This course needs to be purchased"], ["/training/welcome", "A quick tour"], ["/forms", "Returned for a correction"],
-  ["/messages", "Messages"], ["/notifications", "Notifications"], ["/profile", "My profile"], ["/programs", "All-Access Package"], ["/training", "DCW Notice of Rights"],
+  ["/messages", "Messages"], ["/notifications", "Notifications"], ["/profile", "My profile"], ["/programs", "All-Access Package"],
   ["/documents", "Send a document"], ["/help", "How to use the portal"],
   ["/training/documentation", "Documentation Submissions"], ["/training/injection-admin", "RCI Injection Administration"],
 ]) await visit(p, path, text);
