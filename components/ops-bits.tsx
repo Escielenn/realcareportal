@@ -96,46 +96,61 @@ export function RosterImport() {
   const [rows, setRows] = useState<Parsed[]>([]);
   const [result, setResult] = useState<{ error?: string; message?: string; results?: { row: number; ok: boolean; error?: string }[] }>();
   const [pending, start] = useTransition();
+  const [defaultType, setDefaultType] = useState("");
   const seen = useMemo(() => new Set<string>(), []);
 
-  function load(text: string) {
+  function load(text: string, dt: string = defaultType) {
     setResult(undefined);
     const grid = parseCsv(text);
     if (grid.length < 2) { setRows([]); setResult({ error: "The file needs a header row and at least one provider." }); return; }
     const head = grid[0].map((h) => h.trim().toLowerCase());
     const col = (...names: string[]) => head.findIndex((h) => names.includes(h));
-    const c = { name: col("full name", "name", "full_name"), email: col("email", "email address"), phone: col("phone", "phone number"),
-      types: col("provider type", "provider types", "type", "types"), hire: col("hire date", "enrollment date", "hire_date", "start date"),
+    // Works with the roster template and with Wix contact/member exports (First Name, Last Name, Email 1, Phone 1, Labels).
+    const c = { name: col("full name", "name", "full_name"), first: col("first name", "first_name", "firstname"), last: col("last name", "last_name", "lastname"),
+      email: col("email", "email address", "email 1", "login email", "primary email"), phone: col("phone", "phone number", "phone 1", "primary phone"),
+      types: col("provider type", "provider types", "type", "types", "labels", "label"), hire: col("hire date", "enrollment date", "hire_date", "start date"),
       cycle: col("training year start", "renewal date", "cycle start", "cycle_start"), lang: col("language", "preferred language", "locale") };
-    if (c.name < 0 || c.email < 0 || c.types < 0) { setRows([]); setResult({ error: "Columns needed: Full name, Email, Provider type. Download the template to see the layout." }); return; }
+    if ((c.name < 0 && c.first < 0) || c.email < 0) { setRows([]); setResult({ error: "Columns needed: a name (Full name, or First name + Last name) and Email. Download the template to see the layout." }); return; }
     seen.clear();
     setRows(grid.slice(1).map((r) => {
       const get = (i: number) => (i >= 0 ? (r[i] ?? "").trim() : "");
-      const types = [...new Set(get(c.types).split(/[;,|]/).map((t) => TYPE_WORDS[t.trim().toLowerCase()]).filter(Boolean))];
+      const found = [...new Set(get(c.types).split(/[;,|]/).map((t) => TYPE_WORDS[t.trim().toLowerCase()]).filter(Boolean))];
+      const types = found.length ? found : dt ? [dt] : [];
+      const name = get(c.name) || [get(c.first), get(c.last)].filter(Boolean).join(" ");
       const email = get(c.email).toLowerCase();
       const hire = toDate(get(c.hire)); const cycle = toDate(get(c.cycle));
       const problems: string[] = [];
-      if (get(c.name).length < 2) problems.push("name missing");
+      if (name.length < 2) problems.push("name missing");
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) problems.push("email not valid");
       else if (seen.has(email)) problems.push("email listed twice");
       seen.add(email);
-      if (types.length === 0) problems.push("provider type not recognized");
+      if (types.length === 0) problems.push("no provider type (choose a default above)");
       if (hire === "invalid" || cycle === "invalid") problems.push("date not recognized (use YYYY-MM-DD or MM/DD/YYYY)");
-      return { full_name: get(c.name), email, phone: get(c.phone), provider_types: types, hire_date: hire === "invalid" ? "" : hire,
+      return { full_name: name, email, phone: get(c.phone), provider_types: types, hire_date: hire === "invalid" ? "" : hire,
         cycle_start: cycle === "invalid" ? "" : cycle, locale: /^(es|spanish|español)$/i.test(get(c.lang)) ? "es" : "en", problems };
     }));
   }
   const good = rows.filter((r) => r.problems.length === 0);
+  const [lastText, setLastText] = useState("");
   return (
     <div className="space-y-4">
+      <div className="flex flex-wrap items-end gap-3">
+        <div>
+          <label className="label text-sm" htmlFor="ri-default">Provider type for rows without one</label>
+          <select id="ri-default" value={defaultType} onChange={(e) => { setDefaultType(e.target.value); if (lastText) load(lastText, e.target.value); }} className="input w-auto py-2 text-sm">
+            <option value="">None (flag those rows)</option>
+            {TYPES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+          </select>
+        </div>
+      </div>
       <div className="flex flex-wrap items-center gap-3">
         <label className="btn-ghost cursor-pointer">
           Choose a spreadsheet (CSV)
-          <input type="file" accept=".csv,text/csv" className="sr-only" onChange={async (e) => { const f = e.target.files?.[0]; if (f) load(await f.text()); }} />
+          <input type="file" accept=".csv,text/csv" className="sr-only" onChange={async (e) => { const f = e.target.files?.[0]; if (f) { const t = await f.text(); setLastText(t); load(t); } }} />
         </label>
         <a href="/provider-roster-template.csv" download className="text-sm font-semibold text-teal hover:underline">Download the template</a>
       </div>
-      <p className="text-sm text-muted">From Excel: File → Save As → CSV. Columns: Full name, Email, Phone, Provider type (several allowed, separated by ;), Hire date, Training year start, Language.</p>
+      <p className="text-sm text-muted">From Excel: File → Save As → CSV. From Wix: Contacts (or Members) → Export → CSV; First name, Last name, Email and Phone are read automatically, and Labels count as provider types when they match. Nobody is notified and nobody can sign in until an admin sends their login.</p>
       {rows.length > 0 && (
         <>
           <div className="card max-h-96 overflow-auto">

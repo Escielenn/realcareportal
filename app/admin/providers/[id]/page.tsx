@@ -19,7 +19,7 @@ export default async function ProviderDetail({ params, searchParams }: { params:
 
   const [tr, { data: links }, { data: assignments }, { data: msgs }, { data: ents }, { data: notes }, { data: programs }] = await Promise.all([
     trainingFor(supabase, id, p.provider_types),
-    supabase.from("provider_individuals").select("starts_on, ends_on, individuals(id, full_name)").eq("provider_id", id),
+    supabase.from("provider_individuals").select("starts_on, ends_on, relationship, individuals(id, full_name)").eq("provider_id", id),
     supabase.from("assignments").select("id, due_on, form_templates(title_en), individuals(full_name), submissions(id, status, submitted_at)").eq("provider_id", id).order("due_on", { ascending: false }),
     supabase.from("messages").select("id, body, created_at, sender_id").eq("provider_id", id).order("created_at"),
     supabase.from("entitlements").select("id, course_id, starts_on, ends_on, courses(title_en), programs(name_en)").eq("provider_id", id).order("ends_on", { ascending: false }),
@@ -166,14 +166,14 @@ export default async function ProviderDetail({ params, searchParams }: { params:
 
       {clientOn && <div className="grid gap-6 lg:grid-cols-2">
         <section className="card p-5">
-          <h2 className="mb-3 font-bold">People supported</h2>
+          <h2 className="mb-3 font-bold">Clients</h2>
           <ul className="divide-y divide-line">
             {(links ?? []).map((l, i) => {
               const ind = l.individuals as unknown as { id: string; full_name: string };
               const ended = l.ends_on && l.ends_on < new Date().toISOString().slice(0, 10);
               return (
                 <li key={i} className="flex items-center justify-between py-2">
-                  <span className={ended ? "text-muted line-through" : "font-medium"}>{ind?.full_name}</span>
+                  <span><Link href={`/admin/individuals/${ind?.id}`} className={`hover:underline ${ended ? "text-muted line-through" : "font-medium"}`}>{ind?.full_name}</Link>{l.relationship !== "primary" && <span className="ml-2 text-sm text-muted">({l.relationship})</span>}</span>
                   <span className="text-sm text-muted">{fmtDate(l.starts_on)} – {l.ends_on ? fmtDate(l.ends_on) : "present"}{ended ? " · access removed" : ""}</span>
                 </li>
               );

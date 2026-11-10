@@ -9,6 +9,7 @@ import {
 } from "@/app/admin/actions";
 import { createClient } from "@/lib/supabase/client";
 import { CourseOverrideForm } from "@/components/ops-bits";
+import { inviteProviders } from "@/app/ops-actions";
 
 function Msg({ s }: { s?: { error?: string; message?: string } }) {
   if (!s) return null;
@@ -37,6 +38,12 @@ export function ProvidersTable({ rows, courses = [] }: { rows: BulkRow[]; course
         <span className="text-sm font-semibold">{sel.size ? `${sel.size} selected` : "Select providers for bulk actions"}</span>
         <button disabled={!sel.size || pending} onClick={() => run("remind")} className="btn-ghost px-3 py-1.5 text-sm">Send reminder</button>
         <button disabled={!sel.size || pending} onClick={() => run("open")} className="btn-ghost px-3 py-1.5 text-sm">Open new cycle</button>
+        {courses.length > 0 && rows.some((r) => sel.has(r.id) && r.noLogin) && (
+          <button disabled={pending} className="btn-ghost px-3 py-1.5 text-sm"
+            onClick={() => { const ids = rows.filter((r) => sel.has(r.id) && r.noLogin).map((r) => r.id); if (confirm(`Turn on logins for ${ids.length} provider(s)? Each gets an invite link.`)) start(async () => { const r = await inviteProviders(ids); setMsg(r); }); }}>
+            Send login invites
+          </button>
+        )}
         <span className="flex items-center gap-1">
           <label className="sr-only" htmlFor="due">New due date</label>
           <input id="due" type="date" value={due} onChange={(e) => setDue(e.target.value)} className="input w-40 py-1.5 text-sm" />

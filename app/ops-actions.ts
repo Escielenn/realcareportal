@@ -63,6 +63,23 @@ export async function inviteProvider(providerId: string): Promise<R> {
   return { ok: true, link: `/join/${data}` };
 }
 
+// ---------- 1. admins turn logins on for many providers at once (only those without a login)
+export async function inviteProviders(providerIds: string[]): Promise<R> {
+  const ids = (providerIds ?? []).map(uuid).filter((x): x is string => !!x).slice(0, 2000);
+  if (ids.length === 0) return { error: "Choose providers." };
+  const supabase = await createClient();
+  const { data: rows } = await supabase.from("profiles").select("id").in("id", ids).eq("role", "provider").eq("login_enabled", false).eq("active", true);
+  let made = 0;
+  for (const r of rows ?? []) {
+    const { error } = await supabase.rpc("staff_invite_provider", { p_provider: r.id });
+    if (error) return { error: error.message, message: `${made} invite(s) made before the error.` };
+    made++;
+  }
+  revalidatePath("/admin", "layout");
+  const skipped = ids.length - made;
+  return { ok: true, message: `${made} login invite(s) ready under Invite providers${skipped ? `; ${skipped} skipped (already have a login)` : ""}.` };
+}
+
 // ---------- 1. edit a provider's details (email stays fixed; it is their sign-in)
 export async function updateProvider(_p: R | undefined, fd: FormData): Promise<R> {
   const id = uuid(fd.get("id"));

@@ -44,7 +44,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               { heading: "People", items: keep([
                 { href: "/admin/providers", label: "Providers & training" },
                 { href: "/admin/providers/new", label: "Add providers", show: admin },
-                { href: "/admin/individuals", label: "People supported", show: client },
+                { href: "/admin/individuals", label: "Clients", show: client },
                 { href: "/admin/applications", label: "Applications", badge: apps ?? 0 },
                 { href: "/admin/invites", label: "Invite providers", show: admin },
                 { href: "/admin/staff", label: "Staff & permissions", show: full },
