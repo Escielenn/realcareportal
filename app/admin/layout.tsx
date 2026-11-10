@@ -57,6 +57,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 { href: "/admin/announcements", label: "Announcements" },
               ]) },
               { heading: "Records", items: keep([
+                { href: "/admin/form-records", label: "Form records", show: client },
                 { href: "/admin/reports", label: "Reports" },
                 { href: "/admin/transcripts", label: "Transcripts" },
                 { href: "/admin/payments", label: "Payments & access" },

@@ -182,7 +182,7 @@ export default async function ProviderDetail({ params, searchParams }: { params:
         </section>
 
         <section className="card p-5">
-          <h2 className="mb-3 font-bold">Forms</h2>
+          <div className="mb-3 flex items-center justify-between gap-2"><h2 className="font-bold">Forms</h2><Link href={`/admin/form-records?provider=${p.id}`} className="text-sm font-semibold text-teal hover:underline">Search all →</Link></div>
           <ul className="divide-y divide-line">
             {((assignments ?? []) as unknown as A[]).map((a) => {
               const s = Array.isArray(a.submissions) ? a.submissions[0] : a.submissions;
