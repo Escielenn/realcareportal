@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireProvider } from "@/lib/auth";
+import { requireProvider, clientFeaturesOn } from "@/lib/auth";
 import { getLang, t } from "@/lib/i18n";
 import { signOut } from "@/app/actions";
 import { Logo } from "@/components/logo";
@@ -8,6 +8,7 @@ import { ProviderNav } from "@/components/nav";
 
 export default async function ProviderLayout({ children }: { children: React.ReactNode }) {
   const { supabase, profile } = await requireProvider();
+  const client = await clientFeaturesOn(supabase);
   const lang = await getLang();
   const [{ count: returned }, { count: unread }, { data: thread }] = await Promise.all([
     supabase.from("submissions").select("id", { count: "exact", head: true }).eq("provider_id", profile.id).eq("status", "returned"),
@@ -29,8 +30,10 @@ export default async function ProviderLayout({ children }: { children: React.Rea
             items={[
               { href: "/dashboard", label: t(lang, "home"), icon: "home" as const },
               { href: "/training", label: t(lang, "training"), icon: "training" as const },
-              { href: "/forms", label: t(lang, "forms"), icon: "forms" as const, badge: returned ?? 0 },
-              { href: "/documents", label: lang === "es" ? "Documentos" : "Documents", icon: "documents" as const },
+              ...(client ? [
+                { href: "/forms", label: t(lang, "forms"), icon: "forms" as const, badge: returned ?? 0 },
+                { href: "/documents", label: lang === "es" ? "Documentos" : "Documents", icon: "documents" as const },
+              ] : []),
               { href: "/messages", label: t(lang, "messages"), icon: "messages" as const, badge: unreadMessages },
             ]}
           />

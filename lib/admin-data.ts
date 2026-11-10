@@ -4,7 +4,7 @@ import { trainingStatus, type TrainingStatus } from "@/lib/i18n";
 export type ProviderRow = {
   provider_id: string; full_name: string; email: string; provider_types: string[]; locale: string; active: boolean;
   cycle_id: string | null; cycle_number: number | null; starts_on: string | null; due_on: string | null;
-  required_count: number; done_count: number; status: TrainingStatus;
+  required_count: number; done_count: number; status: TrainingStatus; login_enabled: boolean;
 };
 
 export async function providerRows(supabase: SupabaseClient): Promise<ProviderRow[]> {

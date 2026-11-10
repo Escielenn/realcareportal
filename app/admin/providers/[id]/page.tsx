@@ -1,15 +1,17 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireStaff } from "@/lib/auth";
+import { requireStaff, staffCan, clientFeaturesOn } from "@/lib/auth";
 import { trainingFor } from "@/lib/data";
 import { fmtDate, fmtDateTime, providerTypeLabel, trainingStatus } from "@/lib/i18n";
 import { TrainingPill, SubmissionPill } from "@/components/status";
 import { MessageComposer, RenewProviderButton } from "@/components/client-bits";
 import { MarkCompleteForm, GrantAccessForm } from "@/components/admin-bits";
 import { ActiveToggle, ResetLinkButton } from "@/components/phase3-bits";
+import { InviteProviderButton, EditProviderForm, CourseOverrideForm } from "@/components/ops-bits";
 
-export default async function ProviderDetail({ params }: { params: Promise<{ id: string }> }) {
+export default async function ProviderDetail({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ added?: string }> }) {
   const { id } = await params;
+  const { added } = await searchParams;
   const { supabase, profile: me } = await requireStaff();
   const { data: p } = await supabase.from("profiles").select("*").eq("id", id).eq("role", "provider").maybeSingle();
   if (!p) notFound();
@@ -25,6 +27,9 @@ export default async function ProviderDetail({ params }: { params: Promise<{ id:
     supabase.from("programs").select("id, name_en").order("sort"),
   ]);
   const today = new Date().toISOString().slice(0, 10);
+  const canManage = staffCan(me, "training_admin");
+  const clientOn = await clientFeaturesOn(supabase);
+  const title = (cid: string) => tr.courses.find((c) => c.id === cid)?.title_en ?? "Course";
   const status = trainingStatus(tr.required.length, tr.doneCount, tr.current?.due_on ?? null);
   const shown = tr.cycles.slice(0, 3);
   const byCycle = new Map<string, Map<string, { id: string; completed_at: string; source: string }>>();
@@ -37,11 +42,13 @@ export default async function ProviderDetail({ params }: { params: Promise<{ id:
   return (
     <div className="space-y-6">
       <Link href="/admin/providers" className="text-sm font-semibold text-teal hover:underline">← Providers</Link>
+      {added && <p role="status" className="rounded-xl bg-green-soft px-4 py-3 font-semibold text-green">✓ Provider added. Their required courses are set from their provider type. Send a login whenever you're ready.</p>}
       <div className="card flex flex-wrap items-start justify-between gap-4 p-5">
         <div>
           <h1 className="text-2xl font-bold">{p.full_name}</h1>
           <p className="text-muted">{p.email} · {p.provider_types.map((t: string) => providerTypeLabel[t]?.en ?? t).join(", ")} · {p.locale === "es" ? "Prefers Spanish" : "Prefers English"}</p>
-          <p className="text-sm text-muted">Hired {fmtDate(p.hire_date)}</p>
+          <p className="text-sm text-muted">Hired {fmtDate(p.hire_date)}{p.phone ? ` · ${p.phone}` : ""}</p>
+          {!p.login_enabled && <p className="mt-2"><span className="pill bg-sand text-ink">No login yet</span> <span className="text-sm text-muted">Staff manage this record; the provider can't sign in until invited.</span></p>}
         </div>
         <div className="flex flex-col items-end gap-2">
           <TrainingPill status={status} />
@@ -70,7 +77,11 @@ export default async function ProviderDetail({ params }: { params: Promise<{ id:
             <tbody className="divide-y divide-line">
               {tr.required.map((c) => (
                 <tr key={c.id}>
-                  <td className="py-2 pr-3 font-medium">{c.title_en}</td>
+                  <td className="py-2 pr-3 font-medium">
+                    {c.title_en}
+                    {tr.overrides.some((o) => o.course_id === c.id && o.mode === "assigned") && <span className="ml-2 pill bg-teal-soft text-teal">Assigned</span>}
+                    {tr.onceIds.has(c.id) && <span className="ml-2 pill bg-sand text-ink">One time</span>}
+                  </td>
                   {shown.map((cy, i) => {
                     const done = byCycle.get(cy.id)?.get(c.id);
                     return (
@@ -108,6 +119,29 @@ export default async function ProviderDetail({ params }: { params: Promise<{ id:
 
       <div className="grid gap-6 lg:grid-cols-2">
         <section className="card p-5">
+          <h2 className="mb-1 font-bold">Assigned courses &amp; exemptions</h2>
+          <p className="mb-3 text-sm text-muted">On top of what their provider type requires. Use an exemption when a required course doesn't apply to this person.</p>
+          <ul className="mb-4 divide-y divide-line text-sm">
+            {tr.overrides.map((o) => (
+              <li key={o.course_id} className="flex flex-wrap items-center justify-between gap-2 py-1.5">
+                <span className="font-medium">{title(o.course_id)}</span>
+                <span className={o.mode === "exempt" ? "text-amber" : "text-teal"}>{o.mode === "exempt" ? "Exempt" : o.frequency === "once" ? "Assigned · one time" : "Assigned · every year"}{o.note ? ` · ${o.note}` : ""}</span>
+              </li>
+            ))}
+            {tr.overrides.length === 0 && <li className="py-1.5 text-muted">None. Courses come from their provider type only.</li>}
+          </ul>
+          {canManage && <CourseOverrideForm providerIds={[p.id]} courses={tr.courses.map((c) => ({ id: c.id, title: c.title_en, inviteOnly: c.invite_only }))} />}
+        </section>
+        {canManage && (
+          <section className="card p-5">
+            <h2 className="mb-3 font-bold">Details</h2>
+            <EditProviderForm p={{ id: p.id, full_name: p.full_name, phone: p.phone, provider_types: p.provider_types, hire_date: p.hire_date, locale: p.locale }} />
+          </section>
+        )}
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <section className="card p-5">
           <h2 className="mb-1 font-bold">Record training done elsewhere</h2>
           <p className="mb-4 text-sm text-muted">For in-person classes or records from another agency. The reason is saved and shown on the record.</p>
           <MarkCompleteForm providerId={p.id} courses={tr.required.filter((c) => !tr.doneNow.has(c.id)).map((c) => ({ id: c.id, title: c.title_en }))} />
@@ -130,7 +164,7 @@ export default async function ProviderDetail({ params }: { params: Promise<{ id:
         </section>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      {clientOn && <div className="grid gap-6 lg:grid-cols-2">
         <section className="card p-5">
           <h2 className="mb-3 font-bold">People supported</h2>
           <ul className="divide-y divide-line">
@@ -164,13 +198,23 @@ export default async function ProviderDetail({ params }: { params: Promise<{ id:
             })}
           </ul>
         </section>
-      </div>
+      </div>}
 
       <section className="card grid gap-6 p-5 md:grid-cols-2">
         <div>
-          <h2 className="mb-1 font-bold">Sign-in help</h2>
-          <p className="mb-3 text-sm text-muted">Make a one-time link the provider uses to choose a new password.</p>
-          <ResetLinkButton profileId={p.id} />
+          {p.login_enabled ? (
+            <>
+              <h2 className="mb-1 font-bold">Sign-in help</h2>
+              <p className="mb-3 text-sm text-muted">Make a one-time link the provider uses to choose a new password.</p>
+              <ResetLinkButton profileId={p.id} />
+            </>
+          ) : (
+            <>
+              <h2 className="mb-1 font-bold">Login</h2>
+              <p className="mb-3 text-sm text-muted">This provider was added by staff and has no login yet. Send an invite when you want them to use the portal themselves.</p>
+              {canManage ? <InviteProviderButton providerId={p.id} /> : <p className="text-sm text-muted">A training admin can send the invite.</p>}
+            </>
+          )}
         </div>
         <div>
           <h2 className="mb-1 font-bold">Account</h2>

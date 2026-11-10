@@ -48,7 +48,7 @@ const p = await session("provider", "demo.provider@example.com");
 for (const [path, text] of [
   ["/dashboard", "Hello, Maria"], ["/training", "My training"], ["/training/confidentiality", "Confidentiality"],
   ["/training/qmap", "This course needs to be purchased"], ["/training/welcome", "A quick tour"], ["/forms", "Returned for a correction"],
-  ["/messages", "Messages"], ["/notifications", "Notifications"], ["/profile", "My profile"], ["/programs", "All-Access Package"],
+  ["/messages", "Messages"], ["/notifications", "Notifications"], ["/profile", "My profile"], ["/programs", "All-Access Package"], ["/training", "DCW Notice of Rights"],
   ["/documents", "Send a document"], ["/help", "How to use the portal"],
   ["/training/documentation", "Documentation Submissions"], ["/training/injection-admin", "RCI Injection Administration"],
 ]) await visit(p, path, text);
@@ -140,7 +140,7 @@ for (const [path, text] of [
   ["/admin", "Annual training renewal"], ["/admin/providers", "Providers & training"], ["/admin/providers?status=overdue", "Overdue"],
   ["/admin/review", "Review queue"], ["/admin/review?show=all", "All submissions"], ["/admin/transcripts", "Transcripts"],
   ["/admin/transcripts?type=host_home&from=2026-01-01&to=2026-12-31", "Reporting period"], ["/admin/messages", "Messages"],
-  ["/admin/courses", "Courses"], ["/admin/requirements", "Training requirements"], ["/admin/payments", "Payments"], ["/admin/programs", "Specialty Bundle"],
+  ["/admin/courses", "Courses"], ["/admin/requirements", "Training requirements"], ["/admin/payments", "Payments"], ["/admin/programs", "Specialty Bundle"], ["/admin/providers/new", "Upload your roster"], ["/admin/providers", "No login yet"],
   ["/admin/invites", "Invite providers"], ["/admin/documents", "Documents"], ["/admin/forms", "Form library"],
   ["/admin/individuals", "People supported"], ["/admin/applications", "Jamie Fontaine"], ["/admin/notifications", "Alerts"],
   ["/admin/messages", "One private conversation"], ["/admin/messages?show=all", "Messages"], ["/admin/announcements", "New announcement"], ["/admin/reports", "Training compliance by provider type"], ["/admin/import", "Import training history"], ["/admin/outbox", "Email outbox"], ["/admin/audit", "Audit log"],

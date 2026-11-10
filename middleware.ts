@@ -12,6 +12,7 @@ function contentSecurityPolicy(nonce: string) {
     "style-src 'self' 'unsafe-inline'",
     `img-src 'self' data: blob: ${supabase}`,
     `media-src 'self' blob: ${supabase}`,
+    `frame-src ${supabase}`, // course pages uploaded as PDF, shown with signed links
     `connect-src 'self' ${supabase} ${supabase.replace("https://", "wss://")}`,
     "font-src 'self' data:",
     "object-src 'none'",

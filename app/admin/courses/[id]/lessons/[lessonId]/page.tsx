@@ -3,12 +3,14 @@ import { notFound } from "next/navigation";
 import { requireStaff } from "@/lib/auth";
 import { LessonForm, VideoUploader, QuizEditor } from "@/components/admin-bits";
 import { Markdown } from "@/lib/md";
+import { AttachmentUploader, AcknowledgmentEditor } from "@/components/ops-bits";
+import { LessonAttachment } from "@/components/lesson-attachment";
 
 type QRow = { prompt_en: string; prompt_es: string; options_en: string[]; options_es: string[]; correct: number; explanation_en: string; explanation_es: string };
 
 export default async function LessonEditor({ params }: { params: Promise<{ id: string; lessonId: string }> }) {
   const { id, lessonId } = await params;
-  const { supabase } = await requireStaff();
+  const { supabase } = await requireStaff("training_admin");
   const [{ data: course }, { data: lesson }] = await Promise.all([
     supabase.from("courses").select("id, title_en").eq("id", id).maybeSingle(),
     supabase.from("lessons").select("*").eq("id", lessonId).eq("course_id", id).maybeSingle(),
@@ -56,6 +58,23 @@ export default async function LessonEditor({ params }: { params: Promise<{ id: s
           <h2 className="mb-1 font-bold">Questions</h2>
           <p className="mb-4 text-sm text-muted">Answer keys are visible only to staff. Providers see explanations after they answer.</p>
           <QuizEditor lessonId={lesson.id} initial={quiz} />
+        </section>
+      )}
+
+      {lesson.kind === "reading" && (
+        <section className="card grid gap-5 p-5 lg:grid-cols-2">
+          <div>
+            <h2 className="mb-3 font-bold">Page to show (optional)</h2>
+            {lesson.attachment_path ? <LessonAttachment supabase={supabase} path={lesson.attachment_path} title={lesson.title_en} /> : <p className="rounded-xl bg-sand p-6 text-center text-muted">No page uploaded. Providers see the text below.</p>}
+          </div>
+          <AttachmentUploader courseId={lesson.course_id} lessonId={lesson.id} current={lesson.attachment_path} />
+        </section>
+      )}
+
+      {lesson.kind === "acknowledgment" && (
+        <section className="card p-5">
+          <h2 className="mb-3 font-bold">Acknowledgment</h2>
+          <AcknowledgmentEditor lessonId={lesson.id} en={lesson.ack_statement_en ?? ""} es={lesson.ack_statement_es ?? ""} />
         </section>
       )}
 

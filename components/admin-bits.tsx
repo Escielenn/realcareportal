@@ -8,6 +8,7 @@ import {
   stageImport, setImportMatch, commitImport, saveCourse, moveLesson, deleteLesson, saveLesson, setLessonVideo, saveQuiz, addLesson,
 } from "@/app/admin/actions";
 import { createClient } from "@/lib/supabase/client";
+import { CourseOverrideForm } from "@/components/ops-bits";
 
 function Msg({ s }: { s?: { error?: string; message?: string } }) {
   if (!s) return null;
@@ -17,9 +18,9 @@ function Msg({ s }: { s?: { error?: string; message?: string } }) {
 }
 
 // ---------------------------------------------------------------- providers table with bulk actions
-export type BulkRow = { id: string; name: string; email: string; spanish: boolean; types: string; due: string; cycle: number | null; done: number; required: number; statusEl: React.ReactNode };
+export type BulkRow = { id: string; name: string; email: string; spanish: boolean; types: string; due: string; cycle: number | null; done: number; required: number; statusEl: React.ReactNode; noLogin?: boolean };
 
-export function ProvidersTable({ rows }: { rows: BulkRow[] }) {
+export function ProvidersTable({ rows, courses = [] }: { rows: BulkRow[]; courses?: { id: string; title: string; inviteOnly?: boolean }[] }) {
   const [sel, setSel] = useState<Set<string>>(new Set());
   const [due, setDue] = useState("");
   const [msg, setMsg] = useState<{ error?: string; message?: string }>();
@@ -42,6 +43,11 @@ export function ProvidersTable({ rows }: { rows: BulkRow[] }) {
           <button disabled={!sel.size || !due || pending} onClick={() => run("extend")} className="btn-ghost px-3 py-1.5 text-sm">Set due date</button>
         </span>
         <Msg s={msg} />
+        {courses.length > 0 && sel.size > 0 && (
+          <div className="basis-full border-t border-teal/20 pt-2">
+            <CourseOverrideForm compact providerIds={[...sel]} courses={courses} />
+          </div>
+        )}
       </div>
       <div className="card overflow-x-auto">
         <table className="w-full min-w-[760px] text-left">
@@ -61,7 +67,7 @@ export function ProvidersTable({ rows }: { rows: BulkRow[] }) {
                 <td className="px-4 py-3"><input type="checkbox" aria-label={`Select ${r.name}`} checked={sel.has(r.id)} onChange={() => toggle(r.id)} className="h-4 w-4 accent-[#0f5c5f]" /></td>
                 <td className="px-2 py-3">
                   <Link href={`/admin/providers/${r.id}`} className="font-semibold text-teal hover:underline">{r.name}</Link>
-                  <p className="text-sm text-muted">{r.email}{r.spanish ? " · Español" : ""}</p>
+                  <p className="text-sm text-muted">{r.email}{r.spanish ? " · Español" : ""}{r.noLogin && <span className="ml-2 pill bg-sand text-ink">No login yet</span>}</p>
                 </td>
                 <td className="px-4 py-3 text-sm">{r.types}</td>
                 <td className="px-4 py-3 text-sm">{r.due}<p className="text-muted">Cycle {r.cycle}</p></td>
@@ -340,7 +346,7 @@ export function CourseForm({ c }: { c: Record<string, unknown> }) {
       <div className="flex flex-wrap items-end gap-4">
         <div><label className="label text-sm">Price ($)</label><input name="price" type="number" step="0.01" min={0} defaultValue={Number(c.price_cents ?? 0) / 100} className="input w-28 py-2" /></div>
         <div><label className="label text-sm">Access (days)</label><input name="access_days" type="number" min={1} defaultValue={Number(c.access_days ?? 365)} className="input w-28 py-2" /></div>
-        {[["is_specialty", "Specialty course"], ["published", "Published to providers"]].map(([k, l]) => (
+        {[["is_specialty", "Specialty course"], ["published", "Published to providers"], ["invite_only", "Invite only (assigned providers only)"]].map(([k, l]) => (
           <label key={k} className="flex items-center gap-2 pb-2.5 text-sm font-medium"><input type="checkbox" name={k} defaultChecked={Boolean(c[k])} className="h-4 w-4 accent-[#0f5c5f]" /> {l}</label>
         ))}
       </div>
@@ -364,7 +370,7 @@ export function AddLessonButtons({ courseId }: { courseId: string }) {
   const [pending, start] = useTransition();
   return (
     <div className="flex flex-wrap gap-2">
-      {([["reading", "+ Reading"], ["video", "+ Video"], ["quiz", "+ Quiz"]] as const).map(([k, l]) => (
+      {([["reading", "+ Reading"], ["video", "+ Video"], ["quiz", "+ Quiz"], ["acknowledgment", "+ Sign to confirm"]] as const).map(([k, l]) => (
         <button key={k} disabled={pending} onClick={() => start(async () => { await addLesson(courseId, k); })} className="btn-ghost px-3 py-1.5 text-sm">{l}</button>
       ))}
     </div>

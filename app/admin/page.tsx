@@ -6,7 +6,8 @@ import { RenewalRunner } from "@/components/client-bits";
 import { TrainingPill } from "@/components/status";
 import { MountainBand } from "@/components/mountains";
 
-export default async function AdminHome() {
+export default async function AdminHome({ searchParams }: { searchParams: Promise<{ denied?: string }> }) {
+  const { denied } = await searchParams;
   const { supabase, profile } = await requireStaff();
   const today = todayDenver();
   const [rows, { data: queue }, { data: recentMsgs }] = await Promise.all([
@@ -36,6 +37,7 @@ export default async function AdminHome() {
 
   return (
     <div className="space-y-6">
+      {denied && <p role="alert" className="rounded-xl bg-amber-soft px-4 py-3 font-semibold text-amber">That page needs a higher staff permission level. A full admin can change levels under Staff &amp; permissions.</p>}
       <MountainBand className="rounded-2xl px-6 pt-6 pb-10 shadow-sm">
         <p className="text-xs font-semibold tracking-[0.16em] text-sky uppercase">Staff console</p>
         <h1 className="mt-1 text-3xl font-semibold">Good {Number(new Date().toLocaleString("en-US", { hour: "numeric", hour12: false, timeZone: "America/Denver" })) < 12 ? "morning" : "afternoon"}, {profile.full_name.split(" ")[0]}</h1>

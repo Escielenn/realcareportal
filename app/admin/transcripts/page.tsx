@@ -13,11 +13,12 @@ export default async function Transcripts({ searchParams }: { searchParams: Prom
   if (sp.type) rows = rows.filter((r) => r.provider_types.includes(sp.type!));
   const ids = rows.map((r) => r.provider_id);
 
-  const [{ data: comps }, { data: cycles }, { data: courses }, { data: reqs }] = await Promise.all([
+  const [{ data: comps }, { data: cycles }, { data: courses }, { data: reqs }, { data: overrides }] = await Promise.all([
     supabase.from("completions").select("provider_id, course_id, cycle_id, completed_at, score, language, source").in("provider_id", ids.length ? ids : ["00000000-0000-0000-0000-000000000000"]),
     supabase.from("training_cycles").select("*").in("provider_id", ids.length ? ids : ["00000000-0000-0000-0000-000000000000"]).order("cycle_number", { ascending: false }),
     supabase.from("courses").select("id, title_en, sort"),
-    supabase.from("requirements").select("provider_type, course_id"),
+    supabase.from("requirements").select("provider_type, course_id, frequency"),
+    supabase.from("provider_course_overrides").select("provider_id, course_id, mode, frequency").in("provider_id", ids.length ? ids : ["00000000-0000-0000-0000-000000000000"]),
   ]);
   await supabase.rpc("log_event", { p_action: "export_transcripts", p_table: "completions", p_record: `${ids.length} providers` });
   const DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -30,9 +31,14 @@ export default async function Transcripts({ searchParams }: { searchParams: Prom
 
   const exceptions = rows
     .map((r) => {
-      const required = new Set((reqs ?? []).filter((q) => r.provider_types.includes(q.provider_type)).map((q) => q.course_id));
-      const done = new Set((comps ?? []).filter((c) => c.provider_id === r.provider_id && c.cycle_id === r.cycle_id).map((c) => c.course_id));
-      const missing = [...required].filter((c) => !done.has(c));
+      // Same rule as the database's required_courses(): type requirements + assigned courses - exemptions.
+      const mine = (overrides ?? []).filter((o) => o.provider_id === r.provider_id);
+      const freq = new Map<string, string>();
+      for (const q of (reqs ?? []).filter((q) => r.provider_types.includes(q.provider_type))) freq.set(q.course_id, freq.get(q.course_id) === "annual" ? "annual" : q.frequency);
+      for (const o of mine.filter((o) => o.mode === "assigned")) freq.set(o.course_id, freq.get(o.course_id) === "annual" ? "annual" : o.frequency);
+      for (const o of mine.filter((o) => o.mode === "exempt")) freq.delete(o.course_id);
+      const mineDone = (comps ?? []).filter((c) => c.provider_id === r.provider_id);
+      const missing = [...freq.entries()].filter(([c, f]) => !mineDone.some((x) => x.course_id === c && (x.cycle_id === r.cycle_id || f === "once"))).map(([c]) => c);
       return { r, missing };
     })
     .filter((x) => x.missing.length > 0);

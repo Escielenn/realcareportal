@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireStaff } from "@/lib/auth";
+import { requireStaff, staffCan } from "@/lib/auth";
 import { providerRows } from "@/lib/admin-data";
 import { fmtDate, providerTypeLabel } from "@/lib/i18n";
 import { TrainingPill } from "@/components/status";
@@ -15,8 +15,9 @@ const STATUSES = [
 
 export default async function ProvidersPage({ searchParams }: { searchParams: Promise<{ status?: string; type?: string; q?: string }> }) {
   const sp = await searchParams;
-  const { supabase } = await requireStaff();
+  const { supabase, profile } = await requireStaff();
   let rows = await providerRows(supabase);
+  const { data: courseList } = await supabase.from("courses").select("id, title_en, invite_only").order("sort");
   if (sp.status) rows = rows.filter((r) => r.status === sp.status);
   if (sp.type) rows = rows.filter((r) => r.provider_types.includes(sp.type!));
   if (sp.q) rows = rows.filter((r) => r.full_name.toLowerCase().includes(sp.q!.toLowerCase()));
@@ -30,9 +31,12 @@ export default async function ProvidersPage({ searchParams }: { searchParams: Pr
 
   return (
     <div className="space-y-5">
-      <div>
-        <h1 className="text-2xl font-bold">Providers &amp; training</h1>
-        <p className="text-muted">Current-cycle compliance for every provider. Select providers to send reminders, open a new cycle or move due dates in one step.</p>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold">Providers &amp; training</h1>
+          <p className="text-muted">Current-cycle compliance for every provider. Select providers to send reminders, assign a course, open a new cycle or move due dates in one step.</p>
+        </div>
+        {staffCan(profile, "training_admin") && <Link href="/admin/providers/new" className="btn-primary">Add providers</Link>}
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
@@ -55,8 +59,9 @@ export default async function ProvidersPage({ searchParams }: { searchParams: Pr
           id: r.provider_id, name: r.full_name, email: r.email, spanish: r.locale === "es",
           types: r.provider_types.map((t) => providerTypeLabel[t]?.en ?? t).join(", "),
           due: fmtDate(r.due_on), cycle: r.cycle_number, done: r.done_count, required: r.required_count,
-          statusEl: <TrainingPill status={r.status} />,
+          statusEl: <TrainingPill status={r.status} />, noLogin: !r.login_enabled,
         }))}
+        courses={staffCan(profile, "training_admin") ? (courseList ?? []).map((c) => ({ id: c.id, title: c.title_en, inviteOnly: c.invite_only })) : []}
       />
     </div>
   );

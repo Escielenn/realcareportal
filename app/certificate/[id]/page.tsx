@@ -11,12 +11,15 @@ export default async function Certificate({ params }: { params: Promise<{ id: st
   if (!profile) redirect("/login");
   const lang = await getLang();
   // RLS: providers only see their own completions; staff see all.
-  const { data: c } = await supabase.from("completions").select("id, completed_at, score, language, source, provider_id, courses(title_en, title_es), training_cycles(cycle_number, label, starts_on, due_on)").eq("id", id).maybeSingle();
+  const { data: c } = await supabase.from("completions").select("id, completed_at, score, language, source, provider_id, course_id, cycle_id, courses(title_en, title_es), training_cycles(cycle_number, label, starts_on, due_on)").eq("id", id).maybeSingle();
   if (!c) notFound();
   const { data: who } = await supabase.from("profiles").select("full_name").eq("id", c.provider_id).single();
   const course = c.courses as unknown as { title_en: string; title_es: string };
   const cycle = c.training_cycles as unknown as { cycle_number: number; label: string | null; starts_on: string; due_on: string };
   const es = lang === "es";
+  // Signed acknowledgments in this course and year: the exact words, the typed name and when.
+  const { data: acks } = await supabase.from("lesson_acknowledgments").select("typed_name, statement, acknowledged_at, lessons!inner(course_id)")
+    .eq("provider_id", c.provider_id).eq("cycle_id", c.cycle_id).eq("lessons.course_id", c.course_id);
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-8">
@@ -32,6 +35,13 @@ export default async function Certificate({ params }: { params: Promise<{ id: st
         <p className="mt-2 font-[family-name:var(--font-sig)] text-4xl text-ink md:text-5xl">{who?.full_name}</p>
         <p className="mt-6 text-muted">{es ? "completó satisfactoriamente el curso" : "has successfully completed"}</p>
         <p className="mt-2 text-2xl font-bold">{es ? course.title_es : course.title_en}</p>
+        {(acks ?? []).map((a, i) => (
+          <div key={i} className="mx-auto mt-8 max-w-lg rounded-xl border border-line px-5 py-4 text-left text-sm">
+            <p className="font-semibold">{es ? "Acuse de recibo firmado" : "Signed acknowledgment"}</p>
+            <p className="mt-1">“{a.statement}”</p>
+            <p className="mt-2 text-muted">{es ? "Firmado por" : "Signed by"} <strong className="text-ink">{a.typed_name}</strong> · {fmtDate(a.acknowledged_at, lang)}</p>
+          </div>
+        ))}
         <div className="mx-auto mt-10 grid max-w-lg grid-cols-3 gap-4 text-sm">
           <div><p className="font-semibold">{fmtDate(c.completed_at, lang)}</p><p className="text-muted">{es ? "Fecha" : "Date"}</p></div>
           <div><p className="font-semibold">{c.score ? `${c.score}%` : "—"}</p><p className="text-muted">{es ? "Calificación" : "Score"}</p></div>

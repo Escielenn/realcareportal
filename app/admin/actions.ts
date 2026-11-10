@@ -157,17 +157,17 @@ export async function saveCourse(_prev: R | undefined, fd: FormData): Promise<R>
     description_en: str(fd.get("description_en"), 1000), description_es: str(fd.get("description_es"), 1000),
     price_cents: Number.isFinite(price) && price >= 0 ? price : 0,
     access_days: Number.isFinite(days) && days > 0 ? days : 365,
-    is_specialty: fd.get("is_specialty") === "on", published: fd.get("published") === "on",
+    is_specialty: fd.get("is_specialty") === "on", published: fd.get("published") === "on", invite_only: fd.get("invite_only") === "on",
   }).eq("id", id(fd.get("id")));
   if (error) return { error: error.message };
   done(); return { ok: true, message: "Saved" };
 }
 
-export async function addLesson(courseId: string, kind: "reading" | "video" | "quiz") {
-  if (!["reading", "video", "quiz"].includes(kind)) throw new Error("Invalid kind");
+export async function addLesson(courseId: string, kind: "reading" | "video" | "quiz" | "acknowledgment") {
+  if (!["reading", "video", "quiz", "acknowledgment"].includes(kind)) throw new Error("Invalid kind");
   const supabase = await createClient();
   const { data: last } = await supabase.from("lessons").select("sort").eq("course_id", id(courseId)).order("sort", { ascending: false }).limit(1).maybeSingle();
-  const label = { reading: ["New reading", "Lectura nueva"], video: ["New video", "Video nuevo"], quiz: ["Quiz", "Prueba"] }[kind];
+  const label = { reading: ["New reading", "Lectura nueva"], video: ["New video", "Video nuevo"], quiz: ["Quiz", "Prueba"], acknowledgment: ["Sign to confirm", "Firme para confirmar"] }[kind];
   const { data, error } = await supabase.from("lessons").insert({ course_id: courseId, kind, sort: (last?.sort ?? -1) + 1, title_en: label[0], title_es: label[1] }).select("id").single();
   if (error) throw new Error(error.message);
   redirect(`/admin/courses/${courseId}/lessons/${data.id}`);

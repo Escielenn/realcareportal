@@ -8,6 +8,8 @@ import { MarkReadButton } from "@/components/client-bits";
 import { QuizRunner } from "./quiz-runner";
 import { VideoLesson } from "@/components/provider-bits";
 import { LinkedVideo } from "@/components/linked-video";
+import { LessonAttachment } from "@/components/lesson-attachment";
+import { AcknowledgeForm } from "@/components/ops-bits";
 
 export default async function LessonPage({ params }: { params: Promise<{ slug: string; lessonId: string }> }) {
   const { slug, lessonId } = await params;
@@ -17,7 +19,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
   if (!course) notFound();
   const { data: access } = await supabase.rpc("has_course_access", { p_provider: profile.id, p_course: course.id });
   if (!access) redirect(`/training/${slug}`);
-  const { data: lessons } = await supabase.from("lessons").select("id, sort, kind, title_en, title_es, body_en, body_es, video_url, video_seconds, video_source").eq("course_id", course.id).order("sort");
+  const { data: lessons } = await supabase.from("lessons").select("id, sort, kind, title_en, title_es, body_en, body_es, video_url, video_seconds, video_source, attachment_path, ack_statement_en, ack_statement_es").eq("course_id", course.id).order("sort");
   const idx = (lessons ?? []).findIndex((l) => l.id === lessonId);
   if (idx < 0) notFound();
   const lesson = lessons![idx];
@@ -101,11 +103,18 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
               </details>
             )}
           </>
+        ) : lesson.kind === "acknowledgment" ? (
+          <>
+            {body && <div className="mb-5"><Markdown text={body} /></div>}
+            <AcknowledgeForm lessonId={lesson.id} lang={lang} courseHref={`/training/${slug}`} nextHref={next ? nextHref : null}
+              statement={(lang === "es" ? lesson.ack_statement_es ?? lesson.ack_statement_en : lesson.ack_statement_en) ?? title(lesson, lang)} />
+          </>
         ) : lesson.kind === "quiz" ? (
           <QuizRunner lessonId={lesson.id} lang={lang} questions={questions} courseHref={`/training/${slug}`} nextHref={nextHref} />
         ) : (
           <>
-            <Markdown text={lang === "es" ? lesson.body_es : lesson.body_en} />
+            {lesson.attachment_path && <div className="mb-5"><LessonAttachment supabase={supabase} path={lesson.attachment_path} title={title(lesson, lang)} lang={lang} /></div>}
+            {!(lesson.attachment_path && /Real Care staff upload/.test(lesson.body_en ?? "")) && <Markdown text={lang === "es" ? lesson.body_es : lesson.body_en} />}
             <div className="mt-8 border-t border-line pt-5">
               <MarkReadButton lessonId={lesson.id} lang={lang} label={t(lang, "markRead")} nextHref={nextHref} />
             </div>
