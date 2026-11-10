@@ -8,6 +8,7 @@ values ('00000000-0000-0000-0000-000000000000', 'eed26bf3-960d-536c-b609-aa71df3
 insert into auth.identities (id, user_id, provider_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
 values (gen_random_uuid(), 'eed26bf3-960d-536c-b609-aa71df39f52c', 'eed26bf3-960d-536c-b609-aa71df39f52c', '{"sub": "eed26bf3-960d-536c-b609-aa71df39f52c", "email": "demo.staff@example.com", "email_verified": true}'::jsonb, 'email', now(), now(), now());
 insert into public.profiles (id, role, full_name, email, locale, provider_types, hire_date) values ('eed26bf3-960d-536c-b609-aa71df39f52c', 'staff', 'Dana Whitfield', 'demo.staff@example.com', 'en', '{}'::text[], null);
+update public.profiles set staff_level = 'training_admin' where id = 'eed26bf3-960d-536c-b609-aa71df39f52c';
 insert into auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
   raw_app_meta_data, raw_user_meta_data, created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change)
 values ('00000000-0000-0000-0000-000000000000', 'e7749203-b707-5c16-bf3b-77939b7e6ef3', 'authenticated', 'authenticated', 'demo.admin@example.com',
@@ -16,6 +17,16 @@ values ('00000000-0000-0000-0000-000000000000', 'e7749203-b707-5c16-bf3b-77939b7
 insert into auth.identities (id, user_id, provider_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
 values (gen_random_uuid(), 'e7749203-b707-5c16-bf3b-77939b7e6ef3', 'e7749203-b707-5c16-bf3b-77939b7e6ef3', '{"sub": "e7749203-b707-5c16-bf3b-77939b7e6ef3", "email": "demo.admin@example.com", "email_verified": true}'::jsonb, 'email', now(), now(), now());
 insert into public.profiles (id, role, full_name, email, locale, provider_types, hire_date) values ('e7749203-b707-5c16-bf3b-77939b7e6ef3', 'admin', 'Avery Admin', 'demo.admin@example.com', 'en', '{}'::text[], null);
+update public.profiles set staff_level = 'super_admin' where id = 'e7749203-b707-5c16-bf3b-77939b7e6ef3';
+insert into auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+  raw_app_meta_data, raw_user_meta_data, created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change)
+values ('00000000-0000-0000-0000-000000000000', '8c1acc10-d870-54e7-931d-68e42ead7027', 'authenticated', 'authenticated', 'demo.reviewer@example.com',
+  extensions.crypt('RealCare-Demo-2026', extensions.gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"full_name": "Sam Reyes"}'::jsonb,
+  now(), now(), '', '', '', '');
+insert into auth.identities (id, user_id, provider_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
+values (gen_random_uuid(), '8c1acc10-d870-54e7-931d-68e42ead7027', '8c1acc10-d870-54e7-931d-68e42ead7027', '{"sub": "8c1acc10-d870-54e7-931d-68e42ead7027", "email": "demo.reviewer@example.com", "email_verified": true}'::jsonb, 'email', now(), now(), now());
+insert into public.profiles (id, role, full_name, email, locale, provider_types, hire_date) values ('8c1acc10-d870-54e7-931d-68e42ead7027', 'staff', 'Sam Reyes', 'demo.reviewer@example.com', 'en', '{}'::text[], null);
+update public.profiles set staff_level = 'reviewer' where id = '8c1acc10-d870-54e7-931d-68e42ead7027';
 insert into auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
   raw_app_meta_data, raw_user_meta_data, created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change)
 values ('00000000-0000-0000-0000-000000000000', '4e6d8d70-2d43-5307-aeeb-664bf5c96898', 'authenticated', 'authenticated', 'demo.provider@example.com',
@@ -1040,6 +1051,19 @@ insert into public.requirements (provider_type, course_id) select 'host_home', i
 insert into public.requirements (provider_type, course_id) select 'family_caregiver', id from public.courses where slug = any(array['welcome','system-values','scc','supports-services','respect-dignity','pcp','mane','individual-rights','health-safety','driving-safety','dei','confidentiality','communication','crisis','qmap','respite']);
 insert into public.requirements (provider_type, course_id) select 'scc_dsp', id from public.courses where slug = any(array['welcome','system-values','scc','supports-services','respect-dignity','pcp','mane','individual-rights','health-safety','driving-safety','dei','confidentiality','communication','crisis']);
 insert into public.requirements (provider_type, course_id) select 'nmt', id from public.courses where slug = any(array['welcome','system-values','scc','supports-services','respect-dignity','pcp','mane','individual-rights','health-safety','driving-safety','dei','confidentiality','communication','crisis']);
+insert into public.courses (id, slug, title_en, title_es, description_en, description_es, sort, is_specialty, price_cents, invite_only, in_all_access)
+values ('baa431f8-aa21-5eae-a477-0d945585f10e', 'dcw-notice-of-rights', 'DCW Notice of Rights', 'Aviso de derechos para trabajadores de cuidado directo (DCW)',
+ 'A one-time notice of your rights as a Direct Care Worker. Read both pages, then sign to confirm you received and reviewed it.',
+ 'Un aviso único de sus derechos como trabajador de cuidado directo. Lea las dos páginas y luego firme para confirmar que lo recibió y revisó.',
+ 19, false, 0, true, false);
+insert into public.lessons (id, course_id, sort, kind, title_en, title_es, body_en, body_es) values ('e7f89a2d-e930-51d6-a99e-4b6af5c2eee2', 'baa431f8-aa21-5eae-a477-0d945585f10e', 0, 'reading', 'Notice of Rights: page 1', 'Aviso de derechos: página 1', '*Real Care staff upload page 1 of the DCW Notice of Rights here. Until then, ask Real Care staff for the printed notice.*', '*El personal de Real Care sube aquí la página 1 del aviso. Mientras tanto, pida el aviso impreso al personal de Real Care.*');
+insert into public.lessons (id, course_id, sort, kind, title_en, title_es, body_en, body_es) values ('ec3c941b-1b77-5d15-882b-2b0b0952c83c', 'baa431f8-aa21-5eae-a477-0d945585f10e', 1, 'reading', 'Notice of Rights: page 2', 'Aviso de derechos: página 2', '*Real Care staff upload page 2 of the DCW Notice of Rights here.*', '*El personal de Real Care sube aquí la página 2 del aviso.*');
+insert into public.lessons (id, course_id, sort, kind, title_en, title_es, body_en, body_es, ack_statement_en, ack_statement_es)
+values ('b69909c0-c608-5a80-8664-20e05582a98a', 'baa431f8-aa21-5eae-a477-0d945585f10e', 2, 'acknowledgment', 'Sign to confirm', 'Firme para confirmar',
+ 'By signing, you confirm that you received the DCW Notice of Rights and reviewed both pages.',
+ 'Al firmar, usted confirma que recibió el Aviso de derechos DCW y revisó ambas páginas.',
+ 'I received the DCW Notice of Rights and reviewed both pages.',
+ 'Recibí el Aviso de derechos DCW y revisé ambas páginas.');
 insert into public.training_cycles (id, provider_id, cycle_number, starts_on, due_on, label) values ('a9b9ae50-30c6-5aad-902e-99f07ac7a1d7', '4e6d8d70-2d43-5307-aeeb-664bf5c96898', 1, '2024-10-30', '2025-10-30', 'Cycle 1 (imported from Wix)');
 insert into public.completions (provider_id, course_id, cycle_id, completed_at, language, score, source) select '4e6d8d70-2d43-5307-aeeb-664bf5c96898', c.id, 'a9b9ae50-30c6-5aad-902e-99f07ac7a1d7', ('2024-10-30'::date + (7 + (u.o - 1) * 18) * interval '1 day' + interval '15 hours'), 'en', (array[80,90,100,100])[1 + (u.o % 4)], 'legacy_wix' from unnest(array['welcome','system-values','scc','supports-services','respect-dignity','pcp','mane','individual-rights','health-safety','driving-safety','dei','confidentiality','communication','crisis','qmap']) with ordinality u(slug, o) join public.courses c on c.slug = u.slug;
 insert into public.training_cycles (id, provider_id, cycle_number, starts_on, due_on, label) values ('71b60576-d01f-588c-8810-f3eee47fcde9', '4e6d8d70-2d43-5307-aeeb-664bf5c96898', 2, '2025-10-30', '2026-10-30', 'Cycle 2');
@@ -1169,6 +1193,25 @@ insert into public.entitlements (provider_id, course_id, order_id, starts_on, en
 select o.provider_id, o.course_id, o.id, o.created_at::date, (o.created_at::date + 60) from public.orders o where o.description = 'QMAP';
 insert into public.invites (token, email, full_name, provider_types, locale, created_by, created_at)
 values ('83265b49-d84b-53ff-9e13-45fd3e167c5b', 'riley.morgan@example.com', 'Riley Morgan', array['host_home'], 'en', 'eed26bf3-960d-536c-b609-aa71df39f52c', now() - interval '1 day');
+insert into auth.users (instance_id, id, aud, role, email, encrypted_password, raw_app_meta_data, raw_user_meta_data,
+  created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change)
+values ('00000000-0000-0000-0000-000000000000', '3cc0bbbe-ec53-56c4-b460-5281a2853f0a', 'authenticated', 'authenticated', 'nora.patel@example.com', '', '{"provider":"email","providers":["email"]}',
+  '{"full_name": "Nora Patel"}'::jsonb, now(), now(), '', '', '', '');
+insert into public.profiles (id, role, full_name, email, locale, provider_types, hire_date, login_enabled) values ('3cc0bbbe-ec53-56c4-b460-5281a2853f0a', 'provider', 'Nora Patel', 'nora.patel@example.com', 'en', array['host_home']::text[], '2025-03-03', false);
+insert into public.training_cycles (id, provider_id, cycle_number, starts_on, due_on, label) values ('6b102061-4841-5bd3-86b9-90037e388afa', '3cc0bbbe-ec53-56c4-b460-5281a2853f0a', 1, '2026-03-03', '2027-03-03', 'Cycle 1');
+insert into auth.users (instance_id, id, aud, role, email, encrypted_password, raw_app_meta_data, raw_user_meta_data,
+  created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change)
+values ('00000000-0000-0000-0000-000000000000', 'ad4a5135-8b61-5427-a522-554f9300ee3e', 'authenticated', 'authenticated', 'omar.haddad@example.com', '', '{"provider":"email","providers":["email"]}',
+  '{"full_name": "Omar Haddad"}'::jsonb, now(), now(), '', '', '', '');
+insert into public.profiles (id, role, full_name, email, locale, provider_types, hire_date, login_enabled) values ('ad4a5135-8b61-5427-a522-554f9300ee3e', 'provider', 'Omar Haddad', 'omar.haddad@example.com', 'en', array['scc_dsp','nmt']::text[], '2024-09-16', false);
+insert into public.training_cycles (id, provider_id, cycle_number, starts_on, due_on, label) values ('1c1a7ebd-4f56-5cfd-b347-d598411d00e2', 'ad4a5135-8b61-5427-a522-554f9300ee3e', 1, '2026-09-16', '2027-09-16', 'Cycle 1');
+insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('4e6d8d70-2d43-5307-aeeb-664bf5c96898', 'baa431f8-aa21-5eae-a477-0d945585f10e', 'assigned', 'once', 'One-time DCW Notice of Rights', 'eed26bf3-960d-536c-b609-aa71df39f52c');
+insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('a5188704-0003-5cae-bcae-53f6b50b870d', 'baa431f8-aa21-5eae-a477-0d945585f10e', 'assigned', 'once', 'One-time DCW Notice of Rights', 'eed26bf3-960d-536c-b609-aa71df39f52c');
+insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('3cc0bbbe-ec53-56c4-b460-5281a2853f0a', 'baa431f8-aa21-5eae-a477-0d945585f10e', 'assigned', 'once', 'One-time DCW Notice of Rights', 'eed26bf3-960d-536c-b609-aa71df39f52c');
+insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('47525514-f8f7-592f-a5b1-160487075650', '599e34b7-5a6e-5377-9091-026cb8c96861', 'exempt', 'annual', 'Does not transport individuals (example exemption)', 'eed26bf3-960d-536c-b609-aa71df39f52c');
+insert into public.lesson_progress (provider_id, lesson_id, cycle_id, completed_at) select 'a5188704-0003-5cae-bcae-53f6b50b870d', id, 'b6c11126-4b44-5e62-b47f-1d513b29ed33', '2026-11-04 10:00' from public.lessons where course_id = 'baa431f8-aa21-5eae-a477-0d945585f10e';
+insert into public.lesson_acknowledgments (provider_id, lesson_id, cycle_id, typed_name, statement, acknowledged_at) values ('a5188704-0003-5cae-bcae-53f6b50b870d', 'b69909c0-c608-5a80-8664-20e05582a98a', 'b6c11126-4b44-5e62-b47f-1d513b29ed33', 'Brianna Cole', 'I received the DCW Notice of Rights and reviewed both pages.', '2026-11-04 10:00');
+insert into public.completions (provider_id, course_id, cycle_id, completed_at, language, source) values ('a5188704-0003-5cae-bcae-53f6b50b870d', 'baa431f8-aa21-5eae-a477-0d945585f10e', 'b6c11126-4b44-5e62-b47f-1d513b29ed33', '2026-11-04 10:00', 'en', 'portal');
 update public.notifications set read_at = created_at;
 insert into public.notifications (profile_id, kind, title_en, title_es, link, created_at)
 select a.provider_id, 'form_returned', 'A form was returned for a correction', 'Se devolvió un formulario para corregir', '/forms/' || a.id, '2026-10-21 10:00:00-06'

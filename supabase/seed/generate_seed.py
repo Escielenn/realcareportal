@@ -37,7 +37,9 @@ PASSWORD = "RealCare-Demo-2026"
 staff = [
     ("demo.staff@example.com", "Dana Whitfield", "staff"),
     ("demo.admin@example.com", "Avery Admin", "admin"),
+    ("demo.reviewer@example.com", "Sam Reyes", "staff"),
 ]
+STAFF_LEVEL = {"demo.staff@example.com": "training_admin", "demo.admin@example.com": "super_admin", "demo.reviewer@example.com": "reviewer"}
 providers = [
     # email, name, types, locale, hire, current cycle start, completion share of current cycle
     ("demo.provider@example.com", "Maria Delgado", ["host_home"], "en", "2023-10-30", "2025-10-30", None),
@@ -70,6 +72,8 @@ values ('00000000-0000-0000-0000-000000000000', '{i}', 'authenticated', 'authent
 values (gen_random_uuid(), '{i}', '{i}', {j({"sub": i, "email": email, "email_verified": True})}, 'email', now(), now(), now());""")
     types_sql = "array[" + ",".join(q(t) for t in types) + "]::text[]" if types else "'{}'::text[]"
     w(f"insert into public.profiles (id, role, full_name, email, locale, provider_types, hire_date) values ('{i}', {q(role)}, {q(name)}, {q(email)}, {q(loc)}, {types_sql}, {q(hire)});")
+    if email in STAFF_LEVEL:
+        w(f"update public.profiles set staff_level = {q(STAFF_LEVEL[email])} where id = '{i}';")
 
 # ---------------------------------------------------------------- courses
 def P(*lines):
@@ -420,6 +424,31 @@ for ptype, slugs in req.items():
     w(f"insert into public.requirements (provider_type, course_id) select {q(ptype)}, id from public.courses where slug = any(array[{arr}]);")
 
 
+# One-time, invite-only acknowledgment course (Torey's Nov 2 request). Staff upload the two notice pages in the course editor.
+dcw = uid("course:dcw-notice-of-rights")
+course_ids["dcw-notice-of-rights"] = dcw
+w(f"""insert into public.courses (id, slug, title_en, title_es, description_en, description_es, sort, is_specialty, price_cents, invite_only, in_all_access)
+values ('{dcw}', 'dcw-notice-of-rights', 'DCW Notice of Rights', 'Aviso de derechos para trabajadores de cuidado directo (DCW)',
+ 'A one-time notice of your rights as a Direct Care Worker. Read both pages, then sign to confirm you received and reviewed it.',
+ 'Un aviso único de sus derechos como trabajador de cuidado directo. Lea las dos páginas y luego firme para confirmar que lo recibió y revisó.',
+ {len(courses)}, false, 0, true, false);""")
+for li, (te, ts, be, bs) in enumerate([
+    ("Notice of Rights: page 1", "Aviso de derechos: página 1",
+     "*Real Care staff upload page 1 of the DCW Notice of Rights here. Until then, ask Real Care staff for the printed notice.*",
+     "*El personal de Real Care sube aquí la página 1 del aviso. Mientras tanto, pida el aviso impreso al personal de Real Care.*"),
+    ("Notice of Rights: page 2", "Aviso de derechos: página 2",
+     "*Real Care staff upload page 2 of the DCW Notice of Rights here.*",
+     "*El personal de Real Care sube aquí la página 2 del aviso.*"),
+]):
+    w(f"insert into public.lessons (id, course_id, sort, kind, title_en, title_es, body_en, body_es) values ('{uid(f'lesson:dcw-notice-of-rights:{li}')}', '{dcw}', {li}, 'reading', {q(te)}, {q(ts)}, {q(be)}, {q(bs)});")
+w(f"""insert into public.lessons (id, course_id, sort, kind, title_en, title_es, body_en, body_es, ack_statement_en, ack_statement_es)
+values ('{uid("lesson:dcw-notice-of-rights:2")}', '{dcw}', 2, 'acknowledgment', 'Sign to confirm', 'Firme para confirmar',
+ 'By signing, you confirm that you received the DCW Notice of Rights and reviewed both pages.',
+ 'Al firmar, usted confirma que recibió el Aviso de derechos DCW y revisó ambas páginas.',
+ 'I received the DCW Notice of Rights and reviewed both pages.',
+ 'Recibí el Aviso de derechos DCW y revisé ambas páginas.');""")
+
+
 # ---------------------------------------------------------------- cycles and completions
 def add_years(d, n):
     try:
@@ -651,6 +680,29 @@ select o.provider_id, o.course_id, o.id, o.created_at::date, (o.created_at::date
 # ---------------------------------------------------------------- a pending invite (fictional)
 w(f"""insert into public.invites (token, email, full_name, provider_types, locale, created_by, created_at)
 values ('{uid("invite:riley")}', 'riley.morgan@example.com', 'Riley Morgan', array['host_home'], 'en', '{staff_id}', now() - interval '1 day');""")
+
+# ---------------------------------------------------------------- added by staff from the roster, no login yet (fictional)
+for email, name, types, hire, start in [
+    ("nora.patel@example.com", "Nora Patel", ["host_home"], "2025-03-03", "2026-03-03"),
+    ("omar.haddad@example.com", "Omar Haddad", ["scc_dsp", "nmt"], "2024-09-16", "2026-09-16"),
+]:
+    i = uid(email)
+    w(f"""insert into auth.users (instance_id, id, aud, role, email, encrypted_password, raw_app_meta_data, raw_user_meta_data,
+  created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change)
+values ('00000000-0000-0000-0000-000000000000', '{i}', 'authenticated', 'authenticated', {q(email)}, '', '{{"provider":"email","providers":["email"]}}',
+  {j({"full_name": name})}, now(), now(), '', '', '', '');""")
+    types_sql = "array[" + ",".join(q(t) for t in types) + "]::text[]"
+    w(f"insert into public.profiles (id, role, full_name, email, locale, provider_types, hire_date, login_enabled) values ('{i}', 'provider', {q(name)}, {q(email)}, 'en', {types_sql}, {q(hire)}, false);")
+    w(f"insert into public.training_cycles (id, provider_id, cycle_number, starts_on, due_on, label) values ('{uid('cycle:' + email + ':1')}', '{i}', 1, '{start}', '{add_years(date.fromisoformat(start), 1)}', 'Cycle 1');")
+
+# ---------------------------------------------------------------- per-provider assignments and an exemption (fictional)
+for email in ["demo.provider@example.com", "brianna.cole@example.com", "nora.patel@example.com"]:
+    w(f"insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('{uid(email)}', '{dcw}', 'assigned', 'once', 'One-time DCW Notice of Rights', '{staff_id}');")
+w(f"insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('{uid('grace.holloway@example.com')}', '{course_ids['driving-safety']}', 'exempt', 'annual', 'Does not transport individuals (example exemption)', '{staff_id}');")
+b, bcy = uid("brianna.cole@example.com"), uid("cycle:brianna.cole@example.com:2")
+w(f"insert into public.lesson_progress (provider_id, lesson_id, cycle_id, completed_at) select '{b}', id, '{bcy}', '2026-11-04 10:00' from public.lessons where course_id = '{dcw}';")
+w(f"insert into public.lesson_acknowledgments (provider_id, lesson_id, cycle_id, typed_name, statement, acknowledged_at) values ('{b}', '{uid('lesson:dcw-notice-of-rights:2')}', '{bcy}', 'Brianna Cole', 'I received the DCW Notice of Rights and reviewed both pages.', '2026-11-04 10:00');")
+w(f"insert into public.completions (provider_id, course_id, cycle_id, completed_at, language, source) values ('{b}', '{dcw}', '{bcy}', '2026-11-04 10:00', 'en', 'portal');")
 
 # ---------------------------------------------------------------- seeded notifications: history read, one unread
 w("""update public.notifications set read_at = created_at;
