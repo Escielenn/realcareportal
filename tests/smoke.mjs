@@ -142,7 +142,7 @@ for (const [path, text] of [
   ["/admin/transcripts?type=host_home&from=2026-01-01&to=2026-12-31", "Reporting period"], ["/admin/messages", "Messages"],
   ["/admin/courses", "Courses"], ["/admin/requirements", "Training requirements"], ["/admin/payments", "Payments"], ["/admin/programs", "Specialty Bundle"], ["/admin/providers/new", "Upload your roster"], ["/admin/individuals", "RC-1001"], ["/admin/form-records", "Form records"], ["/admin/individuals/35c59efb-e822-529f-9698-2dafe7e10e6b", "Assign a form for Jordy"], ["/admin/providers", "No login yet"],
   ["/admin/invites", "Invite providers"], ["/admin/documents", "Documents"], ["/admin/forms", "Form library"],
-  ["/admin/individuals", "People supported"], ["/admin/applications", "Jamie Fontaine"], ["/admin/notifications", "Alerts"],
+  ["/admin/individuals", "Clients"], ["/admin/applications", "Jamie Fontaine"], ["/admin/notifications", "Alerts"],
   ["/admin/messages", "One private conversation"], ["/admin/messages?show=all", "Messages"], ["/admin/announcements", "New announcement"], ["/admin/reports", "Training compliance by provider type"], ["/admin/import", "Import training history"], ["/admin/outbox", "Email outbox"], ["/admin/audit", "Audit log"],
 ]) await visit(s, path, text);
 
