@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getProfile, staffCan, type StaffLevel } from "@/lib/auth";
 
 // Phase 1 operations: providers without logins, roster import, course assignment/exemption, staff levels,
 // acknowledgment lessons. Every rule is enforced again in the database (staff_can, RLS); these only validate input.
@@ -13,12 +14,18 @@ const TYPES = ["host_home", "family_caregiver", "scc_dsp", "nmt"];
 const uuid = (v: unknown) => (typeof v === "string" && UUID.test(v) ? v : null);
 const str = (v: FormDataEntryValue | null | undefined, max = 200) => String(v ?? "").trim().slice(0, max);
 const date = (v: unknown) => (typeof v === "string" && DATE.test(v) ? v : null);
+// Server-side gate for staff actions (the database checks the same level again through staff_can).
+async function staffOnly(need: StaffLevel) {
+  const { supabase, profile } = await getProfile();
+  return { supabase, denied: !profile || !profile.active || !staffCan(profile, need) ? "Your staff permissions do not allow this." : null };
+}
 type R = { ok?: boolean; error?: string; message?: string; link?: string; results?: { row: number; ok: boolean; error?: string }[] };
 
 // ---------- 1. add one provider (no login yet)
 export async function addProvider(_p: R | undefined, fd: FormData): Promise<R> {
   const types = fd.getAll("types").map(String).filter((t) => TYPES.includes(t));
-  const supabase = await createClient();
+  const { supabase, denied } = await staffOnly("training_admin");
+  if (denied) return { error: denied };
   const { data, error } = await supabase.rpc("staff_add_provider", {
     p_full_name: str(fd.get("full_name"), 120), p_email: str(fd.get("email"), 200), p_phone: str(fd.get("phone"), 40),
     p_types: types, p_hire_date: date(fd.get("hire_date")), p_cycle_start: date(fd.get("cycle_start")),
@@ -43,7 +50,8 @@ export async function importProviders(rows: Row[]): Promise<R> {
     cycle_start: date(r.cycle_start) ?? "",
     locale: r.locale === "es" ? "es" : "en",
   }));
-  const supabase = await createClient();
+  const { supabase, denied } = await staffOnly("training_admin");
+  if (denied) return { error: denied };
   const { data, error } = await supabase.rpc("staff_import_providers", { p_rows: clean });
   if (error) return { error: error.message };
   const results = (data ?? []) as { row: number; ok: boolean; error?: string }[];
@@ -56,7 +64,8 @@ export async function importProviders(rows: Row[]): Promise<R> {
 export async function inviteProvider(providerId: string): Promise<R> {
   const id = uuid(providerId);
   if (!id) return { error: "Invalid" };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffOnly("training_admin");
+  if (denied) return { error: denied };
   const { data, error } = await supabase.rpc("staff_invite_provider", { p_provider: id });
   if (error) return { error: error.message };
   revalidatePath(`/admin/providers/${id}`);
@@ -67,7 +76,8 @@ export async function inviteProvider(providerId: string): Promise<R> {
 export async function inviteProviders(providerIds: string[]): Promise<R> {
   const ids = (providerIds ?? []).map(uuid).filter((x): x is string => !!x).slice(0, 2000);
   if (ids.length === 0) return { error: "Choose providers." };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffOnly("training_admin");
+  if (denied) return { error: denied };
   const { data: rows } = await supabase.from("profiles").select("id").in("id", ids).eq("role", "provider").eq("login_enabled", false).eq("active", true);
   let made = 0;
   for (const r of rows ?? []) {
@@ -88,7 +98,8 @@ export async function updateProvider(_p: R | undefined, fd: FormData): Promise<R
   if (types.length === 0) return { error: "Choose at least one provider type." };
   const name = str(fd.get("full_name"), 120);
   if (name.length < 2) return { error: "Add the provider's full name." };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffOnly("training_admin");
+  if (denied) return { error: denied };
   const { error } = await supabase.from("profiles").update({
     full_name: name, phone: str(fd.get("phone"), 40) || null, provider_types: types,
     hire_date: date(fd.get("hire_date")), locale: fd.get("locale") === "es" ? "es" : "en",
@@ -104,7 +115,8 @@ export async function setCourseOverrides(providerIds: string[], courseId: string
   const course = uuid(courseId);
   if (!course || ids.length === 0) return { error: "Choose providers and a course." };
   if (!["assigned", "exempt", "clear"].includes(mode)) return { error: "Unknown choice" };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffOnly("training_admin");
+  if (denied) return { error: denied };
   const { data, error } = await supabase.rpc("set_course_overrides", {
     p_providers: ids, p_course: course, p_mode: mode, p_frequency: frequency === "annual" ? "annual" : "once", p_note: String(note ?? "").slice(0, 500),
   });
@@ -118,7 +130,8 @@ export async function setCourseOverrides(providerIds: string[], courseId: string
 export async function setLessonAttachment(lessonId: string, path: string | null): Promise<R> {
   const id = uuid(lessonId);
   if (!id) return { error: "Invalid" };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffOnly("training_admin");
+  if (denied) return { error: denied };
   const { data: lesson } = await supabase.from("lessons").select("course_id").eq("id", id).single();
   if (!lesson) return { error: "Lesson not found" };
   if (path !== null) {
@@ -136,7 +149,8 @@ export async function saveAcknowledgment(_p: R | undefined, fd: FormData): Promi
   if (!id) return { error: "Invalid" };
   const en = str(fd.get("ack_en"), 600);
   if (en.length < 5) return { error: "Write the statement providers agree to." };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffOnly("training_admin");
+  if (denied) return { error: denied };
   const { error } = await supabase.from("lessons").update({ ack_statement_en: en, ack_statement_es: str(fd.get("ack_es"), 600) || null }).eq("id", id);
   if (error) return { error: error.message };
   revalidatePath("/admin/courses", "layout");
@@ -157,7 +171,8 @@ export async function acknowledgeLesson(lessonId: string, typedName: string, lan
 export async function setStaffLevel(profileId: string, level: string): Promise<R> {
   const id = uuid(profileId);
   if (!id || !["reviewer", "training_admin", "super_admin"].includes(level)) return { error: "Invalid" };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffOnly("super_admin");
+  if (denied) return { error: denied };
   const { error } = await supabase.rpc("set_staff_level", { p_profile: id, p_level: level });
   if (error) return { error: error.message };
   revalidatePath("/admin/staff");

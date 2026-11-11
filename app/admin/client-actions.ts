@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { getProfile, staffCan, clientFeaturesOn } from "@/lib/auth";
 
 // Client records (people supported). Clients never sign in; staff keep the record and attach providers, staff and forms.
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -11,6 +11,14 @@ const s = (v: FormDataEntryValue | null, max = 200) => String(v ?? "").trim().sl
 const date = (v: FormDataEntryValue | null) => { const x = s(v, 10); return DATE.test(x) ? x : null; };
 const pick = <T extends string>(v: FormDataEntryValue | null, allowed: readonly T[], fallback: T) => (allowed.includes(String(v) as T) ? (String(v) as T) : fallback);
 type R = { ok?: boolean; error?: string; message?: string; id?: string };
+
+// Server-side gate for every action (RLS and the database functions check again): signed-in, active staff, client features on.
+async function staffClient() {
+  const { supabase, profile } = await getProfile();
+  if (!profile || !profile.active || !staffCan(profile, "reviewer")) return { supabase, denied: "Staff only." };
+  if (!(await clientFeaturesOn(supabase))) return { supabase, denied: "Client records are turned off." };
+  return { supabase, denied: null as string | null };
+}
 
 const STATUSES = ["prospective", "active", "on_hold", "discharged"] as const;
 const RELATIONSHIPS = ["primary", "respite", "temporary", "prospective"] as const;
@@ -39,7 +47,8 @@ export async function saveClient(_p: R | undefined, fd: FormData): Promise<R> {
     goals: s(fd.get("goals"), 4000).split("\n").map((g) => g.trim()).filter(Boolean).slice(0, 12),
     notes: s(fd.get("notes"), 2000),
   };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffClient();
+  if (denied) return { error: denied };
   const { data, error } = id
     ? await supabase.from("individuals").update(row).eq("id", id).select("id").single()
     : await supabase.from("individuals").insert(row).select("id").single();
@@ -53,7 +62,8 @@ export async function linkClientProvider(_p: R | undefined, fd: FormData): Promi
   const provider_id = uuid(fd.get("provider_id"));
   const starts_on = date(fd.get("starts_on"));
   if (!individual_id || !provider_id || !starts_on) return { error: "Choose a provider and a start date." };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffClient();
+  if (denied) return { error: denied };
   const { error } = await supabase.from("provider_individuals").upsert({
     individual_id, provider_id, starts_on, ends_on: date(fd.get("ends_on")),
     relationship: pick(fd.get("relationship"), RELATIONSHIPS, "primary"), note: s(fd.get("note"), 500) || null,
@@ -67,7 +77,8 @@ export async function assignClientStaff(_p: R | undefined, fd: FormData): Promis
   const individual_id = uuid(fd.get("individual_id"));
   const staff_id = uuid(fd.get("staff_id"));
   if (!individual_id || !staff_id) return { error: "Choose a staff member." };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffClient();
+  if (denied) return { error: denied };
   const { error } = await supabase.from("individual_staff").upsert({
     individual_id, staff_id, role: pick(fd.get("role"), STAFF_ROLES, "coordinator"), starts_on: date(fd.get("starts_on")) ?? new Date().toISOString().slice(0, 10), ends_on: null,
   });
@@ -78,7 +89,8 @@ export async function assignClientStaff(_p: R | undefined, fd: FormData): Promis
 
 export async function endClientStaff(individualId: string, staffId: string, role: string): Promise<R> {
   if (!uuid(individualId) || !uuid(staffId) || !(STAFF_ROLES as readonly string[]).includes(role)) return { error: "Invalid" };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffClient();
+  if (denied) return { error: denied };
   const { error } = await supabase.from("individual_staff").update({ ends_on: new Date().toISOString().slice(0, 10) })
     .eq("individual_id", individualId).eq("staff_id", staffId).eq("role", role);
   if (error) return { error: error.message };
@@ -95,7 +107,8 @@ export async function assignClientForm(_p: R | undefined, fd: FormData): Promise
   const frequency = pick(fd.get("frequency"), ["once", "daily", "weekly", "monthly", "quarterly"] as const, "once");
   if (!individual || !template || !due) return { error: "Choose a form and a due date." };
   if (providers.length === 0) return { error: "Choose at least one provider." };
-  const supabase = await createClient();
+  const { supabase, denied } = await staffClient();
+  if (denied) return { error: denied };
   const { data, error } = await supabase.rpc("assign_form", { p_template: template, p_providers: providers, p_individual: individual, p_due: due, p_frequency: frequency === "once" ? null : frequency });
   if (error) return { error: error.message };
   revalidatePath("/admin", "layout");
