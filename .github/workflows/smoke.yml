@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 22
       - run: npm install --no-save playwright@1.55.0
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install chromium
       - run: mkdir -p shots && node tests/smoke.mjs
         env:
           BASE_URL: https://realcareportal.vercel.app
