@@ -25,6 +25,22 @@ Updated Nov 10, 2026, after Torey Innes' Nov 9 priorities and Nov 2 DCW Notice r
 
 Checks: 27 database tests for these features pass, the earlier 23 program tests and 4 MFA tests still pass, and the Supabase security advisor shows only the leaked-password setting.
 
+## Added Nov 10–11 (from Jason's notes)
+
+| Item | Where | Status |
+| --- | --- | --- |
+| Full client record (no login): client #, goes by, status (prospective / active / on hold / discharged), program, county, residence, language, service dates, case manager | Admin → Clients → a client | Done |
+| Providers linked to a client as primary, respite, temporary or prospective (prospective can't see the client's forms yet) | Client page | Done |
+| Real Care staff assigned to a client (coordinator, nurse, supervisor) | Client page | Done |
+| Assign forms from the client's page to that client's providers, one time or repeating | Client page | Done |
+| Client list: search, filter by status, program, county, provider, staff; sort; overdue counts | Admin → Clients | Done |
+| Form records: every form searchable by client and by provider (and form, status, dates) | Admin → Form records | Done |
+| Roster upload reads Wix contact/member exports; nobody is notified or can sign in until an admin sends logins | Add providers | Done |
+| Bulk "Send login invites" for selected providers | Providers list | Done |
+| DCW Notice of Rights | Paused (built, unpublished, unassigned) | Paused |
+
+The real Wix roster goes into the production site only (never the demo). Two Wix sites are named "Real Care, Inc. Training"; confirm which one is live.
+
 ## Needs Jason (accounts and decisions)
 
 1. **Decide:** launch Phase 1 before the HIPAA agreements (provider and training data only, client features off), or sign the agreements first.
