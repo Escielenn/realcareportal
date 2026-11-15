@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { PROVIDER_TYPE_LABEL } from "@/lib/provider-types";
 
 export type Lang = "en" | "es";
 
@@ -108,12 +109,7 @@ export function daysBetween(from: string, to: string) {
   return Math.round((Date.parse(to + "T00:00:00Z") - Date.parse(from + "T00:00:00Z")) / 86400000);
 }
 
-export const providerTypeLabel: Record<string, { en: string; es: string }> = {
-  host_home: { en: "Host Home", es: "Hogar anfitrión" },
-  family_caregiver: { en: "Family Caregiver", es: "Cuidador familiar" },
-  scc_dsp: { en: "SCC/DSP", es: "SCC/DSP" },
-  nmt: { en: "NMT", es: "NMT" },
-};
+export const providerTypeLabel: Record<string, { en: string; es: string }> = PROVIDER_TYPE_LABEL;
 
 export type TrainingStatus = "complete" | "overdue" | "due_soon" | "in_progress";
 export function trainingStatus(required: number, done: number, dueOn: string | null): TrainingStatus {

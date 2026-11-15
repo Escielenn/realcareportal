@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isProviderType } from "@/lib/provider-types";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -38,7 +39,7 @@ export async function saveAnnouncement(_p: R | undefined, fd: FormData): Promise
   const title_en = str(fd.get("title_en"), 140);
   const body_en = str(fd.get("body_en"), 4000);
   if (title_en.length < 3 || body_en.length < 3) return { error: "Add an English title and message." };
-  const audience = fd.getAll("audience").map(String).filter((t) => ["host_home", "family_caregiver", "scc_dsp", "nmt"].includes(t));
+  const audience = fd.getAll("audience").map(String).filter(isProviderType);
   const expires = str(fd.get("expires_on"), 10);
   const { error } = await supabase.from("announcements").insert({
     title_en, body_en,

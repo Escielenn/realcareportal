@@ -3,9 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { PROVIDER_TYPES } from "@/lib/provider-types";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const TYPES = ["host_home", "family_caregiver", "scc_dsp", "nmt"];
+const TYPES: string[] = [...PROVIDER_TYPES];
 const uuid = (v: unknown) => (typeof v === "string" && UUID.test(v) ? v : null);
 const str = (v: FormDataEntryValue | null, max = 2000) => String(v ?? "").trim().slice(0, max);
 type R = { ok?: boolean; error?: string; message?: string };

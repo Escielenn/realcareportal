@@ -33,14 +33,15 @@ Either way, client features stay off until the BAAs are signed and the HIPAA rev
 | 8 | Connect a domain, e.g. `portal.realcarecolorado.com` | Real Care IT | One DNS record |
 | 9 | Set up transactional email (Postmark or Resend) for invites and notices | Jason | PHI-free messages only |
 | 10 | Create staff accounts, set permission levels, and set up two-step sign-in for each | Claude + staff | Full admin first |
-| 11 | Upload the roster (Add providers → Upload your roster) and import Wix history | Real Care staff | Spot-check 10 providers |
-| 12 | Upload the two DCW Notice pages, then assign the course to the right providers | Real Care staff | Course editor → each reading lesson |
+| 11 | Connect Wix: create a Wix API key on the live training site (realcaretraining.com) with read access to Members, Contacts, Online Programs and Pricing Plans; add `WIX_API_KEY` and `WIX_SITE_ID` (`823d5027-fa74-4041-9281-12c10fed3385`) to the production Vercel project only | Jason | Never add these to the demo project |
+| 12 | Import everyone from Wix (Import from Wix → Import everyone from Wix). Review the preview, fix anyone marked "Needs a type", then Add. Nobody gets a login or an email | Full admin | Spot-check 10 providers against Wix |
+| 13 | Send login invites in batches from Providers when Real Care is ready | Real Care staff | Needs email (step 9) |
+| 14 | DCW Notice (paused): upload the two pages and assign the course when Real Care is ready | Real Care staff | Course editor → each reading lesson |
 
 ## What Real Care needs to send
 
-1. **Roster** in the template (`/provider-roster-template.csv`): full name, email, phone, provider type(s), hire date, training-year start, language.
-2. **Renewal rule:** each provider's own anniversary, or one agency-wide date?
-3. **Requirement matrix:** which courses each provider type needs (the demo uses the realcaretraining.com set).
-4. **Wix exports** of past completions, per course.
-5. **Staff list** with a level for each: Reviewer, Training admin, or Full admin.
+1. ~~Roster~~ and ~~Wix exports~~: no longer needed. The one-step import reads members, types, completions and plans from the live Wix site (decided Nov 14, 2026).
+2. ~~Renewal rule~~: decided Nov 14, 2026. Training is due 12 months after a provider finishes the year's courses; a missed year stays overdue until finished (`docs/decisions/0002-renewal-rule.md`).
+3. **Requirement matrix:** which courses each provider type needs, including the new **RCI Provider** type (starts with the same 14 core courses as SCC/DSP). The course list matches the live Wix site.
+4. **Staff list** with a level for each: Reviewer, Training admin, or Full admin.
 6. The **DCW Notice of Rights** as two images or a PDF (attached to Torey's Nov 2 email).

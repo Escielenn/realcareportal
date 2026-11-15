@@ -10,6 +10,7 @@ import {
 import { createClient } from "@/lib/supabase/client";
 import { CourseOverrideForm } from "@/components/ops-bits";
 import { inviteProviders } from "@/app/ops-actions";
+import { PROVIDER_TYPE_OPTIONS } from "@/lib/provider-types";
 
 function Msg({ s }: { s?: { error?: string; message?: string } }) {
   if (!s) return null;
@@ -188,7 +189,7 @@ export function InviteForm() {
       <fieldset>
         <legend className="label text-sm">Provider type</legend>
         <div className="flex flex-wrap gap-2">
-          {[["host_home", "Host Home"], ["family_caregiver", "Family Caregiver"], ["scc_dsp", "SCC/DSP"], ["nmt", "NMT"]].map(([v, l]) => (
+          {PROVIDER_TYPE_OPTIONS.map(([v, l]) => (
             <label key={v} className="flex cursor-pointer items-center gap-2 rounded-lg border border-line px-3 py-1.5 text-sm has-[:checked]:border-teal has-[:checked]:bg-teal-soft">
               <input type="checkbox" name="types" value={v} className="accent-[#0f5c5f]" /> {l}
             </label>

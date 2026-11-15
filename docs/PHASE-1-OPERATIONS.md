@@ -39,7 +39,19 @@ Checks: 27 database tests for these features pass, the earlier 23 program tests 
 | Bulk "Send login invites" for selected providers | Providers list | Done |
 | DCW Notice of Rights | Paused (built, unpublished, unassigned) | Paused |
 
-The real Wix roster goes into the production site only (never the demo). Two Wix sites are named "Real Care, Inc. Training"; confirm which one is live.
+The real Wix roster goes into the production site only (never the demo).
+
+## Added Nov 14 (Wix inventory and Jason's answers)
+
+| Item | Where | Status |
+| --- | --- | --- |
+| Live Wix site identified (realcaretraining.com); draft duplicate moved to the Wix trash | Wix | Done |
+| Inventory: 312 active members, 1 blocked, 33 courses, 3,234 completions, 2 plans (counts only) | `wix-inventory.md` in the project | Done |
+| RCI Provider added as a fifth provider type; Wix "FCG" maps to Family Caregiver | Everywhere types appear | Done |
+| Course list matches Wix: All-Access = 14 core courses; Documentation, QMAP, Injection Admin, Employee Orientation invite-only | Courses, Programs | Done |
+| Renewal: due 12 months after finishing; missed years stay overdue (ADR 0002) | Nightly job | Done |
+| Providers without a login get no notifications or emails | All notices | Done (was a gap) |
+| One-step Wix import: preview, fix types, add; no logins, no emails; blocked members left out (ADR 0003) | Import from Wix → Import everyone | Done; demo runs on a fictional sample |
 
 ## Needs Jason (accounts and decisions)
 
@@ -48,16 +60,15 @@ The real Wix roster goes into the production site only (never the demo). Two Wix
 3. **Create the production Supabase project and Vercel project** (paid plans).
 4. **Turn on leaked-password protection** in Supabase Auth.
 5. **Choose an email service** (Postmark or Resend) so invites and reminders send automatically.
+7. **Create a read-only Wix API key** on realcaretraining.com (Members, Contacts, Online Programs, Pricing Plans) for the production import.
 6. **Delete the stray `smoke-hold` branch** on GitHub.
 
 ## Needs Real Care
 
-1. Active provider roster in the template.
-2. Renewal rule: each provider's anniversary, or one agency date.
-3. Confirm the course list for each provider type (All-Access currently has 17 courses; realcaretraining.com says 14).
-4. Wix completion exports.
-5. Staff list with a level for each person.
-6. The two DCW Notice pages as images or a PDF.
+1. ~~Roster~~, ~~renewal rule~~, ~~Wix exports~~, ~~course list~~: settled Nov 14 (the import reads Wix directly).
+2. Which courses an **RCI Provider** must take (starts with the 14 core courses, like SCC/DSP).
+3. Staff list with a level for each person.
+4. The two DCW Notice pages as images or a PDF (DCW is paused).
 
 ## Next build tasks (Claude)
 

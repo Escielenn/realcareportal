@@ -1,6 +1,7 @@
 import { requireStaff } from "@/lib/auth";
 import { buildReports } from "@/lib/reports";
 import { fmtDate, providerTypeLabel } from "@/lib/i18n";
+import { PROVIDER_TYPES, isProviderType } from "@/lib/provider-types";
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -10,7 +11,7 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
   const today = new Date();
   const from = sp.from && DATE.test(sp.from) ? sp.from : new Date(today.getFullYear(), today.getMonth() - 2, 1).toISOString().slice(0, 10);
   const to = sp.to && DATE.test(sp.to) ? sp.to : today.toISOString().slice(0, 10);
-  const type = ["host_home", "family_caregiver", "scc_dsp", "nmt"].includes(sp.type ?? "") ? sp.type! : "";
+  const type = isProviderType(sp.type ?? "") ? sp.type! : "";
   const r = await buildReports(supabase, { from, to, type });
   const q = `from=${from}&to=${to}&type=${type}`;
   const csv = (kind: string) => `/admin/reports/export?kind=${kind}&${q}`;
@@ -29,7 +30,7 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
         <div><label className="label text-sm" htmlFor="r-type">Provider type</label>
           <select id="r-type" name="type" defaultValue={type} className="input py-1.5">
             <option value="">All types</option>
-            {["host_home", "family_caregiver", "scc_dsp", "nmt"].map((t) => <option key={t} value={t}>{providerTypeLabel[t]?.en}</option>)}
+            {PROVIDER_TYPES.map((t) => <option key={t} value={t}>{providerTypeLabel[t]?.en}</option>)}
           </select></div>
         <button className="btn-primary py-2">Update</button>
         <p className="text-sm text-muted">{r.providerCount} active providers · {r.submissionCount} submissions from {fmtDate(from)} to {fmtDate(to)}</p>

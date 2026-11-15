@@ -1051,6 +1051,7 @@ insert into public.requirements (provider_type, course_id) select 'host_home', i
 insert into public.requirements (provider_type, course_id) select 'family_caregiver', id from public.courses where slug = any(array['welcome','system-values','scc','supports-services','respect-dignity','pcp','mane','individual-rights','health-safety','driving-safety','dei','confidentiality','communication','crisis','qmap','respite']);
 insert into public.requirements (provider_type, course_id) select 'scc_dsp', id from public.courses where slug = any(array['welcome','system-values','scc','supports-services','respect-dignity','pcp','mane','individual-rights','health-safety','driving-safety','dei','confidentiality','communication','crisis']);
 insert into public.requirements (provider_type, course_id) select 'nmt', id from public.courses where slug = any(array['welcome','system-values','scc','supports-services','respect-dignity','pcp','mane','individual-rights','health-safety','driving-safety','dei','confidentiality','communication','crisis']);
+insert into public.requirements (provider_type, course_id) select 'rci_provider', id from public.courses where slug = any(array['welcome','system-values','scc','supports-services','respect-dignity','pcp','mane','individual-rights','health-safety','driving-safety','dei','confidentiality','communication','crisis']);
 insert into public.courses (id, slug, title_en, title_es, description_en, description_es, sort, is_specialty, price_cents, invite_only, in_all_access)
 values ('baa431f8-aa21-5eae-a477-0d945585f10e', 'dcw-notice-of-rights', 'DCW Notice of Rights', 'Aviso de derechos para trabajadores de cuidado directo (DCW)',
  'A one-time notice of your rights as a Direct Care Worker. Read both pages, then sign to confirm you received and reviewed it.',
@@ -1193,7 +1194,9 @@ insert into public.announcements (title_en, title_es, body_en, body_es, audience
  'Please complete your Fire Disaster Drill form in the portal by November 6.',
  'Por favor complete su formulario de simulacro de incendio en el portal antes del 6 de noviembre.', '{host_home}', '2026-10-22 08:00:00-06');
 update public.courses set in_all_access = false, access_days = 60 where slug = 'qmap';
-update public.courses set in_all_access = false where slug = 'respite';
+update public.courses set in_all_access = false where slug in ('respite', 'documentation', 'injection-admin', 'employee-orientation');
+update public.courses set invite_only = true where slug in ('documentation', 'qmap', 'injection-admin', 'employee-orientation');
+update public.courses set price_cents = 1000 where slug = 'employee-orientation';
 insert into public.programs (id, slug, name_en, name_es, description_en, description_es, price_cents, duration_days, audience, is_example, sort, active) values
 ('50e88256-f3ac-5e06-b792-4afcf9b4e52f', 'all-access', 'All-Access Package', 'Paquete de acceso completo',
  'Every core Real Care course for 12 months, with certificates. Covers your annual required training.',

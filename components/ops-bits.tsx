@@ -7,8 +7,9 @@ import {
   saveAcknowledgment, acknowledgeLesson, setStaffLevel,
 } from "@/app/ops-actions";
 import { createClient } from "@/lib/supabase/client";
+import { PROVIDER_TYPE_OPTIONS, PROVIDER_TYPE_WORDS } from "@/lib/provider-types";
 
-const TYPES: [string, string][] = [["host_home", "Host Home"], ["family_caregiver", "Family Caregiver"], ["scc_dsp", "SCC/DSP"], ["nmt", "NMT"]];
+const TYPES: [string, string][] = PROVIDER_TYPE_OPTIONS;
 
 function Msg({ s }: { s?: { error?: string; message?: string } }) {
   if (!s) return null;
@@ -64,10 +65,7 @@ export function AddProviderForm() {
 
 // ---------------------------------------------------------------- roster upload
 type Parsed = { full_name: string; email: string; phone: string; provider_types: string[]; hire_date: string; cycle_start: string; locale: string; problems: string[] };
-const TYPE_WORDS: Record<string, string> = {
-  "host home": "host_home", "host_home": "host_home", hhp: "host_home", "family caregiver": "family_caregiver", "family_caregiver": "family_caregiver",
-  fc: "family_caregiver", scc: "scc_dsp", dsp: "scc_dsp", "scc/dsp": "scc_dsp", "scc_dsp": "scc_dsp", nmt: "nmt",
-};
+const TYPE_WORDS: Record<string, string> = PROVIDER_TYPE_WORDS;
 
 function parseCsv(text: string): string[][] {
   const rows: string[][] = []; let row: string[] = []; let cell = ""; let q = false;

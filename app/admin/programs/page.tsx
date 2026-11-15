@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { requireStaff } from "@/lib/auth";
 import { money, today } from "@/lib/programs";
+import { PROVIDER_TYPE_OPTIONS } from "@/lib/provider-types";
 
-const TYPE: Record<string, string> = { host_home: "Host Home", family_caregiver: "Family Caregiver", scc_dsp: "SCC / DSP", nmt: "NMT" };
+const TYPE: Record<string, string> = Object.fromEntries(PROVIDER_TYPE_OPTIONS);
 
 export default async function ProgramsAdmin() {
   const { supabase } = await requireStaff();

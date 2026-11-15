@@ -6,6 +6,7 @@ import {
   createPasswordReset, markThreadRead, requestPasswordHelp, saveAnnouncement, setAccountActive, setThread,
   updateAnnouncement, applyPasswordReset,
 } from "@/app/phase3-actions";
+import { PROVIDER_TYPE_OPTIONS } from "@/lib/provider-types";
 
 type R = { ok?: boolean; error?: string; message?: string; link?: string };
 function Msg({ r }: { r?: R }) {
@@ -47,7 +48,7 @@ export function ThreadControls({ providerId, status, assignedTo, staff }: { prov
   );
 }
 
-const TYPES = [["host_home", "Host Home"], ["family_caregiver", "Family Caregiver"], ["scc_dsp", "SCC/DSP"], ["nmt", "NMT"]] as const;
+const TYPES = PROVIDER_TYPE_OPTIONS;
 
 export function AnnouncementForm() {
   const [r, action, pending] = useActionState(saveAnnouncement, undefined);

@@ -19,6 +19,14 @@ export default async function ImportPage() {
         <h1 className="text-2xl font-bold">Import training history from Wix</h1>
         <p className="text-muted">Upload each course&apos;s participant export once. Rows are matched to providers by email, then by name, and you review every match before anything is saved.</p>
       </div>
+      <section className="card flex flex-wrap items-center justify-between gap-4 border-2 border-teal/30 p-5">
+        <div>
+          <h2 className="text-lg font-bold">Bring everyone over at once</h2>
+          <p className="text-muted">Reads the live Wix site directly: members, types, every completed course and plans. No logins or emails until you invite them.</p>
+        </div>
+        <Link href="/admin/import/wix" className="btn-primary">Import everyone from Wix</Link>
+      </section>
+      <h2 className="text-lg font-bold">Or one course at a time from a CSV export</h2>
       <section className="card p-5">
         <ImportUploader courses={(courses ?? []).map((c) => ({ id: c.id, title: c.title_en }))} />
         <p className="mt-4 text-sm text-muted">

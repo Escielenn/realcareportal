@@ -88,6 +88,9 @@ insert into results (check_name, ok) select 'providers cannot see hidden program
 
 reset role;
 -- The nightly job renews Maria's All-Access (ends within 3 days, auto-renew on, demo mode on).
+-- The seed keeps her term ending about 3 weeks out (for the site check), so move it inside the window here.
+update public.entitlements set ends_on = current_date + 2
+where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898' and program_id = '50e88256-f3ac-5e06-b792-4afcf9b4e52f' and ends_on >= current_date;
 insert into results (check_name, ok) select 'nightly job renewed someone', public._program_autorenew(current_date) >= 1;
 insert into results (check_name, ok)
 select 'nightly job renews when auto-renew is on', exists (select 1 from public.entitlements where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898'

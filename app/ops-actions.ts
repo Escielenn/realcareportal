@@ -4,13 +4,14 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getProfile, staffCan, type StaffLevel } from "@/lib/auth";
+import { PROVIDER_TYPES } from "@/lib/provider-types";
 
 // Phase 1 operations: providers without logins, roster import, course assignment/exemption, staff levels,
 // acknowledgment lessons. Every rule is enforced again in the database (staff_can, RLS); these only validate input.
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
-const TYPES = ["host_home", "family_caregiver", "scc_dsp", "nmt"];
+const TYPES: string[] = [...PROVIDER_TYPES];
 const uuid = (v: unknown) => (typeof v === "string" && UUID.test(v) ? v : null);
 const str = (v: FormDataEntryValue | null | undefined, max = 200) => String(v ?? "").trim().slice(0, max);
 const date = (v: unknown) => (typeof v === "string" && DATE.test(v) ? v : null);

@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { providerRows } from "@/lib/admin-data";
+import { PROVIDER_TYPES } from "@/lib/provider-types";
 
 // Staff reports. Counts and provider-level figures only: no form answers, no names of people supported.
 export type ReportFilters = { from: string; to: string; type: string };
@@ -19,7 +20,7 @@ export async function buildReports(supabase: SupabaseClient, f: ReportFilters) {
   const providerIds = new Set(providers.map((p) => p.provider_id));
 
   // Training compliance by provider type
-  const types = ["host_home", "family_caregiver", "scc_dsp", "nmt"];
+  const types: string[] = [...PROVIDER_TYPES];
   const byType = types.map((t) => {
     const ps = providers.filter((p) => p.provider_types.includes(t));
     const count = (s: string) => ps.filter((p) => p.status === s).length;

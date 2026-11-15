@@ -1,8 +1,9 @@
 import { requireStaff } from "@/lib/auth";
 import { providerTypeLabel } from "@/lib/i18n";
 import { RequirementToggle } from "@/components/admin-bits";
+import { PROVIDER_TYPES } from "@/lib/provider-types";
 
-const TYPES = ["host_home", "family_caregiver", "scc_dsp", "nmt"];
+const TYPES = PROVIDER_TYPES;
 
 export default async function RequirementsPage() {
   const { supabase } = await requireStaff();

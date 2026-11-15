@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { isProviderType } from "@/lib/provider-types";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function assertUuid(v: unknown): string {
@@ -215,7 +216,7 @@ export async function submitApplication(_prev: { ok?: boolean; error?: string } 
   if (fd.get("website")) return { ok: true }; // honeypot: bots fill hidden fields
   if (full_name.length < 2) return { error: es ? "Escriba su nombre." : "Please enter your name." };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: es ? "Escriba un correo válido." : "Please enter a valid email." };
-  const types = fd.getAll("types").map(String).filter((t) => ["host_home", "family_caregiver", "scc_dsp", "nmt"].includes(t));
+  const types = fd.getAll("types").map(String).filter(isProviderType);
   const supabase = await createClient();
   const { error } = await supabase.rpc("submit_application", {
     p_full_name: full_name, p_email: email, p_phone: s("phone", 40) || null, p_locale: locale, p_types: types,

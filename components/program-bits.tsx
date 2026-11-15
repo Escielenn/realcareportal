@@ -3,8 +3,9 @@
 import { useActionState, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { joinProgram, saveProgram, grantProgram, setAutoRenew } from "@/app/programs-actions";
+import { PROVIDER_TYPE_OPTIONS } from "@/lib/provider-types";
 
-const TYPES: [string, string][] = [["host_home", "Host Home"], ["family_caregiver", "Family Caregiver"], ["scc_dsp", "SCC / DSP"], ["nmt", "NMT"]];
+const TYPES: [string, string][] = PROVIDER_TYPE_OPTIONS;
 
 function Msg({ s }: { s?: { error?: string; message?: string } }) {
   if (!s) return null;

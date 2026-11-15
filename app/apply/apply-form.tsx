@@ -8,6 +8,7 @@ const TYPES = [
   { v: "family_caregiver", en: "Family Caregiver", es: "Cuidador familiar" },
   { v: "scc_dsp", en: "SCC / Direct Support Professional", es: "SCC / Profesional de apoyo directo" },
   { v: "nmt", en: "Non-Medical Transportation", es: "Transporte no médico" },
+  { v: "rci_provider", en: "RCI Provider (contractor)", es: "Proveedor RCI (contratista)" },
 ];
 
 export function ApplyForm() {

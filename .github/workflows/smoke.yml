@@ -14,7 +14,8 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
-      - run: npm install --no-save playwright@1.55.0
+      - run: npm install --no-save playwright@1.55.0 tsx@4.20.6
+      - run: npx tsx --test tests/*.test.ts
       - run: npx playwright install chromium
       - run: mkdir -p shots && node tests/smoke.mjs
         env:

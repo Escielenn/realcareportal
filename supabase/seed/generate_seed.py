@@ -418,7 +418,8 @@ for idx, (slug, te, ts, de, ds, specialty, price, lessons) in enumerate(courses)
             w(f"insert into public.lessons (id, course_id, sort, kind, title_en, title_es, body_en, body_es) values ('{lid}', '{cid}', {li}, {q(kind)}, {q(le)}, {q(ls)}, {q(be)}, {q(bs)});")
 
 CORE = order[:14]
-req = {"host_home": CORE + ["qmap"], "family_caregiver": CORE + ["qmap", "respite"], "scc_dsp": CORE, "nmt": CORE}
+req = {"host_home": CORE + ["qmap"], "family_caregiver": CORE + ["qmap", "respite"], "scc_dsp": CORE, "nmt": CORE,
+       "rci_provider": CORE}  # RCI Provider: alternate contractor status (Nov 14, 2026); same starting list as SCC/DSP
 for ptype, slugs in req.items():
     arr = ",".join(q(s) for s in slugs)
     w(f"insert into public.requirements (provider_type, course_id) select {q(ptype)}, id from public.courses where slug = any(array[{arr}]);")
@@ -668,8 +669,11 @@ w("""insert into public.announcements (title_en, title_es, body_en, body_es, aud
 
 
 # ---------------------------------------------------------------- access and payments (fictional history)
+# Matches the live Wix site (Nov 14, 2026): All-Access is the 14 core courses; four courses are invite-only.
 w("""update public.courses set in_all_access = false, access_days = 60 where slug = 'qmap';
-update public.courses set in_all_access = false where slug = 'respite';
+update public.courses set in_all_access = false where slug in ('respite', 'documentation', 'injection-admin', 'employee-orientation');
+update public.courses set invite_only = true where slug in ('documentation', 'qmap', 'injection-admin', 'employee-orientation');
+update public.courses set price_cents = 1000 where slug = 'employee-orientation';
 insert into public.programs (id, slug, name_en, name_es, description_en, description_es, price_cents, duration_days, audience, is_example, sort, active) values
 ('50e88256-f3ac-5e06-b792-4afcf9b4e52f', 'all-access', 'All-Access Package', 'Paquete de acceso completo',
  'Every core Real Care course for 12 months, with certificates. Covers your annual required training.',

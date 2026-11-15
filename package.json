@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:unit": "npx --yes tsx@4.20.6 --test tests/*.test.ts"
   },
   "dependencies": {
     "@fontsource-variable/open-sans": "^5.2.6",

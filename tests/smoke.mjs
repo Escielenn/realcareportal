@@ -221,7 +221,23 @@ await step(s, "create invite", async () => {
   await s.page.click("button:has-text('Create invitation')");
   await s.page.waitForSelector("text=Invitation link", { timeout: 15000 });
 });
+await visit(s, "/admin/import/wix", "Only a super admin can run the Wix import");
 await s.ctx.close();
+
+// ---------------- super admin: one-step Wix import with the fictional sample
+const a = await session("admin", "demo.admin@example.com");
+await step(a, "wix import everyone (sample)", async () => {
+  await a.page.goto(BASE + "/admin/import/wix");
+  await a.page.click("button:has-text('Load the sample Wix data')");
+  await a.page.waitForSelector("text=Ready to add", { timeout: 30000 });
+  await a.page.waitForSelector("text=Rosa Example", { timeout: 15000 });
+  if (await a.page.locator("text=Blocked Person").count()) throw new Error("blocked member was staged");
+  await a.page.click("button:has-text('no logins, no emails')");
+  await a.page.waitForSelector("text=Nobody was notified", { timeout: 30000 });
+});
+await visit(a, "/admin/providers?status=overdue", "Rosa Example");
+await visit(a, "/admin/requirements", "RCI Provider");
+await a.ctx.close();
 
 // ---------------- invite page (signed out)
 const anon = await browser.newContext();

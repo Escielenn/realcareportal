@@ -36,6 +36,10 @@ insert into r (c, ok) select 'roster import adds good rows and reports bad ones'
      {"full_name":"Roster One","email":"roster.one@example.com","provider_types":["scc_dsp"],"hire_date":"2025-01-06"},
      {"full_name":"Dup","email":"test.person@example.com","provider_types":["scc_dsp"]},
      {"full_name":"No Type","email":"no.type@example.com","provider_types":[]}]'::jsonb)) x);
+insert into r (c, ok) select 'RCI Provider can be added', public.staff_add_provider('Rci Person', 'rci.person@example.com', null, array['rci_provider'], null, null, 'en') is not null;
+insert into r (c, ok) select 'no-login providers get no notifications or emails',
+  not exists (select 1 from public.notifications n join public.profiles p on p.id = n.profile_id where p.email in ('test.person@example.com', 'rci.person@example.com'))
+  and not exists (select 1 from public.email_outbox o join public.profiles p on p.id = o.profile_id where p.email in ('test.person@example.com', 'rci.person@example.com'));
 do $$ begin
   begin update public.profiles set login_enabled = true where email = 'test.person@example.com';
     insert into r (c, ok) values ('staff cannot switch a login on directly', false);
@@ -64,6 +68,13 @@ insert into r (c, ok) select 'login is on and history kept', exists (select 1 fr
 set local request.jwt.claims = '{"sub":"e7749203-b707-5c16-bf3b-77939b7e6ef3","role":"authenticated","aal":"aal1"}';
 select public.set_staff_level('8c1acc10-d870-54e7-931d-68e42ead7027', 'training_admin');
 insert into r (c, ok) select 'full admin changes a staff level', (select staff_level from public.profiles where id = '8c1acc10-d870-54e7-931d-68e42ead7027') = 'training_admin';
+
+-- The DCW notice is paused in the seed (unpublished, unassigned). Publish and assign it here to test the flow.
+reset role;
+update public.courses set published = true where id = 'baa431f8-aa21-5eae-a477-0d945585f10e';
+set local role authenticated;
+set local request.jwt.claims = '{"sub":"eed26bf3-960d-536c-b609-aa71df39f52c","role":"authenticated","aal":"aal1"}';
+select public.set_course_overrides(array['4e6d8d70-2d43-5307-aeeb-664bf5c96898'::uuid], 'baa431f8-aa21-5eae-a477-0d945585f10e', 'assigned', 'once', null);
 
 -- Provider (Maria, assigned the DCW notice) ----------------------------------------------------------
 set local request.jwt.claims = '{"sub":"4e6d8d70-2d43-5307-aeeb-664bf5c96898","role":"authenticated","aal":"aal1"}';

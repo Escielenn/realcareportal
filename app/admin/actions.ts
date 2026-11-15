@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isProviderType } from "@/lib/provider-types";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -71,7 +72,7 @@ export async function refundOrder(orderId: string): Promise<R> {
 
 // ---------- requirements matrix
 export async function toggleRequirement(providerType: string, courseId: string, on: boolean): Promise<R> {
-  if (!["host_home", "family_caregiver", "scc_dsp", "nmt"].includes(providerType)) return { error: "Unknown provider type" };
+  if (!isProviderType(providerType)) return { error: "Unknown provider type" };
   const supabase = await createClient();
   const { error } = on
     ? await supabase.from("requirements").insert({ provider_type: providerType, course_id: id(courseId) })
@@ -86,7 +87,7 @@ export async function createInvite(_prev: (R & { link?: string }) | undefined, f
   const { data: { user } } = await supabase.auth.getUser();
   const email = str(fd.get("email"), 200).toLowerCase();
   const name = str(fd.get("full_name"), 200);
-  const types = fd.getAll("types").map(String).filter((t) => ["host_home", "family_caregiver", "scc_dsp", "nmt"].includes(t));
+  const types = fd.getAll("types").map(String).filter(isProviderType);
   if (!name) return { error: "Enter the provider's name" };
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return { error: "Enter a valid email" };
   if (types.length === 0) return { error: "Pick at least one provider type" };
