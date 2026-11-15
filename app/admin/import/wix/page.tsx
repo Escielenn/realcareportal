@@ -22,7 +22,8 @@ type Person = {
   completions: { slug: string; lang: string; on: string }[]; access: { kind: string; ends_on?: string } | null; provider_id: string | null;
 };
 
-export default async function WixImportPage() {
+export default async function WixImportPage({ searchParams }: { searchParams: Promise<{ done?: string; discarded?: string }> }) {
+  const sp = await searchParams;
   const { supabase, profile } = await requireStaff("training_admin");
   const canImport = staffCan(profile, "super_admin");
   const { data: runs } = await supabase.from("wix_import_runs").select("*").order("created_at", { ascending: false }).limit(10);
@@ -34,6 +35,8 @@ export default async function WixImportPage() {
   const count = (s: string) => list.filter((p) => p.status === s).length;
   const summary = (staged?.summary ?? {}) as { skipped_blocked?: number; default_type_used?: number; unmatched_programs?: string[]; completions?: number; with_access?: number };
   const connected = DEMO_MODE || wixConfigured();
+  const done = sp.done ? (runs ?? []).find((r) => r.id === sp.done && r.status === "committed") : undefined;
+  const doneResult = (done?.result ?? null) as { people?: number; completions?: number; access?: number } | null;
 
   return (
     <div className="space-y-6">
@@ -46,6 +49,14 @@ export default async function WixImportPage() {
           Blocked Wix members are never brought over.
         </p>
       </div>
+
+      {doneResult && (
+        <div role="status" className="rounded-xl bg-green-soft p-4 text-sm">
+          <p className="font-semibold">Added {doneResult.people ?? 0} providers with {doneResult.completions ?? 0} completed courses. Nobody was notified.</p>
+          <p className="mt-1">They have no login yet. <Link href="/admin/providers" className="font-semibold text-teal underline">Send login invites from Providers</Link> when you&apos;re ready.</p>
+        </div>
+      )}
+      {sp.discarded && <p role="status" className="rounded-xl bg-sand p-4 text-sm">Preview discarded. Nothing was added.</p>}
 
       {DEMO_MODE && (
         <p className="rounded-xl bg-amber-soft p-4 text-sm">

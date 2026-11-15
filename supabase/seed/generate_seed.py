@@ -724,6 +724,12 @@ values ('00000000-0000-0000-0000-000000000000', '{i}', 'authenticated', 'authent
 
 # ---------------------------------------------------------------- an exemption (fictional); the DCW notice assignments are paused
 w(f"insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('{uid('grace.holloway@example.com')}', '{course_ids['driving-safety']}', 'exempt', 'annual', 'Does not transport individuals (example exemption)', '{staff_id}');")
+# Documentation is invite-only (as on Wix). Show the pattern: staff assigned it to Maria and Real Care covered the cost.
+_maria = uid('demo.provider@example.com')
+w(f"insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('{_maria}', '{course_ids['documentation']}', 'assigned', 'annual', 'Submits monthly paperwork (example assignment)', '{staff_id}');")
+w(f"""with o as (insert into public.orders (provider_id, course_id, description, amount_cents, method, note, created_by)
+  values ('{_maria}', '{course_ids['documentation']}', 'Documentation Submissions & Compliance', 0, 'paid_by_real_care', 'Assigned by staff', '{staff_id}') returning id)
+insert into public.entitlements (provider_id, course_id, order_id, starts_on, ends_on) select '{_maria}', '{course_ids['documentation']}', id, current_date - 30, current_date + 335 from o;""")
 
 # ---------------------------------------------------------------- seeded notifications: history read, one unread
 w("""update public.notifications set read_at = created_at;

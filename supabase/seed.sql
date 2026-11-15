@@ -1241,6 +1241,10 @@ values ('00000000-0000-0000-0000-000000000000', 'ad4a5135-8b61-5427-a522-554f930
 insert into public.profiles (id, role, full_name, email, locale, provider_types, hire_date, login_enabled) values ('ad4a5135-8b61-5427-a522-554f9300ee3e', 'provider', 'Omar Haddad', 'omar.haddad@example.com', 'en', array['scc_dsp','nmt']::text[], '2024-09-16', false);
 insert into public.training_cycles (id, provider_id, cycle_number, starts_on, due_on, label) values ('1c1a7ebd-4f56-5cfd-b347-d598411d00e2', 'ad4a5135-8b61-5427-a522-554f9300ee3e', 1, '2026-09-16', '2027-09-16', 'Cycle 1');
 insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('47525514-f8f7-592f-a5b1-160487075650', '599e34b7-5a6e-5377-9091-026cb8c96861', 'exempt', 'annual', 'Does not transport individuals (example exemption)', 'eed26bf3-960d-536c-b609-aa71df39f52c');
+insert into public.provider_course_overrides (provider_id, course_id, mode, frequency, note, created_by) values ('4e6d8d70-2d43-5307-aeeb-664bf5c96898', 'fa6cac84-3366-5c45-bbde-b6d07e699f72', 'assigned', 'annual', 'Submits monthly paperwork (example assignment)', 'eed26bf3-960d-536c-b609-aa71df39f52c');
+with o as (insert into public.orders (provider_id, course_id, description, amount_cents, method, note, created_by)
+  values ('4e6d8d70-2d43-5307-aeeb-664bf5c96898', 'fa6cac84-3366-5c45-bbde-b6d07e699f72', 'Documentation Submissions & Compliance', 0, 'paid_by_real_care', 'Assigned by staff', 'eed26bf3-960d-536c-b609-aa71df39f52c') returning id)
+insert into public.entitlements (provider_id, course_id, order_id, starts_on, ends_on) select '4e6d8d70-2d43-5307-aeeb-664bf5c96898', 'fa6cac84-3366-5c45-bbde-b6d07e699f72', id, current_date - 30, current_date + 335 from o;
 update public.notifications set read_at = created_at;
 insert into public.notifications (profile_id, kind, title_en, title_es, link, created_at)
 select a.provider_id, 'form_returned', 'A form was returned for a correction', 'Se devolvió un formulario para corregir', '/forms/' || a.id, '2026-10-21 10:00:00-06'

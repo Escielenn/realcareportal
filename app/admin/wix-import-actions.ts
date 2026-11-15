@@ -60,11 +60,10 @@ export async function commitWixImport(_p: R | undefined, fd: FormData): Promise<
   if (denied) return { error: denied };
   const run = String(fd.get("run_id") ?? "");
   if (!UUID.test(run)) return { error: "Unknown import." };
-  const { data, error } = await supabase.rpc("commit_wix_import", { p_run: run });
+  const { error } = await supabase.rpc("commit_wix_import", { p_run: run });
   if (error) return { error: error.message };
-  const r = data as { people: number; completions: number; access: number };
   revalidatePath("/admin", "layout");
-  return { ok: true, message: `Added ${r.people} providers with ${r.completions} completed courses. Nobody was notified. Send login invites from Providers when you're ready.` };
+  redirect(`/admin/import/wix?done=${run}`);
 }
 
 export async function discardWixImport(_p: R | undefined, fd: FormData): Promise<R> {
@@ -75,5 +74,5 @@ export async function discardWixImport(_p: R | undefined, fd: FormData): Promise
   const { error } = await supabase.rpc("discard_wix_import", { p_run: run });
   if (error) return { error: error.message };
   revalidatePath("/admin/import/wix");
-  return { ok: true, message: "Discarded. Nothing was added." };
+  redirect("/admin/import/wix?discarded=1");
 }

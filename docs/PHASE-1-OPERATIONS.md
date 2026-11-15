@@ -60,8 +60,8 @@ The real Wix roster goes into the production site only (never the demo).
 3. **Create the production Supabase project and Vercel project** (paid plans).
 4. **Turn on leaked-password protection** in Supabase Auth.
 5. **Choose an email service** (Postmark or Resend) so invites and reminders send automatically.
-7. **Create a read-only Wix API key** on realcaretraining.com (Members, Contacts, Online Programs, Pricing Plans) for the production import.
 6. **Delete the stray `smoke-hold` branch** on GitHub.
+7. **Create a read-only Wix API key** on realcaretraining.com (Members, Contacts, Online Programs, Pricing Plans) for the production import.
 
 ## Needs Real Care
 

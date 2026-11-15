@@ -53,7 +53,6 @@ export function TypeEditor({ personId, types }: { personId: string; types: strin
 export function CommitBar({ runId, ready }: { runId: string; ready: number }) {
   const [c, commit, committing] = useActionState(commitWixImport, undefined as R);
   const [d, discard, discarding] = useActionState(discardWixImport, undefined as R);
-  if (c?.ok || d?.ok) return <Msg s={c?.ok ? c : d} />;
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap gap-3">

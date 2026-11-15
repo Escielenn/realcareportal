@@ -50,7 +50,7 @@ for (const [path, text] of [
   ["/training/qmap", "This course needs to be purchased"], ["/training/welcome", "A quick tour"], ["/forms", "Returned for a correction"],
   ["/messages", "Messages"], ["/notifications", "Notifications"], ["/profile", "My profile"], ["/programs", "All-Access Package"],
   ["/documents", "Send a document"], ["/help", "How to use the portal"],
-  ["/training/documentation", "Documentation Submissions"], ["/training/injection-admin", "RCI Injection Administration"],
+  ["/training/documentation", "Documentation Submissions"], // invite-only; Maria is assigned it in the demo seed
 ]) await visit(p, path, text);
 
 await step(p, "course video plays from portal storage", async () => {
@@ -233,7 +233,8 @@ await step(a, "wix import everyone (sample)", async () => {
   await a.page.waitForSelector("text=Rosa Example", { timeout: 15000 });
   if (await a.page.locator("text=Blocked Person").count()) throw new Error("blocked member was staged");
   await a.page.click("button:has-text('no logins, no emails')");
-  await a.page.waitForSelector("text=Nobody was notified", { timeout: 30000 });
+  await a.page.waitForURL(/done=/, { timeout: 30000 });
+  await a.page.waitForSelector("text=Nobody was notified", { timeout: 15000 });
 });
 await visit(a, "/admin/providers?status=overdue", "Rosa Example");
 await visit(a, "/admin/requirements", "RCI Provider");
