@@ -56,6 +56,13 @@ end $$;
 select public.join_program('c951f62b-ea6e-5927-a42c-192f313743e9');
 insert into results (check_name, ok)
 select 'joining a program opens its courses', public.has_course_access('4e6d8d70-2d43-5307-aeeb-664bf5c96898', 'becc0762-5154-5f7a-a940-8428f02a1a20');
+insert into results (check_name, ok)
+select 'joining turns automatic renewal on by default', coalesce((select auto_renew from public.program_auto_renew
+  where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898' and program_id = 'c951f62b-ea6e-5927-a42c-192f313743e9'), false);
+select public.set_auto_renew('c951f62b-ea6e-5927-a42c-192f313743e9', false);
+insert into results (check_name, ok)
+select 'provider can turn automatic renewal off', not auto_renew from public.program_auto_renew
+  where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898' and program_id = 'c951f62b-ea6e-5927-a42c-192f313743e9';
 do $$ begin
   begin perform public.join_program('c951f62b-ea6e-5927-a42c-192f313743e9');
     insert into results (check_name, ok) values ('renewal blocked more than 60 days early', false);
