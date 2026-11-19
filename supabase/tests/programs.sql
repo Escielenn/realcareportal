@@ -39,14 +39,9 @@ select 'qmap stays locked without a purchase', not public.has_course_access('4e6
 insert into results (check_name, ok)
 select 'provider cannot ask about another provider', not public.has_course_access('da5c7d56-a9d8-5267-956b-500ba5a379eb', 'c005138d-d318-56d3-8bc4-415fb3e9fd69');
 
--- Paid training never renews automatically (decision 0004): the switch refuses to turn on for a paid program.
-do $$ begin
-  begin perform public.set_auto_renew('50e88256-f3ac-5e06-b792-4afcf9b4e52f', true);
-    insert into results (check_name, ok) values ('paid program refuses auto-renew', false);
-  exception when others then insert into results (check_name, ok) values ('paid program refuses auto-renew', true); end;
-end $$;
-select public.set_auto_renew('50e88256-f3ac-5e06-b792-4afcf9b4e52f', false);
-insert into results (check_name, ok) select 'provider can keep auto-renew off', not auto_renew from public.program_auto_renew
+-- Automatic renewal is the provider's own switch.
+select public.set_auto_renew('50e88256-f3ac-5e06-b792-4afcf9b4e52f', true);
+insert into results (check_name, ok) select 'provider can turn on auto-renew', auto_renew from public.program_auto_renew
   where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898' and program_id = '50e88256-f3ac-5e06-b792-4afcf9b4e52f';
 do $$ begin
   begin insert into public.program_auto_renew (provider_id, program_id, auto_renew) values ('da5c7d56-a9d8-5267-956b-500ba5a379eb', '50e88256-f3ac-5e06-b792-4afcf9b4e52f', true);
@@ -92,19 +87,14 @@ set local request.jwt.claims = '{"sub":"4e6d8d70-2d43-5307-aeeb-664bf5c96898","r
 insert into results (check_name, ok) select 'providers cannot see hidden programs', not exists (select 1 from public.programs where slug = 'test-hidden');
 
 reset role;
--- The nightly job never renews a paid program, even with an old auto-renew row left on and demo mode on.
--- The seed keeps Maria's term ending about 3 weeks out (for the site check), so move it inside the window here.
+-- The nightly job renews Maria's All-Access (ends within 3 days, auto-renew on, demo mode on).
+-- The seed keeps her term ending about 3 weeks out (for the site check), so move it inside the window here.
 update public.entitlements set ends_on = current_date + 2
 where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898' and program_id = '50e88256-f3ac-5e06-b792-4afcf9b4e52f' and ends_on >= current_date;
-update public.program_auto_renew set auto_renew = true
-where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898' and program_id = '50e88256-f3ac-5e06-b792-4afcf9b4e52f';
-insert into results (check_name, ok) select 'nightly job skips paid programs', public._program_autorenew(current_date) = 0;
+insert into results (check_name, ok) select 'nightly job renewed someone', public._program_autorenew(current_date) >= 1;
 insert into results (check_name, ok)
-select 'paid access simply ends (no new term)', not exists (select 1 from public.entitlements where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898'
+select 'nightly job renews when auto-renew is on', exists (select 1 from public.entitlements where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898'
               and program_id = '50e88256-f3ac-5e06-b792-4afcf9b4e52f' and starts_on > current_date);
--- Free programs still renew when the provider chose it.
-update public.programs set price_cents = 0 where id = '50e88256-f3ac-5e06-b792-4afcf9b4e52f';
-insert into results (check_name, ok) select 'nightly job still renews free programs', public._program_autorenew(current_date) >= 1;
 do $$ declare bad text; begin
   select string_agg(check_name, '; ') into bad from results where not ok;
   if bad is not null then raise exception 'FAILED: %', bad; end if;

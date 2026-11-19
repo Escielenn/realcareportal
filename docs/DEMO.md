@@ -16,7 +16,7 @@ About 35 minutes. Do the renewal step last, because it opens Maria's next cycle.
 
 On the sign-in page, press **Take a tour as a provider** or **Take a tour as staff**. The portal signs in as the fictional account and walks through each screen with a large pop-up: a short title, a few plain sentences, and **Next / Back**. The part being described is highlighted.
 
-- **Provider tour (12 steps, Maria):** home page, what needs attention, training progress, the training list and yearly reopening, training history, an in-portal video, programs (no automatic charges), forms, document upload, messages.
+- **Provider tour (12 steps, Maria):** home page, what needs attention, training progress, the training list and yearly reopening, training history, an in-portal video, programs and automatic renewal, forms, document upload, messages.
 - **Staff tour (13 steps, Dana):** today's numbers, automatic annual renewal, **bulk actions** (reminders, due dates, new training years for many providers at once), assigning a form to many providers on a repeat, the review queue, printing every transcript at once, programs, announcements, the shared inbox, reports, the audit log.
 
 Each tour ends with a button to take the other one. **End tour** or the Esc key stops it any time; wandering to another page shows a small "Back to tour" bar. Tours exist only while demo mode is on.
@@ -65,9 +65,9 @@ Each tour ends with a button to take the other one. **End tour** or the Esc key 
 
 ## 4. Programs, messages and security (Phase 3, about 8 minutes)
 
-1. **As Maria → Training → Programs & pricing**: the All-Access Package ($75 for 12 months) ends tomorrow. Press **Renew · $75** (demo checkout); the new term starts the day after the old one ends, so renewing early loses nothing. Below it: **No automatic charges**. Paid training never renews or charges on its own; when the term ends, access ends and she buys it again (decision 0004).
+1. **As Maria → Training → Programs & pricing**: the All-Access Package ($75 for 12 months) ends tomorrow. Press **Renew · $75** (demo checkout); the new term starts the day after the old one ends, so renewing early loses nothing. Turn **Renew automatically** on or off; it's her choice, per program.
 2. Open **QMAP**: it isn't in a program, so it's sold on its own. Respite is in the example **Specialty Bundle**.
-3. **As Dana → Programs**: one price for everyone, the course list, who can join, active members and who's ending in 30 days. Open **All-Access Package** to see members and **Give this program** at no charge.
+3. **As Dana → Programs**: one price for everyone, the course list, who can join, active members and who's ending in 30 days. Open **All-Access Package** to see members (with "auto-renew on" where they chose it) and **Give this program** at no charge.
 4. **Messages**: the staff inbox has Open / Mine / Waiting / Closed tabs, assignment, and "Seen by provider".
 5. **Announcements**: post one to Host Homes only, pin it, set it to hide after a date.
 6. **Reports**: compliance, forms and payments, each downloadable as CSV (logged in the audit log).
@@ -98,7 +98,7 @@ This restores every fictional record, including Riley's pending invite.
 | Feature | Demo | Production (Phase 1/2 plan) |
 | --- | --- | --- |
 | Card payments | Demo checkout, no card | Stripe Checkout + webhooks |
-| Program auto-renewal | Free (Real Care paid) programs only; paid training never auto-renews | Same. Paid training uses one-time Stripe Checkout, never a subscription |
+| Program auto-renewal | Nightly job renews with demo checkout | Stripe subscription charges the saved card; its webhook records the renewal |
 | Emails | Shown in the outbox, not sent | Postmark/Resend, same PHI-free templates |
 | Video hosting | Real Care's videos as 720p MP4 in private Supabase Storage, streamed through short-lived signed links; only providers with access to the course can stream it | Same, or Mux if adaptive streaming and captions are needed |
 | Invitations | Link copied by staff | Emailed automatically via Supabase Auth |

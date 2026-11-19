@@ -24,10 +24,6 @@ const L = {
   joinFree: { en: "Join for free", es: "Unirse gratis" },
   renew: { en: "Renew", es: "Renovar" },
   renewFrom: { en: "You can renew starting", es: "Puede renovar a partir del" },
-  noAutoCharge: {
-    en: "No automatic charges. Your access ends on its end date, and you can buy it again whenever you need it.",
-    es: "Sin cargos automáticos. Su acceso termina en la fecha indicada y puede volver a comprarlo cuando lo necesite.",
-  },
   endsSoon: { en: "Ends in", es: "Termina en" },
   example: { en: "Example", es: "Ejemplo" },
   single: { en: "Courses sold on their own", es: "Cursos que se venden por separado" },
@@ -103,13 +99,10 @@ export default async function ProgramsPage() {
                   <p className="text-sm text-muted">{L.renewFrom[lang]} {fmtDate(new Date(Date.parse(last!.ends_on) - 60 * 86_400_000).toISOString().slice(0, 10), lang)}</p>
                 )}
               </div>
-              {last && !p.price_cents && (
+              {last && (
                 <div data-tour="auto-renew" className="border-t border-line px-5 py-4">
-                  <AutoRenewSwitch programId={p.id} on={acc.autoRenew.has(p.id)} lang={lang} price={L.free[lang]} />
+                  <AutoRenewSwitch programId={p.id} on={acc.autoRenew.has(p.id)} lang={lang} price={p.price_cents ? money(p.price_cents) : L.free[lang]} />
                 </div>
-              )}
-              {last && p.price_cents > 0 && (
-                <p data-tour="auto-renew" className="border-t border-line px-5 py-4 text-sm text-muted">{L.noAutoCharge[lang]}</p>
               )}
             </li>
           );
