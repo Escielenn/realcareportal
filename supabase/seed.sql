@@ -1219,8 +1219,7 @@ select o.provider_id, o.program_id, o.id, o.created_at::date, (o.created_at::dat
 -- Keep the demo provider's All-Access current whenever the demo is reset: ends in about 3 weeks, so renewing is possible.
 update public.entitlements set starts_on = current_date - 340, ends_on = current_date + 24
 where provider_id = '4e6d8d70-2d43-5307-aeeb-664bf5c96898' and program_id = '50e88256-f3ac-5e06-b792-4afcf9b4e52f';
-insert into public.program_auto_renew (provider_id, program_id, auto_renew)
-select id, '50e88256-f3ac-5e06-b792-4afcf9b4e52f', true from public.profiles where email in ('brianna.cole@example.com', 'fatima.noor@example.com');
+-- Paid programs never renew automatically (decision 0004), so the demo seeds no auto-renew rows for All-Access.
 insert into public.orders (provider_id, course_id, description, amount_cents, method, created_at)
 select p.id, c.id, 'QMAP', 3000, 'wix', now() - interval '20 days' from public.profiles p, public.courses c
 where c.slug = 'qmap' and p.email in ('brianna.cole@example.com', 'evan.ruiz@example.com', 'hector.salinas@example.com', 'fatima.noor@example.com', 'jordan.lee@example.com');

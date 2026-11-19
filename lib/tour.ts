@@ -55,8 +55,8 @@ export const TOURS: Record<TourRole, { name: string; steps: TourStep[] }> = {
       {
         path: "/programs",
         target: "auto-renew",
-        title: "Renew automatically, if she wants",
-        body: "One switch. On: it renews by itself before it ends. Off: she gets reminders. It's her choice, and she can change it any time.",
+        title: "No surprise charges",
+        body: "Paid training never renews or charges her card on its own. When her term ends, access ends, and she buys it again when she needs it. Reminders tell her before it ends.",
       },
       {
         path: "/forms",
