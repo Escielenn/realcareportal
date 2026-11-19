@@ -4,6 +4,7 @@ import { getLang, fmtDate } from "@/lib/i18n";
 import { title, type Course } from "@/lib/data";
 import { accessFor, daysUntil, money, programName, today } from "@/lib/programs";
 import { JoinProgramButton, AutoRenewSwitch } from "@/components/program-bits";
+import { BillingContact } from "@/components/billing-contact";
 
 const L = {
   title: { en: "Programs & pricing", es: "Programas y precios" },
@@ -133,6 +134,7 @@ export default async function ProgramsPage() {
       )}
 
       <p className="text-xs text-muted">{L.demo[lang]}</p>
+      <BillingContact lang={lang} />
     </div>
   );
 }

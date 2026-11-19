@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { reportVideo, demoCheckout, markNotificationsRead } from "@/app/actions";
+import { BillingContact } from "@/components/billing-contact";
 
 const V = {
   watched: { en: "Watched", es: "Visto" },
@@ -107,6 +108,7 @@ export function Paywall({ courseId, priceCents, accessDays, programs, lang }: { 
         )}
       </div>
       <p className="mt-3 text-xs text-muted">{P.demo[lang]}</p>
+      <div className="mt-2"><BillingContact lang={lang} /></div>
       {error && <p role="alert" className="mt-2 text-sm text-coral">{error}</p>}
     </div>
   );
