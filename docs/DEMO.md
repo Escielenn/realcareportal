@@ -65,9 +65,9 @@ Each tour ends with a button to take the other one. **End tour** or the Esc key 
 
 ## 4. Programs, messages and security (Phase 3, about 8 minutes)
 
-1. **As Maria → Training → Programs & pricing**: the All-Access Package ($75 for 12 months) ends tomorrow. Press **Renew · $75** (demo checkout); the new term starts the day after the old one ends, so renewing early loses nothing. Turn **Renew automatically** on or off; it's her choice, per program.
+1. **As Maria → Training → Programs & pricing**: the All-Access Package ($75 for 12 months) ends tomorrow. Press **Renew · $75** (demo checkout); the new term starts the day after the old one ends, so renewing early loses nothing. **Renew automatically** is on by default for every program; she can turn it off, and she gets notice 30 and 7 days before a renewal.
 2. Open **QMAP**: it isn't in a program, so it's sold on its own. Respite is in the example **Specialty Bundle**.
-3. **As Dana → Programs**: one price for everyone, the course list, who can join, active members and who's ending in 30 days. Open **All-Access Package** to see members (with "auto-renew on" where they chose it) and **Give this program** at no charge.
+3. **As Dana → Programs**: one price for everyone, the course list, who can join, active members and who's ending in 30 days. Open **All-Access Package** to see members (with "auto-renew on" unless they turned it off) and **Give this program** at no charge.
 4. **Messages**: the staff inbox has Open / Mine / Waiting / Closed tabs, assignment, and "Seen by provider".
 5. **Announcements**: post one to Host Homes only, pin it, set it to hide after a date.
 6. **Reports**: compliance, forms and payments, each downloadable as CSV (logged in the audit log).

@@ -4,12 +4,13 @@ import { getLang, fmtDate } from "@/lib/i18n";
 import { title, type Course } from "@/lib/data";
 import { accessFor, daysUntil, money, programName, today } from "@/lib/programs";
 import { JoinProgramButton, AutoRenewSwitch } from "@/components/program-bits";
+import { BillingContact } from "@/components/billing-contact";
 
 const L = {
   title: { en: "Programs & pricing", es: "Programas y precios" },
   intro: {
-    en: "A program opens a set of courses for a full term, usually 12 months. Join once, then renew each year.",
-    es: "Un programa abre un grupo de cursos por un periodo completo, normalmente 12 meses. Únase una vez y renueve cada año.",
+    en: "A program opens a set of courses for a full term, usually 12 months. Join once; it renews each year unless you turn that off.",
+    es: "Un programa abre un grupo de cursos por un periodo completo, normalmente 12 meses. Únase una vez; se renueva cada año a menos que lo apague.",
   },
   months12: { en: "12 months", es: "12 meses" },
   days: { en: "days", es: "días" },
@@ -126,6 +127,7 @@ export default async function ProgramsPage() {
       )}
 
       <p className="text-xs text-muted">{L.demo[lang]}</p>
+      <BillingContact lang={lang} />
     </div>
   );
 }
